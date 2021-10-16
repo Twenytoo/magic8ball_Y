@@ -18,6 +18,7 @@
 		1372444227182838007A08E9 /* DecodedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372444127182838007A08E9 /* DecodedData.swift */; };
 		1372444427184682007A08E9 /* HardcodedAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372444327184682007A08E9 /* HardcodedAnswers.swift */; };
 		13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */; };
+		13A9A222271B138F00133716 /* AnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A221271B138F00133716 /* AnswerModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		1372444127182838007A08E9 /* DecodedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedData.swift; sourceTree = "<group>"; };
 		1372444327184682007A08E9 /* HardcodedAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardcodedAnswers.swift; sourceTree = "<group>"; };
 		13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		13A9A221271B138F00133716 /* AnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				1372444127182838007A08E9 /* DecodedData.swift */,
 				1372444327184682007A08E9 /* HardcodedAnswers.swift */,
 				13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */,
+				13A9A221271B138F00133716 /* AnswerModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				1372444427184682007A08E9 /* HardcodedAnswers.swift in Sources */,
 				1372444227182838007A08E9 /* DecodedData.swift in Sources */,
 				13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */,
+				13A9A222271B138F00133716 /* AnswerModel.swift in Sources */,
 				136752FB27144FD800ADC62C /* ViewController.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
