@@ -8,6 +8,7 @@
 import UIKit
 
 class SettingsViewController: UITableViewController {
+
     
     let answers = ["Yes, definitely", "It is certain", "Without a doubt", "Yes", "Most likely", "Sure, why not?", "Same", "Tell me more", "Out to lunch", "Reply hazy, try again", "Ask again later", "The cake is a lie", "42", "TMI", "Very doubtful", "Don't count on it", "My reply is no", "Absolutely not"]
 
@@ -27,12 +28,16 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let  answerCell = tableView.dequeueReusableCell(withIdentifier: "Answer", for: indexPath)
+        let  answerCell = tableView.dequeueReusableCell(withIdentifier: "Answer", for: indexPath) as! CustomTableViewCell
         
-        answerCell.textLabel?.text = answers[indexPath.row]
+        answerCell.answerLabel?.text = answers[indexPath.row]
         
         return answerCell
         
     }
+    
+    //MARK: - Table view delegate
+    
+
 
 }

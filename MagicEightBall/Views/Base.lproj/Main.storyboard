@@ -12,18 +12,43 @@
         <scene sceneID="78a-Sp-ALJ">
             <objects>
                 <tableViewController id="ZGK-rn-tVz" customClass="SettingsViewController" customModule="MagicEightBall" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="HlE-ZG-JHA">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="HlE-ZG-JHA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Answer" id="bLf-7X-Gzo">
-                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Answer" id="bLf-7X-Gzo" customClass="CustomTableViewCell" customModule="MagicEightBall" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bLf-7X-Gzo" id="qBe-ms-hMM">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your answer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vV4-u2-pQb">
+                                            <rect key="frame" x="16" y="5" width="382" height="14.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                            <color key="textColor" systemColor="systemGrayColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OgJ-0j-be2">
+                                            <rect key="frame" x="16" y="24.5" width="382" height="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="OgJ-0j-be2" secondAttribute="trailing" constant="16" id="EI7-u8-x6W"/>
+                                        <constraint firstItem="vV4-u2-pQb" firstAttribute="leading" secondItem="qBe-ms-hMM" secondAttribute="leading" constant="16" id="JeZ-jh-0Wi"/>
+                                        <constraint firstItem="OgJ-0j-be2" firstAttribute="leading" secondItem="qBe-ms-hMM" secondAttribute="leading" constant="16" id="gHa-Ae-2Sw"/>
+                                        <constraint firstItem="OgJ-0j-be2" firstAttribute="top" secondItem="vV4-u2-pQb" secondAttribute="bottom" constant="5" id="ieT-Bh-Edr"/>
+                                        <constraint firstItem="vV4-u2-pQb" firstAttribute="top" secondItem="qBe-ms-hMM" secondAttribute="top" constant="5" id="llh-8a-Z9b"/>
+                                        <constraint firstAttribute="trailing" secondItem="vV4-u2-pQb" secondAttribute="trailing" constant="16" id="v0t-fF-EAz"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="answerLabel" destination="OgJ-0j-be2" id="Jrr-ex-2r2"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -35,7 +60,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f1j-9Q-88l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2595.6521739130435" y="87.723214285714278"/>
+            <point key="canvasLocation" x="2594.202898550725" y="87.723214285714278"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WF0-6v-P8F">
@@ -129,6 +154,9 @@
         <image name="Magic Ball PNG" width="500" height="500"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
