@@ -16,6 +16,7 @@
 		1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372443C27180CA8007A08E9 /* SettingsViewController.swift */; };
 		1372444027182402007A08E9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372443F27182402007A08E9 /* NetworkManager.swift */; };
 		1372444227182838007A08E9 /* DecodedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372444127182838007A08E9 /* DecodedData.swift */; };
+		1372444427184682007A08E9 /* HardcodedAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372444327184682007A08E9 /* HardcodedAnswers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		1372443C27180CA8007A08E9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		1372443F27182402007A08E9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		1372444127182838007A08E9 /* DecodedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedData.swift; sourceTree = "<group>"; };
+		1372444327184682007A08E9 /* HardcodedAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardcodedAnswers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				1372443F27182402007A08E9 /* NetworkManager.swift */,
 				1372444127182838007A08E9 /* DecodedData.swift */,
+				1372444327184682007A08E9 /* HardcodedAnswers.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1372444427184682007A08E9 /* HardcodedAnswers.swift in Sources */,
 				1372444227182838007A08E9 /* DecodedData.swift in Sources */,
 				136752FB27144FD800ADC62C /* ViewController.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
