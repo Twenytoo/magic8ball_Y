@@ -35,6 +35,10 @@ class ViewController: UIViewController {
             self.answerLabel.text = answer
         }
     }
+    
+    @IBAction func cancelAction (_ segue: UIStoryboardSegue) {
+        
+    }
 }
 
 

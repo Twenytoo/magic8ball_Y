@@ -21,7 +21,6 @@ struct Answer {
             answers.append(Answer(answerText: answer))
         }
         
-        
         return answers
     }
 }
