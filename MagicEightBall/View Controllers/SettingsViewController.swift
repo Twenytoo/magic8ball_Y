@@ -6,25 +6,25 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SettingsViewController: UITableViewController {
-    
-    let newAnswer = Answer()
 
-//    var answers = Answer.getAnswers()
+    var answers: Results<Answer>!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.main.async {
-            self.newAnswer.saveAnswers()
-        }
+        answers = realm.objects(Answer.self)
     }
     
     func addNewAnswer (answer: String) -> () {
         
-//        self.answers.append(Answer(answerText: answer))
+        let newAnswer = Answer(name: answer)
+        
+        StorageManager.saveObject(newAnswer)
+       
     }
 
     @IBAction func cancelByBarButton(_ sender: Any) {
@@ -33,20 +33,20 @@ class SettingsViewController: UITableViewController {
     
     //MARK: - Table view data source
     
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//
-//        return answers.count
-//    }
-//
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let  answerCell = tableView.dequeueReusableCell(withIdentifier: "Answer", for: indexPath) as! CustomTableViewCell
-//
-//        answerCell.answerLabel?.text = answers[indexPath.row].answerText
-//
-//        return answerCell
-//
-//    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        return answers.isEmpty ? 0 : answers.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let  answerCell = tableView.dequeueReusableCell(withIdentifier: "Answer", for: indexPath) as! CustomTableViewCell
+
+        answerCell.answerLabel?.text = answers[indexPath.row].answerText
+
+        return answerCell
+
+    }
     
     //MARK: - Table view delegate
     
