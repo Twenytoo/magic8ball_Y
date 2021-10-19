@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController {
+    
+    var answers: Results<Answer>!
     
     var networkManager = NetworkManager()
     
@@ -16,6 +19,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         networkManager.fetchAnswer()
+        
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -28,6 +32,15 @@ class ViewController: UIViewController {
     func updateAnswerLabel(answer: String) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
+        }
+    }
+    
+    func showAnswerWithoutConnection () -> String {
+        answers = realm.objects(Answer.self)
+        if let answer = answers?.randomElement()?.answerText {
+            return answer
+        } else {
+        return "Add new answers!"
         }
     }
     

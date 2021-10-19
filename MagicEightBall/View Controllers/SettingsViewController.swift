@@ -12,7 +12,6 @@ class SettingsViewController: UITableViewController {
 
     var answers: Results<Answer>!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,10 +24,6 @@ class SettingsViewController: UITableViewController {
         
         StorageManager.saveObject(newAnswer)
        
-    }
-
-    @IBAction func cancelByBarButton(_ sender: Any) {
-        dismiss(animated: true)
     }
     
     //MARK: - Table view data source
@@ -59,7 +54,7 @@ class SettingsViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
-
+    
         return deleteAction
     }
     

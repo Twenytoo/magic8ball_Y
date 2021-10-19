@@ -11,16 +11,18 @@ struct NetworkManager {
     
     var completionHandler: ((String)->Void)?
     
+    
     func fetchAnswer () {
         let urlString = "https://8ball.delegator.com/magic/JSON/%3Cquestion_string%3E"
-        guard let url = URL(string: urlString) else {
-            return
-            //ДОПИСАТЬ ЛОГИКУ ЕСЛИ НЕТ ИНТЕРНЕТА
-        }
+        guard let url = URL(string: urlString) else {return}
+        
         URLSession.shared.dataTask(with: url) {data, response, error in
-            if let error = error {
-                print(error)
-                return
+            if let _ = error {
+                DispatchQueue.main.async {
+                    let sc = ViewController()
+                    let answer = sc.showAnswerWithoutConnection()
+                    self.completionHandler?(answer)
+                }
             }
             if let data = data {
                 if let answer = parseJSON(withData: data) {
@@ -41,4 +43,5 @@ struct NetworkManager {
         }
         return nil
     }
+
 }
