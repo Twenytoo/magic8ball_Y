@@ -31,9 +31,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func cancelAction (_ segue: UIStoryboardSegue) {
-        //Изменить на dismiss 
-    }
+    @IBAction func cancelAction (_ segue: UIStoryboardSegue) {}
 }
 
 
