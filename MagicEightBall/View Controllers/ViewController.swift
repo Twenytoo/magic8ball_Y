@@ -40,7 +40,7 @@ class ViewController: UIViewController {
         if let answer = answers?.randomElement()?.answerText {
             return answer
         } else {
-        return "Add new answers!"
+        return "Add new answers"
         }
     }
     
