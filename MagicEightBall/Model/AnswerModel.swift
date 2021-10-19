@@ -5,23 +5,25 @@
 //  Created by Артём on 16.10.2021.
 //
 
-import Foundation
+import UIKit
+import RealmSwift
 
-struct Answer {
+class Answer: Object {
     
-    var answerText: String
+    @objc dynamic var answerText = ""
     
-    static let hardcodedAnswers = ["Yes, definitely", "It is certain", "Without a doubt", "Yes", "Most likely", "Sure, why not?", "Same", "Tell me more", "Out to lunch", "Reply hazy, try again", "Ask again later", "The cake is a lie", "42", "TMI", "Very doubtful", "Don't count on it", "My reply is no", "Absolutely not"]
+    let hardcodedAnswers = ["It is certain", "Without a doubt", "Yes", "Most likely", "Sure, why not?", "Same", "Ask again later", "42", "TMI", "Very doubtful", "Don't count on it", "My reply is no", "Absolutely not"]
     
-    static func getAnswers () -> [Answer] {
-        
-        var answers = [Answer] ()
-        
+    func saveAnswers () {
+
         for answer in hardcodedAnswers {
-            answers.append(Answer(answerText: answer))
+                
+            let newAnswer = Answer()
+            
+            newAnswer.answerText = answer
+            
+            StorageManager.saveObject(newAnswer)
         }
-        
-        return answers
     }
 }
  

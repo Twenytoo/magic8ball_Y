@@ -5,7 +5,7 @@
 //  Created by Артём on 14.10.2021.
 //
 
-import Foundation
+import UIKit
 
 struct DecodedData: Codable {
     let magic: Magic

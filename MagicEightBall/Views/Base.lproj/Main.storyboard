@@ -59,10 +59,14 @@
                     <navigationItem key="navigationItem" title="Settings" id="iEc-2i-JYg">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="K56-yU-Cii">
                             <connections>
-                                <segue destination="9ox-Mm-R16" kind="unwind" unwindAction="cancelAction:" id="tW4-iR-fHk"/>
+                                <segue destination="9ox-Mm-R16" kind="unwind" unwindAction="cancelAction:" id="Eh0-94-17a"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="WnW-rg-3AP"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="WnW-rg-3AP">
+                            <connections>
+                                <action selector="addAnswerByBarButton:" destination="ZGK-rn-tVz" id="V4W-QE-gk9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f1j-9Q-88l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
