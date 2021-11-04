@@ -6,6 +6,6 @@ target 'MagicEightBall' do
   use_frameworks!
 
   pod 'Alamofire', '~> 5.4'
-  pod 'RealmSwift'
+  pod 'RealmSwift', '~>10'
 
 end
