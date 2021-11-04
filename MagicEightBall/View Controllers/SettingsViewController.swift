@@ -10,6 +10,7 @@ import RealmSwift
 
 class SettingsViewController: UITableViewController {
 
+    // Array of objects of Answer type from database
     var answers: Results<Answer>!
     
     override func viewDidLoad() {
@@ -18,6 +19,13 @@ class SettingsViewController: UITableViewController {
         answers = realm.objects(Answer.self)
     }
     
+    ///Adds the new object of Answer type in the database
+    ///
+    ///
+    /// Creates an instance of Answer type from String type. Then pass the object of Answer type to store it in the database
+    ///
+    /// - Parameter answer: Sting
+    /// - Returns: Void
     func addNewAnswer (answer: String) -> () {
         
         let newAnswer = Answer(name: answer)
@@ -58,6 +66,7 @@ class SettingsViewController: UITableViewController {
         return deleteAction
     }
     
+    //Calls the alert to create a new answer on pressing a BarButton
     @IBAction func addAnswerByBarButton(_ sender: UIBarButtonItem) {
         
         let addAnswer = UIAlertController(title: "Add your answer", message: nil, preferredStyle: .alert)

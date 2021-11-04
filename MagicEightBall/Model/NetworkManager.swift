@@ -7,12 +7,20 @@
 
 import UIKit
 
+// Manager for working with network
+
 struct NetworkManager {
     
+    /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String)->Void)?
-    
-    
-    func fetchAnswer () {
+
+    ///Receiving data from the Internet using URLSession
+    ///
+    /// The function uses url to receive data, response and error using the URLSession where an instance of ViewController is created on the main queue and receives an instance of the String type from there and is handler by the complitionHandler
+    ///
+    /// - Returns: The function returns Void, but calls the function URLSession
+    func fetchAnswerByURL () {
+        
         let urlString = "https://8ball.delegator.com/magic/JSON/%3Cquestion_string%3E"
         guard let url = URL(string: urlString) else {return}
         
@@ -32,7 +40,13 @@ struct NetworkManager {
         }.resume()
     }
     
+    ///Parses JSON data
+    ///
+    /// Use data formatted Data to get an optional string formatted answer. In the case of an error, it will be printed in the terminal.
+    ///
+    /// - Returns: Optional String
     func parseJSON(withData data: Data ) -> String? {
+        
         let decoder = JSONDecoder()
         
         do{
@@ -43,5 +57,4 @@ struct NetworkManager {
         }
         return nil
     }
-
 }

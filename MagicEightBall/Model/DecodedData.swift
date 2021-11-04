@@ -7,6 +7,8 @@
 
 import UIKit
 
+//Model for parsing JSON data from the internet
+
 struct DecodedData: Codable {
     let magic: Magic
 }
