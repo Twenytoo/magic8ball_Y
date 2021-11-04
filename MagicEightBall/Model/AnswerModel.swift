@@ -8,6 +8,8 @@
 import UIKit
 import RealmSwift
 
+//Model for saving date in Realm database
+
 class Answer: Object {
     
     @objc dynamic var answerText = ""
