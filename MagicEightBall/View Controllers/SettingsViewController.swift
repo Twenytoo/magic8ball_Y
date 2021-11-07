@@ -9,14 +9,16 @@ import UIKit
 import RealmSwift
 
 class SettingsViewController: UITableViewController {
-
+    
     // Array of objects of Answer type from database
-    var answers: Results<Answer>!
+    private var answers: Results<Answer>!
+    private var storedManager: StorageManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         answers = realm.objects(Answer.self)
+        setStoredManager()
     }
     
     ///Adds the new object of Answer type in the database
@@ -26,29 +28,33 @@ class SettingsViewController: UITableViewController {
     ///
     /// - Parameter answer: Sting
     /// - Returns: Void
-    func addNewAnswer (answer: String) -> () {
+    private func addNewAnswer (answer: String) -> () {
         
         let newAnswer = Answer(name: answer)
         
-        StorageManager.saveObject(newAnswer)
-       
+        storedManager.saveObject(newAnswer)
+        
+    }
+    ///Сreates a StoredManager instance and assigns the created instance to the storedManager class property
+    private func setStoredManager () {
+        self.storedManager = StorageManager()
     }
     
     //MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         return answers.isEmpty ? 0 : answers.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let  answerCell = tableView.dequeueReusableCell(withIdentifier: "Answer", for: indexPath) as! CustomTableViewCell
-
+        
         answerCell.answerLabel?.text = answers[indexPath.row].answerText
-
+        
         return answerCell
-
+        
     }
     
     //MARK: - Table view delegate
@@ -58,11 +64,11 @@ class SettingsViewController: UITableViewController {
         let answer = answers[indexPath.row]
         
         let deleteItem = UIContextualAction(style: .destructive, title: "Delete") {  (_,_,_) in
-            StorageManager.deleteObject(answer)
+            self.storedManager.deleteObject(answer)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
-    
+        
         return deleteAction
     }
     
@@ -73,10 +79,10 @@ class SettingsViewController: UITableViewController {
         
         addAnswer.addTextField { (textField) in textField.placeholder = "Enter your answer"
         }
-
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
         addAnswer.addAction(cancelAction)
-
+        
         let doneAction = UIAlertAction(title: "Done", style: .default) { _ in
             
             if let addAnswerTextField = addAnswer.textFields?[0].text {
@@ -85,7 +91,7 @@ class SettingsViewController: UITableViewController {
             }
         }
         addAnswer.addAction(doneAction)
-
+        
         present(addAnswer, animated: true)
     }
 }

@@ -11,19 +11,21 @@ import RealmSwift
 class ViewController: UIViewController {
     
     // Array of objects of Answer type from database
-    var answers: Results<Answer>!
+    private var answers: Results<Answer>!
     
     //Entry point for working with network
-    var networkManager = NetworkManager()
+    var networkManager: NetworkManager!
     
     @IBOutlet weak var answerLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setNetworkManager()
         networkManager.fetchAnswerByURL()
         
     }
-    
+
     //Configuration the Shake motion
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
@@ -37,7 +39,7 @@ class ViewController: UIViewController {
     ///Updates the label on the ViewController in the TableViewCell
     /// - Parameter answer:String
     /// - Returns: Void
-    func updateAnswerLabel(answer: String) {
+    private func updateAnswerLabel(answer: String) {
         
         DispatchQueue.main.async {
             self.answerLabel.text = answer
@@ -57,8 +59,13 @@ class ViewController: UIViewController {
             return answer
             
         } else {
-        return "Add new answers"
+            return "Add new answers"
         }
+    }
+    
+    ///Сreates a NetworkManager instance and assigns the created instance to the networkManager class property
+    private func setNetworkManager () {
+        self.networkManager = NetworkManager()
     }
     
     //Action to cancel Settings ViewController
