@@ -10,20 +10,16 @@ import RealmSwift
 
 class ViewController: UIViewController {
     
-    // Array of objects of Answer type from database
-    var answers: Results<Answer>!
-    
     //Entry point for working with network
-    var networkManager = NetworkManager()
+    var networkManager: NetworkService!
+    var storageManager: StorageService!
     
     @IBOutlet weak var answerLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkManager.fetchAnswerByURL()
-        
     }
-    
+
     //Configuration the Shake motion
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
@@ -37,32 +33,49 @@ class ViewController: UIViewController {
     ///Updates the label on the ViewController in the TableViewCell
     /// - Parameter answer:String
     /// - Returns: Void
-    func updateAnswerLabel(answer: String) {
+    private func updateAnswerLabel(answer: String) {
         
         DispatchQueue.main.async {
             self.answerLabel.text = answer
         }
     }
+
+    //Addtion dependencies
+    func setNetworkManager(networkManager: NetworkService) {
+        self.networkManager = networkManager
+    }
+    func setStorageManager(storageManager: StorageService) {
+        self.storageManager = storageManager
+    }
+    
+    //Passing storageManager to SetttingsViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let navigationVC = segue.destination as? UINavigationController else {return}
+        let settingsVC = navigationVC.viewControllers.first as! SettingsViewController
+        settingsVC.storageManager = self.storageManager
+    }
+    
+    //Action to cancel Settings ViewController
+    @IBAction func cancelAction(_ segue: UIStoryboardSegue) {}
+}
+
+
+//MARK: - Extension for Local DB
+extension ViewController: DBService {
     
     ///Returns the answer from database in case of unsuccessful internet connection
     ///
     ///Takes a random element from the database and turns it into string format. If the database is empty, it will inform the user that new answers need to be added.
     ///
     /// - Returns: Answer of String type
-    func showAnswerWithoutConnection () -> String {
-        
-        answers = realm.objects(Answer.self)
-        
-        if let answer = answers?.randomElement()?.answerText {
+    func showAnswerWithoutConnection() -> String {
+    
+        if let answer = storageManager.answers.randomElement()?.answerText {
             return answer
-            
+
         } else {
-        return "Add new answers"
+            return "Add new answers"
         }
     }
-    
-    //Action to cancel Settings ViewController
-    @IBAction func cancelAction (_ segue: UIStoryboardSegue) {}
 }
-
 

@@ -7,38 +7,59 @@
 
 import UIKit
 
+protocol DBService {
+    func showAnswerWithoutConnection() -> String
+}
+
+protocol NetworkService {
+    var completionHandler: ((String) -> Void)? { get set }
+    func fetchAnswerByURL () -> Void
+    func parseJSON(withData data: Data ) -> String?
+    var dataBaseDelegate: DBService! { get set }
+}
+
 // Manager for working with network
 
-struct NetworkManager {
+class NetworkManager: NetworkService {
     
     /// Handles an instance of String type in case of unsuccessful internet connection
-    var completionHandler: ((String)->Void)?
-
+    var completionHandler: ((String) -> Void)?
+    
+    /// Shows answers from DB in case of unsuccessful internet connection
+    var dataBaseDelegate: DBService!
+    
+    
+    //MARK: - Getting data from Network
+    
+    
     ///Receiving data from the Internet using URLSession
     ///
     /// The function uses url to receive data, response and error using the URLSession where an instance of ViewController is created on the main queue and receives an instance of the String type from there and is handler by the complitionHandler
     ///
     /// - Returns: The function returns Void, but calls the function URLSession
-    func fetchAnswerByURL () {
-        
+    func fetchAnswerByURL() {
+        //The address where the data is received
         let urlString = "https://8ball.delegator.com/magic/JSON/%3Cquestion_string%3E"
+        
         guard let url = URL(string: urlString) else {return}
         
         URLSession.shared.dataTask(with: url) {data, response, error in
             if let _ = error {
+                
                 DispatchQueue.main.async {
-                    let sc = ViewController()
-                    let answer = sc.showAnswerWithoutConnection()
+                    let answer = self.dataBaseDelegate.showAnswerWithoutConnection()
                     self.completionHandler?(answer)
                 }
             }
             if let data = data {
-                if let answer = parseJSON(withData: data) {
+                if let answer = self.parseJSON(withData: data) {
                     self.completionHandler?(answer)
                 }
             }
         }.resume()
     }
+    
+    //MARK: - Parsing JSON data
     
     ///Parses JSON data
     ///
