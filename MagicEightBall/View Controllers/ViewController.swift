@@ -41,10 +41,10 @@ class ViewController: UIViewController {
     }
 
     //Addtion dependencies
-    func setNetworkManager (networkManager: NetworkService) {
+    func setNetworkManager(networkManager: NetworkService) {
         self.networkManager = networkManager
     }
-    func setStorageManager (storageManager: StorageService) {
+    func setStorageManager(storageManager: StorageService) {
         self.storageManager = storageManager
     }
     
@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     }
     
     //Action to cancel Settings ViewController
-    @IBAction func cancelAction (_ segue: UIStoryboardSegue) {}
+    @IBAction func cancelAction(_ segue: UIStoryboardSegue) {}
 }
 
 
@@ -68,7 +68,7 @@ extension ViewController: DBService {
     ///Takes a random element from the database and turns it into string format. If the database is empty, it will inform the user that new answers need to be added.
     ///
     /// - Returns: Answer of String type
-    func showAnswerWithoutConnection () -> String {
+    func showAnswerWithoutConnection() -> String {
     
         if let answer = storageManager.answers.randomElement()?.answerText {
             return answer

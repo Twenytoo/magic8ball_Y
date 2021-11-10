@@ -26,7 +26,7 @@ class SettingsViewController: UITableViewController {
     ///
     /// - Parameter answer: Sting
     /// - Returns: Void
-    private func addNewAnswer (answer: String) -> () {
+    private func addNewAnswer(answer: String) -> () {
         
         let newAnswer = Answer(name: answer)
         

@@ -29,7 +29,7 @@ class StorageManager: StorageService {
     ///
     /// - Parameter answer: an instance of Answer
     /// - Returns: Void
-    func saveObject (_ answer: Answer) {
+    func saveObject(_ answer: Answer) {
         
         try! realm.write {
             realm.add(answer)
@@ -42,7 +42,7 @@ class StorageManager: StorageService {
     ///
     /// - Parameter answer: an instance of Answer
     /// - Returns: Void
-    func deleteObject (_ answer: Answer) {
+    func deleteObject(_ answer: Answer) {
         
         try! realm.write {
             realm.delete(answer)

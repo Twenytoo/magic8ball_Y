@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DBService {
-    func showAnswerWithoutConnection () -> String
+    func showAnswerWithoutConnection() -> String
 }
 
 protocol NetworkService {
@@ -37,7 +37,7 @@ class NetworkManager: NetworkService {
     /// The function uses url to receive data, response and error using the URLSession where an instance of ViewController is created on the main queue and receives an instance of the String type from there and is handler by the complitionHandler
     ///
     /// - Returns: The function returns Void, but calls the function URLSession
-    func fetchAnswerByURL () {
+    func fetchAnswerByURL() {
         //The address where the data is received
         let urlString = "https://8ball.delegator.com/magic/JSON/%3Cquestion_string%3E"
         
