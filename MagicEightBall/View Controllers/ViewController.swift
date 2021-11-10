@@ -10,20 +10,14 @@ import RealmSwift
 
 class ViewController: UIViewController {
     
-    // Array of objects of Answer type from database
-    private var answers: Results<Answer>!
-    
     //Entry point for working with network
-    var networkManager: NetworkManager!
+    var networkManager: NetworkService!
+    var storageManager: StorageService!
     
     @IBOutlet weak var answerLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setNetworkManager()
-        networkManager.fetchAnswerByURL()
-        
     }
 
     //Configuration the Shake motion
@@ -45,6 +39,29 @@ class ViewController: UIViewController {
             self.answerLabel.text = answer
         }
     }
+
+    //Addtion dependencies
+    func setNetworkManager (networkManager: NetworkService) {
+        self.networkManager = networkManager
+    }
+    func setStorageManager (storageManager: StorageService) {
+        self.storageManager = storageManager
+    }
+    
+    //Passing storageManager to SetttingsViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let navigationVC = segue.destination as? UINavigationController else {return}
+        let settingsVC = navigationVC.viewControllers.first as! SettingsViewController
+        settingsVC.storageManager = self.storageManager
+    }
+    
+    //Action to cancel Settings ViewController
+    @IBAction func cancelAction (_ segue: UIStoryboardSegue) {}
+}
+
+
+//MARK: - Extension for Local DB
+extension ViewController: DBService {
     
     ///Returns the answer from database in case of unsuccessful internet connection
     ///
@@ -52,24 +69,13 @@ class ViewController: UIViewController {
     ///
     /// - Returns: Answer of String type
     func showAnswerWithoutConnection () -> String {
-        
-        answers = realm.objects(Answer.self)
-        
-        if let answer = answers?.randomElement()?.answerText {
+    
+        if let answer = storageManager.answers.randomElement()?.answerText {
             return answer
-            
+
         } else {
             return "Add new answers"
         }
     }
-    
-    ///Сreates a NetworkManager instance and assigns the created instance to the networkManager class property
-    private func setNetworkManager () {
-        self.networkManager = NetworkManager()
-    }
-    
-    //Action to cancel Settings ViewController
-    @IBAction func cancelAction (_ segue: UIStoryboardSegue) {}
 }
-
 

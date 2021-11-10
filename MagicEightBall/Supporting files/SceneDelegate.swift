@@ -14,7 +14,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        guard let _ = (scene as? UIWindowScene) else { return }
+        let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let networkManager = NetworkManager()
+        let storageManager = StorageManager()
+        storageManager.answers = realm.objects(Answer.self)
+        mainVC.setNetworkManager(networkManager: networkManager)
+        mainVC.setStorageManager(storageManager: storageManager)
+        mainVC.networkManager.dataBaseDelegate = mainVC
+        self.window?.rootViewController = mainVC
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

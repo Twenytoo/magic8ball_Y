@@ -11,14 +11,12 @@ import RealmSwift
 class SettingsViewController: UITableViewController {
     
     // Array of objects of Answer type from database
-    private var answers: Results<Answer>!
-    private var storedManager: StorageManager!
+    var storageManager: StorageService!
+    
+    var message: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        answers = realm.objects(Answer.self)
-        setStoredManager()
     }
     
     ///Adds the new object of Answer type in the database
@@ -32,26 +30,23 @@ class SettingsViewController: UITableViewController {
         
         let newAnswer = Answer(name: answer)
         
-        storedManager.saveObject(newAnswer)
+        storageManager.saveObject(newAnswer)
         
     }
-    ///Сreates a StoredManager instance and assigns the created instance to the storedManager class property
-    private func setStoredManager () {
-        self.storedManager = StorageManager()
-    }
+
     
     //MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return answers.isEmpty ? 0 : answers.count
+        return storageManager.answers.isEmpty ? 0 : storageManager.answers.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let  answerCell = tableView.dequeueReusableCell(withIdentifier: "Answer", for: indexPath) as! CustomTableViewCell
         
-        answerCell.answerLabel?.text = answers[indexPath.row].answerText
+        answerCell.answerLabel?.text = storageManager.answers[indexPath.row].answerText
         
         return answerCell
         
@@ -61,10 +56,10 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let answer = answers[indexPath.row]
+        let answer = storageManager.answers[indexPath.row]
         
         let deleteItem = UIContextualAction(style: .destructive, title: "Delete") {  (_,_,_) in
-            self.storedManager.deleteObject(answer)
+            self.storageManager.deleteObject(answer)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
