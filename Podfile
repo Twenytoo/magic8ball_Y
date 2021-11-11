@@ -7,5 +7,6 @@ target 'MagicEightBall' do
 
   pod 'Alamofire', '~> 5.4'
   pod 'RealmSwift', '~>10'
+  pod 'SwiftLint'
 
 end

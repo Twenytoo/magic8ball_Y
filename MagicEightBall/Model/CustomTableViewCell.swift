@@ -7,8 +7,7 @@
 
 import UIKit
 
-//Customization of TableViewCell
-
+// Customization of TableViewCell
 class CustomTableViewCell: UITableViewCell {
 
     @IBOutlet weak var answerLabel: UILabel!
