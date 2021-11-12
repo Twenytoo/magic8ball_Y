@@ -1,0 +1,16 @@
+/* 
+  myStrings.strings
+  MagicEightBall
+
+  Created by Артём on 12.11.2021.
+  
+*/
+
+"answer" = "Answer";
+"cancel" = "Cancel";
+"delete" = "Delete";
+"done" = "Done";
+"add" = "Add new Answer";
+"enter" = "Enter your answer";
+"error" = "Error opening realm: ";
+"url" = "https://8ball.delegator.com/magic/JSON/question_string";

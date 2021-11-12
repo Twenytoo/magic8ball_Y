@@ -1,0 +1,1 @@
+        "https://8ball.delegator.com/magic/JSON/%3Cquestion_string%3E";

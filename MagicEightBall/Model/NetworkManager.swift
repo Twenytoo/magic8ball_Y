@@ -34,7 +34,7 @@ class NetworkManager: NetworkService {
     /// - Returns: The function returns Void, but calls the function URLSession
     func fetchAnswerByURL() {
         // The address where the data is received
-        let urlString = "https://8ball.delegator.com/magic/JSON/%3Cquestion_string%3E"
+        let urlString = L10n.url
         guard let url = URL(string: urlString) else {return}
         URLSession.shared.dataTask(with: url) {data, _, error in
             if error != nil {

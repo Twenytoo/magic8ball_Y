@@ -30,7 +30,7 @@ class SettingsViewController: UITableViewController {
         return storageManager.answers.isEmpty ? 0 : storageManager.answers.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Answer", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.answer, for: indexPath)
         if let answerCell = cell as? CustomTableViewCell {
             answerCell.answerLabel?.text = storageManager.answers[indexPath.row].answerText
             return answerCell
@@ -42,7 +42,7 @@ class SettingsViewController: UITableViewController {
                             trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
     UISwipeActionsConfiguration? {
         let answer = storageManager.answers[indexPath.row]
-        let deleteItem = UIContextualAction(style: .destructive, title: "Delete") {  (_, _, _) in
+        let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
             self.storageManager.deleteObject(answer)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -51,12 +51,12 @@ class SettingsViewController: UITableViewController {
     }
     // Calls the alert to create a new answer on pressing a BarButton
     @IBAction func addAnswerByBarButton(_ sender: UIBarButtonItem) {
-        let addAnswer = UIAlertController(title: "Add your answer", message: nil, preferredStyle: .alert)
-        addAnswer.addTextField { (textField) in textField.placeholder = "Enter your answer"
+        let addAnswer = UIAlertController(title: L10n.add, message: nil, preferredStyle: .alert)
+        addAnswer.addTextField { (textField) in textField.placeholder = L10n.enter
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel) { _ in }
         addAnswer.addAction(cancelAction)
-        let doneAction = UIAlertAction(title: "Done", style: .default) { _ in
+        let doneAction = UIAlertAction(title: L10n.done, style: .default) { _ in
             if let addAnswerTextField = addAnswer.textFields?[0].text {
                 self.addNewAnswer(answer: addAnswerTextField)
                 self.tableView.reloadData()

@@ -64,7 +64,7 @@ extension ViewController: DBService {
         if let answer = storageManager.answers.randomElement()?.answerText {
             return answer
         } else {
-            return "Add new answers"
+            return L10n.add
         }
     }
 }
