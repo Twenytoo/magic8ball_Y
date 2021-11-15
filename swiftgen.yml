@@ -9,9 +9,4 @@ xcassets:
   outputs:
     - templateName: swift5
       output: MagicEightBall/SwiftGen/Assets.swift
-files:
-  inputs: MagicEightBall/Base.lproj
-  filter: .+\.txt
-  outputs:
-    templateName: structured-swift5
-    output: MagicEightBall/SwiftGen/Files.swift
+

@@ -16,6 +16,8 @@ internal enum L10n {
   internal static let answer = L10n.tr("myStrings", "answer")
   /// Cancel
   internal static let cancel = L10n.tr("myStrings", "cancel")
+  /// cell
+  internal static let cell = L10n.tr("myStrings", "cell")
   /// Delete
   internal static let delete = L10n.tr("myStrings", "delete")
   /// Done
@@ -24,6 +26,10 @@ internal enum L10n {
   internal static let enter = L10n.tr("myStrings", "enter")
   /// Error opening realm: 
   internal static let error = L10n.tr("myStrings", "error")
+  /// SETTINGS
+  internal static let settings = L10n.tr("myStrings", "settings")
+  /// Some Answer
+  internal static let someAnswer = L10n.tr("myStrings", "some_answer")
   /// https://8ball.delegator.com/magic/JSON/question_string
   internal static let url = L10n.tr("myStrings", "url")
 }

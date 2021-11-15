@@ -8,12 +8,24 @@
 import UIKit
 import RealmSwift
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+        let tableView: UITableView = {
+        let tableView = UITableView()
+            tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
+        return tableView
+    }()
     // Array of objects of Answer type from database
     var storageManager: StorageService!
     var message: String!
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundColor = .black
+        view.addSubview(tableView)
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.dataSource = self
+        tableView.frame = view.bounds
     }
     /// Adds the new object of Answer type in the database
     /// Creates an instance of Answer type from String type.
@@ -26,20 +38,18 @@ class SettingsViewController: UITableViewController {
         storageManager.saveObject(newAnswer)
     }
     // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return storageManager.answers.isEmpty ? 0 : storageManager.answers.count
     }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.answer, for: indexPath)
-        if let answerCell = cell as? CustomTableViewCell {
-            answerCell.answerLabel?.text = storageManager.answers[indexPath.row].answerText
-            return answerCell
-        }
-        return cell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.cell, for: indexPath)
+        guard let answerCell = cell as? CustomTableViewCell else {return UITableViewCell()}
+        answerCell.configure(text: storageManager.answers[indexPath.row].answerText)
+        return answerCell
     }
     // MARK: - Table view delegate
-    override func tableView(_ tableView: UITableView,
-                            trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
+     func tableView(_ tableView: UITableView,
+                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
     UISwipeActionsConfiguration? {
         let answer = storageManager.answers[indexPath.row]
         let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
