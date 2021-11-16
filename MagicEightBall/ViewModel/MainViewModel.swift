@@ -8,34 +8,20 @@
 import UIKit
 
 class MainViewModel: MainViewModelType, DBService {
-//    var settingsVC: SettingViewModel
+    func addButton() -> UIButton {
+        return UIButton()
+    }
     var networkManager: NetworkService
     var storageManager: StorageService
     let customView: CustomViewForMainVC
-    var settingController: UIViewController
-    var settingNavigationVC: UINavigationController
     init(networkManager: NetworkService,
          storageManager: StorageService,
-         customView: CustomViewForMainVC,
-         settingNavigationVC: UINavigationController,
-         settingController: UIViewController) {
+         customView: CustomViewForMainVC) {
         self.networkManager = networkManager
         self.storageManager = storageManager
         self.customView = customView
-        self.settingNavigationVC = settingNavigationVC
-        self.settingController = settingController
     }
-    func addButton() -> UIButton {
-        let settingsButton = UIButton(frame: CGRect(x: 115, y: 500, width: 200, height: 100))
-        settingsButton.setTitleColor(.cyan, for: .normal)
-        settingsButton.setTitle(L10n.settings, for: .normal)
-        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
-        return settingsButton
-    }
-    @objc func buttonDidTap(closure: (UINavigationController) -> Void) {
-        settingNavigationVC.present(settingController, animated: true, completion: nil)
-    }
+
     /// Returns the answer from database in case of unsuccessful internet connection
     /// Takes a random element from the database and turns it into string format. If the database is empty.
     /// It will inform the user that new answers need to be added.

@@ -11,7 +11,4 @@ protocol MainViewModelType {
     var networkManager: NetworkService { get set }
     var storageManager: StorageService { get set }
     var customView: CustomViewForMainVC { get }
-    var settingController: UIViewController { get }
-    var settingNavigationVC: UINavigationController { get }
-    func addButton() -> UIButton
 }

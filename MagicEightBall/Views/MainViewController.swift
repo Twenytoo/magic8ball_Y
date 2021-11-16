@@ -21,13 +21,13 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(viewModel.customView)
+        self.view.addSubview(addButton())
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         viewModel.customView.frame = view.bounds
-        self.view.addSubview(viewModel.addButton())
     }
-    // Configuration the Shake motion
+//     Configuration the Shake motion
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
         viewModel.networkManager.completionHandler = { answer in self.updateAnswerLabel(answer: answer)}
@@ -45,5 +45,18 @@ class MainViewController: UIViewController {
         DispatchQueue.main.async {
             self.viewModel.customView.answerLabel.text = answer.uppercased()
         }
+    }
+    func addButton() -> UIButton {
+        let settingsButton = UIButton(frame: CGRect(x: 115, y: 500, width: 200, height: 100))
+        settingsButton.setTitleColor(.cyan, for: .normal)
+        settingsButton.setTitle(L10n.settings, for: .normal)
+        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+        return settingsButton
+    }
+    @objc func buttonDidTap() {
+        let settingViewModel = SettingViewModel(storageManager: viewModel.storageManager)
+        let setVC = SettingsViewController(viewModel: settingViewModel)
+        present(UINavigationController(rootViewController: setVC), animated: true)
     }
 }

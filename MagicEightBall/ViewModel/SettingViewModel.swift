@@ -22,5 +22,4 @@ class SettingViewModel: SettingViewModelType {
         let newAnswer = Answer(name: answer)
         storageManager.saveObject(newAnswer)
     }
-    
 }

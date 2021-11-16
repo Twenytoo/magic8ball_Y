@@ -7,7 +7,6 @@
 
 import Foundation
 
-// Manager for working with network
 protocol NetworkService {
     var completionHandler: ((String) -> Void)? { get set }
     func fetchAnswerByURL()
