@@ -50,9 +50,9 @@ class MainViewController: UIViewController {
         self.storageManager = storageManager
     }
     @objc func buttonDidTap() {
-        let settingsVC = SettingsViewController()
+        let settingsVC = SettingsViewController(storageManager: storageManager)
         settingsVC.storageManager = self.storageManager
-        present(settingsVC, animated: true, completion: nil)
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     // Action to cancel Settings ViewController
     @IBAction func cancelAction(_ segue: UIStoryboardSegue) {}

@@ -13,15 +13,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
-        let mainVC = MainViewController()
         let networkManager = NetworkManager()
         let storageManager = StorageManager()
+        let mainNavigationVC = MainNavigationViewController()
+        let mainVC = MainViewController()
+//        let settingsVC = SettingsViewController(storageManager: storageManager)
+        mainNavigationVC.viewControllers = [mainVC]
         storageManager.answers = realm.objects(Answer.self)
         mainVC.setNetworkManager(networkManager: networkManager)
         mainVC.setStorageManager(storageManager: storageManager)
         mainVC.networkManager.dataBaseDelegate = mainVC
 
-        window.rootViewController = mainVC
+        window.rootViewController = mainNavigationVC
         window.makeKeyAndVisible()
         self.window = window
         return true

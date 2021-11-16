@@ -15,8 +15,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return tableView
     }()
     // Array of objects of Answer type from database
-    var storageManager: StorageService!
+    var storageManager: StorageService
     var message: String!
+    init(storageManager: StorageService) {
+        self.storageManager = storageManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundColor = .black
@@ -60,7 +67,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return deleteAction
     }
     // Calls the alert to create a new answer on pressing a BarButton
-    @IBAction func addAnswerByBarButton(_ sender: UIBarButtonItem) {
+        func addAnswerByBarButton(_ sender: UIBarButtonItem) {
         let addAnswer = UIAlertController(title: L10n.add, message: nil, preferredStyle: .alert)
         addAnswer.addTextField { (textField) in textField.placeholder = L10n.enter
         }

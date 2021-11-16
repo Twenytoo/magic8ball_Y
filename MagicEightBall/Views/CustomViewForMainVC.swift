@@ -24,7 +24,7 @@ class CustomViewForMainVC: UIView {
 //      Creating ImageView with Magic Ball image
         let imageBall = UIImage(asset: Asset.magicBallPNG)
         let imageBallView = UIImageView(image: imageBall)
-        imageBallView.frame = CGRect(x: 20, y: 50, width: 400, height: 400)
+        imageBallView.frame = CGRect(x: 20, y: 100, width: 400, height: 400)
         self.addSubview(imageBallView)
 //        Creating label for answer
         answerLabel.text = L10n.someAnswer
