@@ -9,16 +9,17 @@ import UIKit
 import RealmSwift
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+//    SettingViewModel
+    let viewModel: SettingViewModelType
+//    Creating table view
         let tableView: UITableView = {
         let tableView = UITableView()
             tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
         return tableView
     }()
-    // Array of objects of Answer type from database
-    var storageManager: StorageService
-    var message: String!
-    init(storageManager: StorageService) {
-        self.storageManager = storageManager
+//    var message: String!
+    init(viewModel: SettingViewModelType) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -51,25 +52,25 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /// - Returns: Void
     private func addNewAnswer(answer: String) {
         let newAnswer = Answer(name: answer)
-        storageManager.saveObject(newAnswer)
+        viewModel.storageManager.saveObject(newAnswer)
     }
     // MARK: - Table view data source
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return storageManager.answers.isEmpty ? 0 : storageManager.answers.count
+        return viewModel.storageManager.answers.isEmpty ? 0 : viewModel.storageManager.answers.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: L10n.cell, for: indexPath)
         guard let answerCell = cell as? CustomTableViewCell else {return UITableViewCell()}
-        answerCell.configure(text: storageManager.answers[indexPath.row].answerText)
+        answerCell.configure(text: viewModel.storageManager.answers[indexPath.row].answerText)
         return answerCell
     }
     // MARK: - Table view delegate
      func tableView(_ tableView: UITableView,
                     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
     UISwipeActionsConfiguration? {
-        let answer = storageManager.answers[indexPath.row]
+        let answer = viewModel.storageManager.answers[indexPath.row]
         let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
-            self.storageManager.deleteObject(answer)
+            self.viewModel.storageManager.deleteObject(answer)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])

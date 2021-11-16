@@ -9,11 +9,21 @@ import UIKit
 import RealmSwift
 
 class MainViewController: UIViewController {
+    let viewModel: MainViewModelType
 //     Entry point for working with network
     var networkManager: NetworkService!
     var storageManager: StorageService!
 //    Creating User Interface
     let customView = CustomViewForMainVC()
+    
+    init(viewModel: MainViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(customView)
@@ -42,23 +52,14 @@ class MainViewController: UIViewController {
             self.customView.answerLabel.text = answer
         }
     }
-    // Addtion dependencies
-    func setNetworkManager(networkManager: NetworkService) {
-        self.networkManager = networkManager
-    }
-    func setStorageManager(storageManager: StorageService) {
-        self.storageManager = storageManager
-    }
     @objc func buttonDidTap() {
         let settingsVC = SettingsViewController(storageManager: storageManager)
         settingsVC.storageManager = self.storageManager
         let mainNavigationVC = MainNavigationViewController(rootViewController: settingsVC)
         present(mainNavigationVC, animated: true)
-//        navigationController?.pushViewController(settingsVC, animated: true)
     }
-    // Action to cancel Settings ViewController
-    @IBAction func cancelAction(_ segue: UIStoryboardSegue) {}
 }
+
 
 // MARK: - Extension for Local DB
 extension MainViewController: DBService {
@@ -75,3 +76,4 @@ extension MainViewController: DBService {
         }
     }
 }
+

@@ -15,13 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         let networkManager = NetworkManager()
         let storageManager = StorageManager()
+        let customView = CustomViewForMainVC()
+        let mainViewModel = MainViewModel(networkManager: networkManager,
+                                          storageManager: storageManager,
+                                          customView: customView)
 //        let mainNavigationVC = MainNavigationViewController()
-        let mainVC = MainViewController()
+        let mainVC = MainViewController(viewModel: mainViewModel)
 //        let settingsVC = SettingsViewController(storageManager: storageManager)
 //        mainNavigationVC.viewControllers = [mainVC]
         storageManager.answers = realm.objects(Answer.self)
-        mainVC.setNetworkManager(networkManager: networkManager)
-        mainVC.setStorageManager(storageManager: storageManager)
         mainVC.networkManager.dataBaseDelegate = mainVC
 
         window.rootViewController = mainVC

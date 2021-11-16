@@ -20,6 +20,13 @@
 		13894E69273EB067000EA2C5 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13894E66273EB067000EA2C5 /* Assets.swift */; };
 		13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13894E6F273FEDC5000EA2C5 /* CustomViewForMainVC.swift */; };
 		138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */; };
+		138E032A27439D60004D4FA8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032927439D60004D4FA8 /* NetworkService.swift */; };
+		138E032C27439D81004D4FA8 /* DBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032B27439D81004D4FA8 /* DBService.swift */; };
+		138E032E27439DC2004D4FA8 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032D27439DC2004D4FA8 /* StorageService.swift */; };
+		138E033427439E36004D4FA8 /* SettingViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033127439E36004D4FA8 /* SettingViewModelType.swift */; };
+		138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033227439E36004D4FA8 /* SettingViewModel.swift */; };
+		138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033327439E36004D4FA8 /* MainViewModel.swift */; };
+		138E033827439E6C004D4FA8 /* MainViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033727439E6C004D4FA8 /* MainViewModelType.swift */; };
 		139640D5271EFEB30088FCD7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139640D4271EFEB30088FCD7 /* StorageManager.swift */; };
 		13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */; };
 		13A9A222271B138F00133716 /* AnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A221271B138F00133716 /* AnswerModel.swift */; };
@@ -42,6 +49,13 @@
 		13894E66273EB067000EA2C5 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		13894E6F273FEDC5000EA2C5 /* CustomViewForMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewForMainVC.swift; sourceTree = "<group>"; };
 		138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
+		138E032927439D60004D4FA8 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		138E032B27439D81004D4FA8 /* DBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBService.swift; sourceTree = "<group>"; };
+		138E032D27439DC2004D4FA8 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		138E033127439E36004D4FA8 /* SettingViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModelType.swift; sourceTree = "<group>"; };
+		138E033227439E36004D4FA8 /* SettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		138E033327439E36004D4FA8 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		138E033727439E6C004D4FA8 /* MainViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelType.swift; sourceTree = "<group>"; };
 		139640D4271EFEB30088FCD7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		13A9A221271B138F00133716 /* AnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerModel.swift; sourceTree = "<group>"; };
@@ -78,6 +92,7 @@
 				136752F527144FD800ADC62C /* MagicEightBall */,
 				136752F427144FD800ADC62C /* Products */,
 				A1807200BEC6291524EF9275 /* Pods */,
+				132F50B1273EAEC300B24FDC /* SwiftGen */,
 				1720584EF2E15C4D6F3EEE66 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -93,9 +108,9 @@
 		136752F527144FD800ADC62C /* MagicEightBall */ = {
 			isa = PBXGroup;
 			children = (
-				132F50B1273EAEC300B24FDC /* SwiftGen */,
+				138E033027439E36004D4FA8 /* ViewModel */,
+				138E032827439D38004D4FA8 /* Protocols */,
 				1372443E271823E3007A08E9 /* Model */,
-				1372443B27180B54007A08E9 /* View Controllers */,
 				1372443A27180B2C007A08E9 /* Views */,
 				1372443927180B17007A08E9 /* Supporting files */,
 				132F50AE273EACF000B24FDC /* myStrings.strings */,
@@ -116,20 +131,13 @@
 		1372443A27180B2C007A08E9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				136752FA27144FD800ADC62C /* MainViewController.swift */,
+				1372443C27180CA8007A08E9 /* SettingsViewController.swift */,
+				138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */,
 				1367530127144FDE00ADC62C /* LaunchScreen.storyboard */,
 				13894E6F273FEDC5000EA2C5 /* CustomViewForMainVC.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		1372443B27180B54007A08E9 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				136752FA27144FD800ADC62C /* MainViewController.swift */,
-				1372443C27180CA8007A08E9 /* SettingsViewController.swift */,
-				138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */,
-			);
-			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		1372443E271823E3007A08E9 /* Model */ = {
@@ -143,6 +151,29 @@
 			);
 			path = Model;
 			sourceTree = "<group>";
+		};
+		138E032827439D38004D4FA8 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				138E032927439D60004D4FA8 /* NetworkService.swift */,
+				138E032B27439D81004D4FA8 /* DBService.swift */,
+				138E032D27439DC2004D4FA8 /* StorageService.swift */,
+				138E033127439E36004D4FA8 /* SettingViewModelType.swift */,
+				138E033727439E6C004D4FA8 /* MainViewModelType.swift */,
+			);
+			name = Protocols;
+			path = Model/Protocols;
+			sourceTree = "<group>";
+		};
+		138E033027439E36004D4FA8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				138E033227439E36004D4FA8 /* SettingViewModel.swift */,
+				138E033327439E36004D4FA8 /* MainViewModel.swift */,
+			);
+			name = ViewModel;
+			path = MagicEightBall/ViewModel;
+			sourceTree = SOURCE_ROOT;
 		};
 		1720584EF2E15C4D6F3EEE66 /* Frameworks */ = {
 			isa = PBXGroup;
@@ -295,17 +326,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				1372444227182838007A08E9 /* DecodedData.swift in Sources */,
+				138E033427439E36004D4FA8 /* SettingViewModelType.swift in Sources */,
 				138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */,
 				13894E69273EB067000EA2C5 /* Assets.swift in Sources */,
+				138E032C27439D81004D4FA8 /* DBService.swift in Sources */,
 				13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */,
+				138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */,
 				13894E68273EB067000EA2C5 /* Strings.swift in Sources */,
 				13A9A222271B138F00133716 /* AnswerModel.swift in Sources */,
 				136752FB27144FD800ADC62C /* MainViewController.swift in Sources */,
+				138E033827439E6C004D4FA8 /* MainViewModelType.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
+				138E032E27439DC2004D4FA8 /* StorageService.swift in Sources */,
 				139640D5271EFEB30088FCD7 /* StorageManager.swift in Sources */,
 				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,
+				138E032A27439D60004D4FA8 /* NetworkService.swift in Sources */,
 				1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */,
+				138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

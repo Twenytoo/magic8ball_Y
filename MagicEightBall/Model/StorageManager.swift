@@ -7,12 +7,6 @@
 
 import RealmSwift
 
-protocol StorageService {
-    var answers: Results<Answer>! { get set}
-    func saveObject (_ answer: Answer)
-    func deleteObject (_ answer: Answer)
-}
-
 // Сreating the function for saving and deleting objects from the database
 // Entry point for working with the Realm database
 let realm = StorageManager.createRealm()

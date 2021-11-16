@@ -7,19 +7,6 @@
 
 import UIKit
 
-protocol DBService: AnyObject {
-    func showAnswerWithoutConnection() -> String
-}
-
-protocol NetworkService {
-    var completionHandler: ((String) -> Void)? { get set }
-    func fetchAnswerByURL()
-    func parseJSON(withData data: Data ) -> String?
-    var dataBaseDelegate: DBService! { get set }
-}
-
-// Manager for working with network
-
 class NetworkManager: NetworkService {
     /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String) -> Void)?

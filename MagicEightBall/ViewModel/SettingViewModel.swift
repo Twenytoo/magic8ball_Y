@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+class SettingViewModel: SettingViewModelType {
+    let storageManager: StorageService
+    init(storageManager: StorageService) {
+    self.storageManager = storageManager
+    }
+}
