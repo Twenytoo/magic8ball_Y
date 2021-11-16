@@ -8,7 +8,7 @@
 import Foundation
 
 class SettingViewModel: SettingViewModelType {
-    let storageManager: StorageService
+    var storageManager: StorageService
     init(storageManager: StorageService) {
     self.storageManager = storageManager
     }

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol SettingViewModelType {
-    var storageManager: StorageService { get }
+    var storageManager: StorageService { get set }
 }

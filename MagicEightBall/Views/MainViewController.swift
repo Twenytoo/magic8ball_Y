@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         customView.frame = view.bounds
-        customView.settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+        self.view.addSubview(viewModel.addButton())
     }
     // Configuration the Shake motion
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -52,12 +52,7 @@ class MainViewController: UIViewController {
             self.customView.answerLabel.text = answer
         }
     }
-    @objc func buttonDidTap() {
-        let settingsVC = SettingsViewController(storageManager: storageManager)
-        settingsVC.storageManager = self.storageManager
-        let mainNavigationVC = MainNavigationViewController(rootViewController: settingsVC)
-        present(mainNavigationVC, animated: true)
-    }
+ 
 }
 
 
