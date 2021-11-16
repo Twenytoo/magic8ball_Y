@@ -49,13 +49,6 @@ class MainViewController: UIViewController {
     func setStorageManager(storageManager: StorageService) {
         self.storageManager = storageManager
     }
-    // Passing storageManager to SetttingsViewController
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard let navigationVC = segue.destination as? UINavigationController else {return}
-//        if let settingsVC = navigationVC.viewControllers.first as? SettingsViewController {
-//
-//        }
-//    }
     @objc func buttonDidTap() {
         let settingsVC = SettingsViewController()
         settingsVC.storageManager = self.storageManager
