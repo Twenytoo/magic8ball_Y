@@ -92,7 +92,6 @@
 				136752F527144FD800ADC62C /* MagicEightBall */,
 				136752F427144FD800ADC62C /* Products */,
 				A1807200BEC6291524EF9275 /* Pods */,
-				132F50B1273EAEC300B24FDC /* SwiftGen */,
 				1720584EF2E15C4D6F3EEE66 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -108,6 +107,7 @@
 		136752F527144FD800ADC62C /* MagicEightBall */ = {
 			isa = PBXGroup;
 			children = (
+				132F50B1273EAEC300B24FDC /* SwiftGen */,
 				138E033027439E36004D4FA8 /* ViewModel */,
 				138E032827439D38004D4FA8 /* Protocols */,
 				1372443E271823E3007A08E9 /* Model */,

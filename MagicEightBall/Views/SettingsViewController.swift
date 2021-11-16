@@ -31,11 +31,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: .add,
                                                             style: .plain,
                                                             target: self,
-                                                            action:  #selector(addAnswerByBarButton))
+                                                            action: #selector(addAnswerByBarButton))
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: .checkmark,
                                                            style: .plain,
                                                            target: self,
-                                                           action:  #selector(dismissSelf(_:)))
+                                                           action: #selector(dismissSelf(_:)))
         view.addSubview(tableView)
     }
     override func viewDidLayoutSubviews() {

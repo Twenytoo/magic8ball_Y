@@ -9,36 +9,30 @@ import UIKit
 import RealmSwift
 
 class MainViewController: UIViewController {
-    let viewModel: MainViewModelType
+    var viewModel: MainViewModelType
 //     Entry point for working with network
-    var networkManager: NetworkService!
-    var storageManager: StorageService!
-//    Creating User Interface
-    let customView = CustomViewForMainVC()
-    
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(customView)
+        self.view.addSubview(viewModel.customView)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        customView.frame = view.bounds
+        viewModel.customView.frame = view.bounds
         self.view.addSubview(viewModel.addButton())
     }
     // Configuration the Shake motion
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        networkManager.completionHandler = { answer in self.updateAnswerLabel(answer: answer)}
-        networkManager.fetchAnswerByURL()
-        UIView.transition(with: customView.answerLabel,
+        viewModel.networkManager.completionHandler = { answer in self.updateAnswerLabel(answer: answer)}
+        viewModel.networkManager.fetchAnswerByURL()
+        UIView.transition(with: viewModel.customView.answerLabel,
                           duration: 0.5,
                           options: .transitionFlipFromTop,
                           animations: nil,
@@ -49,26 +43,7 @@ class MainViewController: UIViewController {
     /// - Returns: Void
     private func updateAnswerLabel(answer: String) {
         DispatchQueue.main.async {
-            self.customView.answerLabel.text = answer
-        }
-    }
- 
-}
-
-
-// MARK: - Extension for Local DB
-extension MainViewController: DBService {
-    /// Returns the answer from database in case of unsuccessful internet connection
-    /// Takes a random element from the database and turns it into string format. If the database is empty.
-    /// It will inform the user that new answers need to be added.
-    ///
-    /// - Returns: Answer of String type
-    func showAnswerWithoutConnection() -> String {
-        if let answer = storageManager.answers.randomElement()?.answerText {
-            return answer
-        } else {
-            return L10n.add
+            self.viewModel.customView.answerLabel.text = answer.uppercased()
         }
     }
 }
-

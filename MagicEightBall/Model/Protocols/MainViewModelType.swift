@@ -8,8 +8,8 @@
 import UIKit
 
 protocol MainViewModelType {
-    var networkManager: NetworkService { get }
-    var storageManager: StorageService { get }
+    var networkManager: NetworkService { get set }
+    var storageManager: StorageService { get set }
     var customView: CustomViewForMainVC { get }
     var settingNavigationVC: UINavigationController { get }
     func addButton() -> UIButton
