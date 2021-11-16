@@ -9,4 +9,5 @@ import Foundation
 
 protocol SettingViewModelType {
     var storageManager: StorageService { get set }
+    func addNewAnswer(answer: String)
 }

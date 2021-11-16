@@ -44,16 +44,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.frame = view.bounds
         title = L10n.settings
     }
-    /// Adds the new object of Answer type in the database
-    /// Creates an instance of Answer type from String type.
-    /// Then pass the object of Answer type to store it in the database
-    ///
-    /// - Parameter answer: Sting
-    /// - Returns: Void
-    private func addNewAnswer(answer: String) {
-        let newAnswer = Answer(name: answer)
-        viewModel.storageManager.saveObject(newAnswer)
-    }
     // MARK: - Table view data source
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.storageManager.answers.isEmpty ? 0 : viewModel.storageManager.answers.count
@@ -77,7 +67,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return deleteAction
     }
     // Calls the alert to create a new answer on pressing a BarButton
-    @objc func addAnswerByBarButton(_ sender: UIBarButtonItem) {
+    @objc func addAnswerByBarButton() {
         let addAnswer = UIAlertController(title: L10n.add, message: nil, preferredStyle: .alert)
         addAnswer.addTextField { (textField) in textField.placeholder = L10n.enter
         }
@@ -85,7 +75,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         addAnswer.addAction(cancelAction)
         let doneAction = UIAlertAction(title: L10n.done, style: .default) { _ in
             if let addAnswerTextField = addAnswer.textFields?[0].text {
-                self.addNewAnswer(answer: addAnswerTextField)
+                self.viewModel.addNewAnswer(answer: addAnswerTextField)
                 self.tableView.reloadData()
             }
         }

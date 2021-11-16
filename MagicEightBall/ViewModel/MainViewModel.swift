@@ -12,15 +12,18 @@ class MainViewModel: MainViewModelType, DBService {
     var networkManager: NetworkService
     var storageManager: StorageService
     let customView: CustomViewForMainVC
+    var settingController: UIViewController
     var settingNavigationVC: UINavigationController
     init(networkManager: NetworkService,
          storageManager: StorageService,
          customView: CustomViewForMainVC,
-         settingNavigationVC: UINavigationController) {
+         settingNavigationVC: UINavigationController,
+         settingController: UIViewController) {
         self.networkManager = networkManager
         self.storageManager = storageManager
         self.customView = customView
         self.settingNavigationVC = settingNavigationVC
+        self.settingController = settingController
     }
     func addButton() -> UIButton {
         let settingsButton = UIButton(frame: CGRect(x: 115, y: 500, width: 200, height: 100))
@@ -30,11 +33,8 @@ class MainViewModel: MainViewModelType, DBService {
         settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
         return settingsButton
     }
-    @objc func buttonDidTap(closure: () -> Void) {
-//        self.settingsVC.viewModel.storageManager = self.storageManager
-////        let mainNavigationVC = MainNavigationViewController(rootViewController: settingsVC)
-//        present(mainNavigationVC, animated: true)
-        print("SOMETHING!!!")
+    @objc func buttonDidTap(closure: (UINavigationController) -> Void) {
+        settingNavigationVC.present(settingController, animated: true, completion: nil)
     }
     /// Returns the answer from database in case of unsuccessful internet connection
     /// Takes a random element from the database and turns it into string format. If the database is empty.
