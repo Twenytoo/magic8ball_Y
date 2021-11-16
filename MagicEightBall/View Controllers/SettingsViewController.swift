@@ -27,12 +27,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundColor = .black
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .add,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action:  #selector(addAnswerByBarButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: .checkmark,
+                                                           style: .plain,
+                                                           target: self,
+                                                           action:  #selector(dismissSelf(_:)))
         view.addSubview(tableView)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.dataSource = self
         tableView.frame = view.bounds
+        title = L10n.settings
     }
     /// Adds the new object of Answer type in the database
     /// Creates an instance of Answer type from String type.
@@ -67,7 +76,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return deleteAction
     }
     // Calls the alert to create a new answer on pressing a BarButton
-        func addAnswerByBarButton(_ sender: UIBarButtonItem) {
+    @objc func addAnswerByBarButton(_ sender: UIBarButtonItem) {
         let addAnswer = UIAlertController(title: L10n.add, message: nil, preferredStyle: .alert)
         addAnswer.addTextField { (textField) in textField.placeholder = L10n.enter
         }
@@ -81,5 +90,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         addAnswer.addAction(doneAction)
         present(addAnswer, animated: true)
+    }
+    @objc func dismissSelf(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 }
