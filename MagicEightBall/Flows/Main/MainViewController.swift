@@ -50,12 +50,11 @@ class MainViewController: UIViewController {
         return settingsButton
     }
     @objc func buttonDidTap() {
-//        let settingViewModel = SettingViewModel(storageManager: viewModel.storageManager)
-//        let setVC = SettingsViewController(viewModel: settingViewModel)
-//        present(UINavigationController(rootViewController: setVC), animated: true)
+        let setVC = SettingsViewController()
+        present(UINavigationController(rootViewController: setVC), animated: true)
     }
 }
-//MARK: - Setting UI
+// MARK: - Setting UI
 extension MainViewController {
     func setUpInterface() {
         self.view.backgroundColor = .black

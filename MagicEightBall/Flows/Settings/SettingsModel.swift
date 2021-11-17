@@ -13,19 +13,18 @@ class SettingsModel: SettingsModelType {
     var storageManager: StorageService
     init(storageManager: StorageService = StorageManager()) {
         self.storageManager = storageManager
+        fetchAnswerString()
     }
     func addNewAnswer(answer: String) {
         let newAnswer = Answer(name: answer)
         storageManager.saveObject(newAnswer)
     }
     func deleteAnswer(answer: String) {
-        for answerTypeAnswer in storageManager.answers {
-            if answerTypeAnswer.answerText == answer {
-                storageManager.deleteObject(answerTypeAnswer)
-            }
+        for answerTypeAnswer in storageManager.answers where answerTypeAnswer.answerText == answer {
+            storageManager.deleteObject(answerTypeAnswer)
         }
     }
-    func fetchAnswerString(answers: Results<Answer>) {
+    func fetchAnswerString() {
         var temp = [String]()
         for answer in storageManager.answers {
             temp.append(answer.answerText)

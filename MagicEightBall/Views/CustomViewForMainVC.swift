@@ -9,7 +9,6 @@ import UIKit
 
 class CustomViewForMainVC: UIView {
     let answerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 90, height: 30))
-    
     init() {
         super.init(frame: CGRect())
         setUpInterface()

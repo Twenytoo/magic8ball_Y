@@ -13,6 +13,7 @@ class SettingViewModel: SettingsViewModelType {
     var settingsModel: SettingsModelType
     init(settingsModel: SettingsModelType = SettingsModel()) {
         self.settingsModel = settingsModel
+        fullAnswers()
     }
     /// Adds the new object of Answer type in the database
     /// Creates an instance of Answer type from String type.

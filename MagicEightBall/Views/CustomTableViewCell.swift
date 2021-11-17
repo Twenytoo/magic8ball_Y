@@ -32,7 +32,7 @@ class CustomTableViewCell: UITableViewCell {
                                    width: contentView.frame.width,
                                    height: contentView.frame.height)
     }
-    //Configurating cell
+//    Configurating cell
     func configure(text: String) {
         answerLabel.text = text
     }

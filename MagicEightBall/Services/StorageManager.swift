@@ -61,6 +61,4 @@ class StorageManager: StorageService, DBManagerProtocol {
             return L10n.add
         }
     }
-    
-
 }

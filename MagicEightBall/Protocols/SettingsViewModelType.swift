@@ -10,7 +10,7 @@ import RealmSwift
 
 protocol SettingsViewModelType {
     var answers: [String]! { get set }
-    var settingsModel: SettingsModelType { get set } 
+    var settingsModel: SettingsModelType {get set}
     func addNewAnswer(answer: String)
     func deleteAnswer(answer: String)
 }
