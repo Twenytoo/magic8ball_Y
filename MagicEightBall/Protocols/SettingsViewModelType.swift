@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol SettingsViewModelType {
-    var storageManager: StorageService { get set }
+    var answers: [String]! { get set }
+    var settingsModel: SettingsModelType { get set } 
     func addNewAnswer(answer: String)
+    func deleteAnswer(answer: String)
 }

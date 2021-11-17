@@ -27,6 +27,7 @@
 		138A906B2745301C00424EA3 /* SettingsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90662745301C00424EA3 /* SettingsViewModelType.swift */; };
 		138A906C2745301C00424EA3 /* DBManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90672745301C00424EA3 /* DBManagerProtocol.swift */; };
 		138A906E274533F200424EA3 /* MainModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A906D274533F200424EA3 /* MainModelType.swift */; };
+		138A907027454A6500424EA3 /* SettingsModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A906F27454A6500424EA3 /* SettingsModelType.swift */; };
 		138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */; };
 		138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033227439E36004D4FA8 /* SettingViewModel.swift */; };
 		138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033327439E36004D4FA8 /* MainViewModel.swift */; };
@@ -59,6 +60,7 @@
 		138A90662745301C00424EA3 /* SettingsViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModelType.swift; sourceTree = "<group>"; };
 		138A90672745301C00424EA3 /* DBManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManagerProtocol.swift; sourceTree = "<group>"; };
 		138A906D274533F200424EA3 /* MainModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModelType.swift; sourceTree = "<group>"; };
+		138A906F27454A6500424EA3 /* SettingsModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelType.swift; sourceTree = "<group>"; };
 		138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
 		138E033227439E36004D4FA8 /* SettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		138E033327439E36004D4FA8 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -197,10 +199,11 @@
 			isa = PBXGroup;
 			children = (
 				138A906D274533F200424EA3 /* MainModelType.swift */,
+				138A906F27454A6500424EA3 /* SettingsModelType.swift */,
+				138A90662745301C00424EA3 /* SettingsViewModelType.swift */,
 				138A90632745301C00424EA3 /* MainViewModelType.swift */,
 				138A90642745301C00424EA3 /* StorageService.swift */,
 				138A90652745301C00424EA3 /* NetworkService.swift */,
-				138A90662745301C00424EA3 /* SettingsViewModelType.swift */,
 				138A90672745301C00424EA3 /* DBManagerProtocol.swift */,
 			);
 			path = Protocols;
@@ -377,6 +380,7 @@
 				138A906C2745301C00424EA3 /* DBManagerProtocol.swift in Sources */,
 				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,
 				1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */,
+				138A907027454A6500424EA3 /* SettingsModelType.swift in Sources */,
 				138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

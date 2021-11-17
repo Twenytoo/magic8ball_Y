@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return tableView
     }()
 //    var message: String!
-    init(viewModel: SettingsViewModelType) {
+    init(viewModel: SettingsViewModelType = SettingViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -28,14 +28,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .add,
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(addAnswerByBarButton))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: .checkmark,
-                                                           style: .plain,
-                                                           target: self,
-                                                           action: #selector(dismissSelf(_:)))
+        addBarButtonItems()
         view.addSubview(tableView)
     }
     override func viewDidLayoutSubviews() {
@@ -46,21 +39,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     // MARK: - Table view data source
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.storageManager.answers.isEmpty ? 0 : viewModel.storageManager.answers.count
+        return viewModel.answers.isEmpty ? 0 : viewModel.answers.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: L10n.cell, for: indexPath)
         guard let answerCell = cell as? CustomTableViewCell else {return UITableViewCell()}
-        answerCell.configure(text: viewModel.storageManager.answers[indexPath.row].answerText)
+        answerCell.configure(text: viewModel.answers[indexPath.row])
         return answerCell
     }
     // MARK: - Table view delegate
      func tableView(_ tableView: UITableView,
                     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
     UISwipeActionsConfiguration? {
-        let answer = viewModel.storageManager.answers[indexPath.row]
+        let answer = viewModel.answers[indexPath.row]
         let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
-            self.viewModel.storageManager.deleteObject(answer)
+            self.viewModel.deleteAnswer(answer: answer)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
@@ -84,5 +77,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     @objc func dismissSelf(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SettingsViewController {
+    func addBarButtonItems() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .add,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(addAnswerByBarButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: .checkmark,
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(dismissSelf(_:)))
     }
 }

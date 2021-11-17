@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import RealmSwift
 
 class SettingViewModel: SettingsViewModelType {
-    var storageManager: StorageService
-    init(storageManager: StorageService) {
-    self.storageManager = storageManager
+    var answers: [String]!
+    var settingsModel: SettingsModelType
+    init(settingsModel: SettingsModelType = SettingsModel()) {
+        self.settingsModel = settingsModel
     }
     /// Adds the new object of Answer type in the database
     /// Creates an instance of Answer type from String type.
@@ -19,7 +21,18 @@ class SettingViewModel: SettingsViewModelType {
     /// - Parameter answer: Sting
     /// - Returns: Void
     func addNewAnswer(answer: String) {
-        let newAnswer = Answer(name: answer)
-        storageManager.saveObject(newAnswer)
+        settingsModel.addNewAnswer(answer: answer)
+    }
+    func deleteAnswer(answer: String) {
+        settingsModel.deleteAnswer(answer: answer)
+    }
+    func fullAnswers() {
+        var temp = [String]()
+        if let answers = settingsModel.answers {
+            for answer in answers {
+                temp.append(answer)
+            }
+        }
+        self.answers = temp
     }
 }

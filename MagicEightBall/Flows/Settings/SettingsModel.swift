@@ -6,3 +6,30 @@
 //
 
 import Foundation
+import RealmSwift
+
+class SettingsModel: SettingsModelType {
+    var answers: [String]?
+    var storageManager: StorageService
+    init(storageManager: StorageService = StorageManager()) {
+        self.storageManager = storageManager
+    }
+    func addNewAnswer(answer: String) {
+        let newAnswer = Answer(name: answer)
+        storageManager.saveObject(newAnswer)
+    }
+    func deleteAnswer(answer: String) {
+        for answerTypeAnswer in storageManager.answers {
+            if answerTypeAnswer.answerText == answer {
+                storageManager.deleteObject(answerTypeAnswer)
+            }
+        }
+    }
+    func fetchAnswerString(answers: Results<Answer>) {
+        var temp = [String]()
+        for answer in storageManager.answers {
+            temp.append(answer.answerText)
+        }
+        self.answers = temp
+    }
+}
