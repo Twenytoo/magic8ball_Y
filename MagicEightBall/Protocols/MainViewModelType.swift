@@ -1,14 +1,14 @@
 //
-//  File.swift
+//  MainViewModelType.swift
 //  MagicEightBall
 //
-//  Created by Артём on 15.11.2021.
+//  Created by Артём on 16.11.2021.
 //
 
-import Foundation
+import UIKit
 
 protocol MainViewModelType {
     var networkManager: NetworkService { get set }
     var storageManager: StorageService { get set }
-    var customView: CustomViewForMainVC { get set }
+    var customView: CustomViewForMainVC { get }
 }

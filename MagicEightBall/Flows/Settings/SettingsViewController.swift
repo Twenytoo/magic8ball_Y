@@ -10,7 +10,7 @@ import RealmSwift
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 //    SettingViewModel
-    let viewModel: SettingViewModelType
+    let viewModel: SettingsViewModelType
 //    Creating table view
         let tableView: UITableView = {
         let tableView = UITableView()
@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return tableView
     }()
 //    var message: String!
-    init(viewModel: SettingViewModelType) {
+    init(viewModel: SettingsViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
