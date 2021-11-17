@@ -8,8 +8,9 @@
 import Foundation
 
 protocol MainModelType {
+    var answer: String! { get set }
     var networkManager: NetworkService { get set }
     var storageManager: StorageService { get set }
     var completionHandler: ((String) -> Void)? { get set }
-    func fetchAnswerByURL() -> String
+    func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
 }

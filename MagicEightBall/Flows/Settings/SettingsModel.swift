@@ -20,8 +20,10 @@ class SettingsModel: SettingsModelType {
         storageManager.saveObject(newAnswer)
     }
     func deleteAnswer(answer: String) {
-        for answerTypeAnswer in storageManager.answers where answerTypeAnswer.answerText == answer {
-            storageManager.deleteObject(answerTypeAnswer)
+        for answerTypeAnswer in storageManager.answers {
+            if answerTypeAnswer.answerText == answer {
+                storageManager.deleteObject(answerTypeAnswer)
+            }
         }
     }
     func fetchAnswerString() {

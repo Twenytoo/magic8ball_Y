@@ -9,15 +9,15 @@ import UIKit
 import RealmSwift
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-//    SettingViewModel
+    //    SettingViewModel
     let viewModel: SettingsViewModelType
-//    Creating table view
-        let tableView: UITableView = {
+    //    Creating table view
+    let tableView: UITableView = {
         let tableView = UITableView()
-            tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
+        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
         return tableView
     }()
-//    var message: String!
+    //    var message: String!
     init(viewModel: SettingsViewModelType = SettingViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -27,18 +27,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.backgroundColor = .black
         addBarButtonItems()
         view.addSubview(tableView)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        tableView.dataSource = self
         tableView.frame = view.bounds
         title = L10n.settings
     }
     // MARK: - Table view data source
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.answers.isEmpty ? 0 : viewModel.answers.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,8 +49,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return answerCell
     }
     // MARK: - Table view delegate
-     func tableView(_ tableView: UITableView,
-                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
     UISwipeActionsConfiguration? {
         let answer = viewModel.answers[indexPath.row]
         let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
@@ -59,7 +60,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
         return deleteAction
     }
-    // Calls the alert to create a new answer on pressing a BarButton
+    /// Calls the alert to create a new answer on pressing a BarButton
     @objc func addAnswerByBarButton() {
         let addAnswer = UIAlertController(title: L10n.add, message: nil, preferredStyle: .alert)
         addAnswer.addTextField { (textField) in textField.placeholder = L10n.enter

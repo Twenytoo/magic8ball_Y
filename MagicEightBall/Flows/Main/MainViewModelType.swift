@@ -9,5 +9,5 @@ import UIKit
 
 protocol MainViewModelType {
     var completionHandler: ((String) -> Void)? { get set }
-    func fetchAnswerByURL() -> String
+    func fetchAnswerByURL(completion: @escaping (String) -> Void)
 }

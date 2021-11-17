@@ -26,7 +26,9 @@ class MainViewController: UIViewController {
 //     Configuration the Shake motion
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        updateAnswerLabel(answer: viewModel.fetchAnswerByURL())
+        viewModel.fetchAnswerByURL {answer in
+            self.updateAnswerLabel(answer: answer)
+        }
         UIView.transition(with: self.answerLabel,
                           duration: 0.5,
                           options: .transitionFlipFromTop,
