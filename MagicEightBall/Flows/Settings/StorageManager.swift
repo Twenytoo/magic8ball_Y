@@ -7,20 +7,16 @@
 
 import RealmSwift
 
-protocol StorageService {
-    var answers: Results<Answer>! { get set}
-    func saveObject (_ answer: Answer)
-    func deleteObject (_ answer: Answer)
-}
-
-// Сreating the function for saving and deleting objects from the database
-// Entry point for working with the Realm database
+/// Entry point for working with the Realm database
 let realm = StorageManager.createRealm()
 
-// Manager for working with Realm database
-class StorageManager: StorageService {
-    // The array for answers from Realm
+/// Manager for working with Realm database
+class StorageManager: StorageService, DBManagerProtocol {
+    /// The array for answers from Realm
     var answers: Results<Answer>!
+    init() {
+        answers = realm.objects(Answer.self)
+    }
     /// Saves the object of Answer type in the database
     ///
     /// Pass the object of Answer type to store it in the database
@@ -55,5 +51,16 @@ class StorageManager: StorageService {
           fatalError("Error opening realm: \(error)")
         }
       }
-
+    /// Returns the answer from database in case of unsuccessful internet connection
+    /// Takes a random element from the database and turns it into string format. If the database is empty.
+    /// It will inform the user that new answers need to be added.
+    ///
+    /// - Returns: Answer of String type
+    func showAnswerWithoutConnection() -> String {
+        if let answer = self.answers.randomElement()?.answerText {
+            return answer
+        } else {
+            return L10n.add
+        }
+    }
 }

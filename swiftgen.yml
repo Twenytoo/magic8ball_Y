@@ -1,12 +1,12 @@
 strings:
-  inputs: MagicEightBall/Base.lproj/myStrings.strings
+  inputs: MagicEightBall/Resources/Base.lproj/myStrings.strings
   outputs:
     - templateName: structured-swift5
-      output: MagicEightBall/SwiftGen/Strings.swift
+      output: MagicEightBall/Resources/SwiftGen/Strings.swift
 xcassets:
   inputs:
-    - MagicEightBall/Supporting files/Assets.xcassets
+    - MagicEightBall/Resources/Assets.xcassets
   outputs:
     - templateName: swift5
-      output: MagicEightBall/SwiftGen/Assets.swift
+      output: MagicEightBall/Resources/SwiftGen/Assets.swift
 
