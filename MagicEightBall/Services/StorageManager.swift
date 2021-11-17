@@ -12,7 +12,7 @@ import RealmSwift
 let realm = StorageManager.createRealm()
 
 // Manager for working with Realm database
-class StorageManager: StorageService {
+class StorageManager: StorageService, DBManagerProtocol {
     // The array for answers from Realm
     var answers: Results<Answer>!
     /// Saves the object of Answer type in the database
@@ -49,5 +49,18 @@ class StorageManager: StorageService {
           fatalError("Error opening realm: \(error)")
         }
       }
+    /// Returns the answer from database in case of unsuccessful internet connection
+    /// Takes a random element from the database and turns it into string format. If the database is empty.
+    /// It will inform the user that new answers need to be added.
+    ///
+    /// - Returns: Answer of String type
+    func showAnswerWithoutConnection() -> String {
+        if let answer = self.answers.randomElement()?.answerText {
+            return answer
+        } else {
+            return L10n.add
+        }
+    }
+    
 
 }

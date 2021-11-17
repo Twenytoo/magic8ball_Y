@@ -9,7 +9,6 @@ import Foundation
 
 protocol NetworkService {
     var completionHandler: ((String) -> Void)? { get set }
-    func fetchAnswerByURL()
+    func fetchAnswerByURL() -> String
     func parseJSON(withData data: Data ) -> String?
-    var dataBaseDelegate: DBService! { get set }
 }

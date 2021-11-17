@@ -9,6 +9,7 @@ import UIKit
 import RealmSwift
 
 class MainViewController: UIViewController {
+    var answerLabel = UILabel()
     var viewModel: MainViewModelType
 //     Entry point for working with network
     init(viewModel: MainViewModelType) {
@@ -20,19 +21,13 @@ class MainViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(viewModel.customView)
-        self.view.addSubview(addButton())
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        viewModel.customView.frame = view.bounds
+        setUpInterface()
     }
 //     Configuration the Shake motion
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        viewModel.networkManager.completionHandler = { answer in self.updateAnswerLabel(answer: answer)}
-        viewModel.networkManager.fetchAnswerByURL()
-        UIView.transition(with: viewModel.customView.answerLabel,
+        updateAnswerLabel(answer: viewModel.fetchAnswerByURL())
+        UIView.transition(with: self.answerLabel,
                           duration: 0.5,
                           options: .transitionFlipFromTop,
                           animations: nil,
@@ -43,7 +38,7 @@ class MainViewController: UIViewController {
     /// - Returns: Void
     private func updateAnswerLabel(answer: String) {
         DispatchQueue.main.async {
-            self.viewModel.customView.answerLabel.text = answer.uppercased()
+            self.answerLabel.text = answer
         }
     }
     func addButton() -> UIButton {
@@ -55,8 +50,29 @@ class MainViewController: UIViewController {
         return settingsButton
     }
     @objc func buttonDidTap() {
-        let settingViewModel = SettingViewModel(storageManager: viewModel.storageManager)
-        let setVC = SettingsViewController(viewModel: settingViewModel)
-        present(UINavigationController(rootViewController: setVC), animated: true)
+//        let settingViewModel = SettingViewModel(storageManager: viewModel.storageManager)
+//        let setVC = SettingsViewController(viewModel: settingViewModel)
+//        present(UINavigationController(rootViewController: setVC), animated: true)
+    }
+}
+//MARK: - Setting UI
+extension MainViewController {
+    func setUpInterface() {
+        self.view.backgroundColor = .black
+//      Creating ImageView with Magic Ball image
+        let imageBall = UIImage(asset: Asset.magicBallPNG)
+        let imageBallView = UIImageView(image: imageBall)
+        imageBallView.frame = CGRect(x: 20, y: 100, width: 400, height: 400)
+        self.view.addSubview(imageBallView)
+//        Creating label for answer
+        answerLabel.frame = CGRect(x: 0, y: 0, width: 90, height: 30)
+        answerLabel.text = L10n.someAnswer
+        answerLabel.textColor = .white
+        answerLabel.textAlignment = .center
+        answerLabel.adjustsFontSizeToFitWidth = true
+        answerLabel.numberOfLines = 2
+        answerLabel.center = imageBallView.center
+        self.view.addSubview(answerLabel)
+        self.view.addSubview(addButton())
     }
 }

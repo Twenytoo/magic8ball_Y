@@ -25,7 +25,8 @@
 		138A90692745301C00424EA3 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90642745301C00424EA3 /* StorageService.swift */; };
 		138A906A2745301C00424EA3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90652745301C00424EA3 /* NetworkService.swift */; };
 		138A906B2745301C00424EA3 /* SettingsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90662745301C00424EA3 /* SettingsViewModelType.swift */; };
-		138A906C2745301C00424EA3 /* DBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90672745301C00424EA3 /* DBService.swift */; };
+		138A906C2745301C00424EA3 /* DBManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90672745301C00424EA3 /* DBManagerProtocol.swift */; };
+		138A906E274533F200424EA3 /* MainModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A906D274533F200424EA3 /* MainModelType.swift */; };
 		138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */; };
 		138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033227439E36004D4FA8 /* SettingViewModel.swift */; };
 		138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033327439E36004D4FA8 /* MainViewModel.swift */; };
@@ -56,7 +57,8 @@
 		138A90642745301C00424EA3 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		138A90652745301C00424EA3 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		138A90662745301C00424EA3 /* SettingsViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModelType.swift; sourceTree = "<group>"; };
-		138A90672745301C00424EA3 /* DBService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBService.swift; sourceTree = "<group>"; };
+		138A90672745301C00424EA3 /* DBManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManagerProtocol.swift; sourceTree = "<group>"; };
+		138A906D274533F200424EA3 /* MainModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModelType.swift; sourceTree = "<group>"; };
 		138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
 		138E033227439E36004D4FA8 /* SettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		138E033327439E36004D4FA8 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -111,12 +113,12 @@
 		136752F527144FD800ADC62C /* MagicEightBall */ = {
 			isa = PBXGroup;
 			children = (
-				138A90622745301C00424EA3 /* Protocols */,
 				138A905A27452D2800424EA3 /* Flows */,
 				1372443E271823E3007A08E9 /* Services */,
 				1372443A27180B2C007A08E9 /* Views */,
 				1372443927180B17007A08E9 /* Resources */,
 				132F50AE273EACF000B24FDC /* myStrings.strings */,
+				138A90622745301C00424EA3 /* Protocols */,
 			);
 			path = MagicEightBall;
 			sourceTree = "<group>";
@@ -194,11 +196,12 @@
 		138A90622745301C00424EA3 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				138A906D274533F200424EA3 /* MainModelType.swift */,
 				138A90632745301C00424EA3 /* MainViewModelType.swift */,
 				138A90642745301C00424EA3 /* StorageService.swift */,
 				138A90652745301C00424EA3 /* NetworkService.swift */,
 				138A90662745301C00424EA3 /* SettingsViewModelType.swift */,
-				138A90672745301C00424EA3 /* DBService.swift */,
+				138A90672745301C00424EA3 /* DBManagerProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */,
 				13894E69273EB067000EA2C5 /* Assets.swift in Sources */,
 				13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */,
+				138A906E274533F200424EA3 /* MainModelType.swift in Sources */,
 				138A90682745301C00424EA3 /* MainViewModelType.swift in Sources */,
 				138A906B2745301C00424EA3 /* SettingsViewModelType.swift in Sources */,
 				138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */,
@@ -370,7 +374,7 @@
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
 				139640D5271EFEB30088FCD7 /* StorageManager.swift in Sources */,
 				138A906A2745301C00424EA3 /* NetworkService.swift in Sources */,
-				138A906C2745301C00424EA3 /* DBService.swift in Sources */,
+				138A906C2745301C00424EA3 /* DBManagerProtocol.swift in Sources */,
 				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,
 				1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */,
 				138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */,

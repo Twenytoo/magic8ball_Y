@@ -8,7 +8,6 @@
 import UIKit
 
 protocol MainViewModelType {
-    var networkManager: NetworkService { get set }
-    var storageManager: StorageService { get set }
-    var customView: CustomViewForMainVC { get }
+    var completionHandler: ((String) -> Void)? { get set }
+    func fetchAnswerByURL() -> String
 }
