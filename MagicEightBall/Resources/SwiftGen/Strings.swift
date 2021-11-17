@@ -28,7 +28,7 @@ internal enum L10n {
   internal static let error = L10n.tr("myStrings", "error")
   /// SETTINGS
   internal static let settings = L10n.tr("myStrings", "settings")
-  /// Some Answer
+  /// SOME ANSWER
   internal static let someAnswer = L10n.tr("myStrings", "some_answer")
   /// https://8ball.delegator.com/magic/JSON/question_string
   internal static let url = L10n.tr("myStrings", "url")

@@ -7,14 +7,16 @@
 
 import RealmSwift
 
-// Сreating the function for saving and deleting objects from the database
-// Entry point for working with the Realm database
+/// Entry point for working with the Realm database
 let realm = StorageManager.createRealm()
 
-// Manager for working with Realm database
+/// Manager for working with Realm database
 class StorageManager: StorageService, DBManagerProtocol {
-    // The array for answers from Realm
+    /// The array for answers from Realm
     var answers: Results<Answer>!
+    init() {
+        answers = realm.objects(Answer.self)
+    }
     /// Saves the object of Answer type in the database
     ///
     /// Pass the object of Answer type to store it in the database
