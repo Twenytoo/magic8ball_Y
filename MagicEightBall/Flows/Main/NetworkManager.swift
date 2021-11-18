@@ -8,11 +8,10 @@
 import UIKit
 
 class NetworkManager: NetworkService {
-    var answer = L10n.someAnswer
     /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String) -> Void)?
     /// Shows answers from DB in case of unsuccessful internet connection
-    var dbManager: DBManagerProtocol
+    private var dbManager: DBManagerProtocol
     init(dbManager: DBManagerProtocol = StorageManager()) {
         self.dbManager = dbManager
     }
@@ -22,27 +21,27 @@ class NetworkManager: NetworkService {
     /// where an instance of ViewController is created on the main queue and receives an instance of the String type
     /// from there and is handler by the complitionHandler
     /// - Returns: The function returns Void, but calls the function URLSession
-    func fetchAnswerByURL() -> String {
+    func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void) {
         // The address where the data is received
         let urlString = L10n.url
         if let url = URL(string: urlString) {
             URLSession.shared.dataTask(with: url) {data, _, error in
                 if error != nil {
                     DispatchQueue.main.async {
-                        self.answer = self.dbManager.showAnswerWithoutConnection()
+                        let answer = self.dbManager.showAnswerWithoutConnection()
+                        completion(answer)
                     }
                 }
                 if let data = data {
-                    if let answerJSON = self.parseJSON(withData: data) {
-                        self.answer = answerJSON
+                    if let answer = self.parseJSON(withData: data) {
+                        completion(answer)
                     }
                 }
             }.resume()
         } else {
             let answer = self.dbManager.showAnswerWithoutConnection()
-            return answer
+            completion(answer)
         }
-        return self.answer
     }
     // MARK: - Parsing JSON data
     /// Parses JSON data
@@ -51,7 +50,7 @@ class NetworkManager: NetworkService {
     /// In the case of an error, it will be printed in the terminal.
     ///
     /// - Returns: Optional String
-    func parseJSON(withData data: Data ) -> String? {
+    private func parseJSON(withData data: Data ) -> String? {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(DecodedData.self, from: data)

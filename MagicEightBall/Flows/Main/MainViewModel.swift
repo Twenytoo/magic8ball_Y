@@ -8,13 +8,15 @@
 import UIKit
 
 class MainViewModel: MainViewModelType {
-    let mainModel: MainModelType
+    private let mainModel: MainModelType
     lazy var completionHandler = self.mainModel.completionHandler
     init(mainModel: MainModelType = MainModel()) {
         self.mainModel = mainModel
     }
-    func fetchAnswerByURL() -> String {
-        let answer = mainModel.fetchAnswerByURL()
-        return answer.uppercased()
+    func fetchAnswerByURL(completion: @escaping (String) -> Void) {
+        mainModel.fetchAnswerByURL { answer in
+            let answerString = answer!.uppercased()
+            completion(answerString)
+        }
     }
 }

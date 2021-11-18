@@ -8,6 +8,7 @@
 import Foundation
 
 class MainModel: MainModelType {
+    var answer: String!
     var networkManager: NetworkService
     var storageManager: StorageService
     lazy var completionHandler = networkManager.completionHandler
@@ -16,8 +17,10 @@ class MainModel: MainModelType {
         self.networkManager = networkManager
         self.storageManager = storageManager
     }
-    func fetchAnswerByURL() -> String {
-        let answer = networkManager.fetchAnswerByURL()
-        return answer
+
+    func fetchAnswerByURL(completion: @escaping (String?) -> Void) {
+        networkManager.fetchAnswerByURL { answer in
+            completion(answer)
+        }
     }
 }

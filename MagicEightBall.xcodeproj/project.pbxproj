@@ -159,13 +159,14 @@
 		138A905B27452D7400424EA3 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				138A905D27452DCF00424EA3 /* MainModel.swift */,
 				138A906D274533F200424EA3 /* MainModelType.swift */,
 				138E033327439E36004D4FA8 /* MainViewModel.swift */,
-				138A905D27452DCF00424EA3 /* MainModel.swift */,
 				138A90632745301C00424EA3 /* MainViewModelType.swift */,
 				136752FA27144FD800ADC62C /* MainViewController.swift */,
 				1372444127182838007A08E9 /* DecodedData.swift */,
 				1372443F27182402007A08E9 /* NetworkManager.swift */,
+				138A90652745301C00424EA3 /* NetworkService.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -174,11 +175,13 @@
 			isa = PBXGroup;
 			children = (
 				138A905F27452E2700424EA3 /* SettingsModel.swift */,
-				138E033227439E36004D4FA8 /* SettingViewModel.swift */,
-				1372443C27180CA8007A08E9 /* SettingsViewController.swift */,
 				138A906F27454A6500424EA3 /* SettingsModelType.swift */,
+				138E033227439E36004D4FA8 /* SettingViewModel.swift */,
 				138A90662745301C00424EA3 /* SettingsViewModelType.swift */,
+				1372443C27180CA8007A08E9 /* SettingsViewController.swift */,
 				139640D4271EFEB30088FCD7 /* StorageManager.swift */,
+				138A90672745301C00424EA3 /* DBManagerProtocol.swift */,
+				138A90642745301C00424EA3 /* StorageService.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -194,9 +197,6 @@
 		138A90622745301C00424EA3 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				138A90642745301C00424EA3 /* StorageService.swift */,
-				138A90652745301C00424EA3 /* NetworkService.swift */,
-				138A90672745301C00424EA3 /* DBManagerProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";

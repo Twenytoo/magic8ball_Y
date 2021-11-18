@@ -9,6 +9,5 @@ import Foundation
 
 protocol NetworkService {
     var completionHandler: ((String) -> Void)? { get set }
-    func fetchAnswerByURL() -> String
-    func parseJSON(withData data: Data ) -> String?
+    func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
 }
