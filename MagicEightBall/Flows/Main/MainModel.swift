@@ -8,7 +8,6 @@
 import Foundation
 
 class MainModel: MainModelType {
-
     var answer: String!
     var networkManager: NetworkService
     var storageManager: StorageService
@@ -18,9 +17,15 @@ class MainModel: MainModelType {
         self.networkManager = networkManager
         self.storageManager = storageManager
     }
+
     func fetchAnswerByURL(completion: @escaping (String?) -> Void) {
         networkManager.fetchAnswerByURL { answer in
             completion(answer)
         }
     }
+//        func fetchAnswerByURL(completion: @escaping (String?) -> Void) {
+//            networkManager.fetchAnswerByURL { answer in
+//                completion(answer)
+//            }
+//        }
 }

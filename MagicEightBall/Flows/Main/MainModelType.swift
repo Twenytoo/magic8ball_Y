@@ -13,4 +13,5 @@ protocol MainModelType {
     var storageManager: StorageService { get set }
     var completionHandler: ((String) -> Void)? { get set }
     func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
+//    func fetchAnswerByURL(completion: @escaping (String?) -> String)
 }

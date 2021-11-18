@@ -10,7 +10,7 @@ import RealmSwift
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //    SettingViewModel
-    let viewModel: SettingsViewModelType
+    var viewModel: SettingsViewModelType
     //    Creating table view
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -55,6 +55,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let answer = viewModel.answers[indexPath.row]
         let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
             self.viewModel.deleteAnswer(answer: answer)
+            self.viewModel.answers.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
@@ -69,6 +70,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         addAnswer.addAction(cancelAction)
         let doneAction = UIAlertAction(title: L10n.done, style: .default) { _ in
             if let addAnswerTextField = addAnswer.textFields?[0].text {
+                self.viewModel.answers.append(addAnswerTextField)
                 self.viewModel.addNewAnswer(answer: addAnswerTextField)
                 self.tableView.reloadData()
             }

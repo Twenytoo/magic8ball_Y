@@ -19,4 +19,12 @@ class MainViewModel: MainViewModelType {
             completion(answerString)
         }
     }
+
+//    func returnString (s1: String?) -> String {
+//        return s1 ?? "ERROR"
+//    }
+//    func fetchAnswerByURL() -> String {
+//        mainModel.fetchAnswerByURL(completion: returnString(s1:))
+//    }
+
 }
