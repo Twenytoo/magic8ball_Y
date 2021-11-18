@@ -23,9 +23,4 @@ class MainModel: MainModelType {
             completion(answer)
         }
     }
-//        func fetchAnswerByURL(completion: @escaping (String?) -> Void) {
-//            networkManager.fetchAnswerByURL { answer in
-//                completion(answer)
-//            }
-//        }
 }

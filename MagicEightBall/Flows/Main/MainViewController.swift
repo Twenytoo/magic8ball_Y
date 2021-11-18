@@ -9,9 +9,8 @@ import UIKit
 import RealmSwift
 
 class MainViewController: UIViewController {
-    var answerLabel = UILabel()
-    var viewModel: MainViewModelType
-//     Entry point for working with network
+    private var answerLabel = UILabel()
+    private var viewModel: MainViewModelType
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -23,7 +22,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setUpInterface()
     }
-//     Configuration the Shake motion
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
         viewModel.fetchAnswerByURL {answer in
@@ -43,7 +41,7 @@ class MainViewController: UIViewController {
             self.answerLabel.text = answer
         }
     }
-    func addButton() -> UIButton {
+    private func addButton() -> UIButton {
         let settingsButton = UIButton(frame: CGRect(x: 115, y: 500, width: 200, height: 100))
         settingsButton.setTitleColor(.cyan, for: .normal)
         settingsButton.setTitle(L10n.settings, for: .normal)
@@ -51,21 +49,21 @@ class MainViewController: UIViewController {
         settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
         return settingsButton
     }
-    @objc func buttonDidTap() {
+    @objc private func buttonDidTap() {
         let setVC = SettingsViewController()
         present(UINavigationController(rootViewController: setVC), animated: true)
     }
 }
 // MARK: - Setting UI
-extension MainViewController {
+private extension MainViewController {
     func setUpInterface() {
         self.view.backgroundColor = .black
-//      Creating ImageView with Magic Ball image
+///     ImageView with Magic Ball image
         let imageBall = UIImage(asset: Asset.magicBallPNG)
         let imageBallView = UIImageView(image: imageBall)
         imageBallView.frame = CGRect(x: 20, y: 100, width: 400, height: 400)
         self.view.addSubview(imageBallView)
-//        Creating label for answer
+///     Label for answer
         answerLabel.frame = CGRect(x: 0, y: 0, width: 90, height: 30)
         answerLabel.text = L10n.someAnswer
         answerLabel.textColor = .white

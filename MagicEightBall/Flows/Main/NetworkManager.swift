@@ -11,7 +11,7 @@ class NetworkManager: NetworkService {
     /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String) -> Void)?
     /// Shows answers from DB in case of unsuccessful internet connection
-    var dbManager: DBManagerProtocol
+    private var dbManager: DBManagerProtocol
     init(dbManager: DBManagerProtocol = StorageManager()) {
         self.dbManager = dbManager
     }
@@ -50,7 +50,7 @@ class NetworkManager: NetworkService {
     /// In the case of an error, it will be printed in the terminal.
     ///
     /// - Returns: Optional String
-    func parseJSON(withData data: Data ) -> String? {
+    private func parseJSON(withData data: Data ) -> String? {
         let decoder = JSONDecoder()
         do {
             let decodedData = try decoder.decode(DecodedData.self, from: data)

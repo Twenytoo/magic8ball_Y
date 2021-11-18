@@ -24,7 +24,7 @@ class SettingsModel: SettingsModelType {
             storageManager.deleteObject(answerTypeAnswer)
         }
     }
-    func fetchAnswerString() {
+    private func fetchAnswerString() {
         var temp = [String]()
         for answer in storageManager.answers {
             temp.append(answer.answerText)

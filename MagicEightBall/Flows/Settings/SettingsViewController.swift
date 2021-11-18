@@ -10,9 +10,9 @@ import RealmSwift
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //    SettingViewModel
-    var viewModel: SettingsViewModelType
+    private var viewModel: SettingsViewModelType
     //    Creating table view
-    let tableView: UITableView = {
+    private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
         return tableView
@@ -62,7 +62,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return deleteAction
     }
     /// Calls the alert to create a new answer on pressing a BarButton
-    @objc func addAnswerByBarButton() {
+    @objc private func addAnswerByBarButton() {
         let addAnswer = UIAlertController(title: L10n.add, message: nil, preferredStyle: .alert)
         addAnswer.addTextField { (textField) in textField.placeholder = L10n.enter
         }
@@ -78,12 +78,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         addAnswer.addAction(doneAction)
         present(addAnswer, animated: true)
     }
-    @objc func dismissSelf(_ sender: UIBarButtonItem) {
+    @objc private func dismissSelf(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
 }
 
-extension SettingsViewController {
+private extension SettingsViewController {
     func addBarButtonItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: .add,
                                                             style: .plain,
