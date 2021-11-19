@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return tableView
     }()
     //    var message: String!
-    init(viewModel: SettingsViewModelType = SettingViewModel()) {
+    init(viewModel: SettingsViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

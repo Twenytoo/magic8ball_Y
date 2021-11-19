@@ -11,7 +11,7 @@ import RealmSwift
 class SettingViewModel: SettingsViewModelType {
     var answers: [String]!
     var settingsModel: SettingsModelType
-    init(settingsModel: SettingsModelType = SettingsModel()) {
+    init(settingsModel: SettingsModelType) {
         self.settingsModel = settingsModel
         fullAnswers()
     }

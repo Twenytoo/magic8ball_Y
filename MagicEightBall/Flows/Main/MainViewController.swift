@@ -50,8 +50,11 @@ class MainViewController: UIViewController {
         return settingsButton
     }
     @objc private func buttonDidTap() {
-        let setVC = SettingsViewController()
-        present(UINavigationController(rootViewController: setVC), animated: true)
+        let storageManager = StorageManager()
+        let settingsModel = SettingsModel(storageManager: storageManager)
+        let settingViewModel = SettingViewModel(settingsModel: settingsModel)
+        let settingsVC = SettingsViewController(viewModel: settingViewModel)
+        present(UINavigationController(rootViewController: settingsVC), animated: true)
     }
 }
 // MARK: - Setting UI

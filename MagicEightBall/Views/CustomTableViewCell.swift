@@ -7,16 +7,13 @@
 
 import UIKit
 
-// Customization of TableViewCell
 class CustomTableViewCell: UITableViewCell {
-//    Creating Label
     private let answerLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = .systemFont(ofSize: 17, weight: .bold)
         return label
     }()
-//    Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .purple
@@ -32,7 +29,7 @@ class CustomTableViewCell: UITableViewCell {
                                    width: contentView.frame.width,
                                    height: contentView.frame.height)
     }
-//    Configurating cell
+///    Configurating cell
     func configure(text: String) {
         answerLabel.text = text
     }

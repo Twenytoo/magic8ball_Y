@@ -11,7 +11,7 @@ import RealmSwift
 class SettingsModel: SettingsModelType {
     var answers: [String]?
     var storageManager: StorageService
-    init(storageManager: StorageService = StorageManager()) {
+    init(storageManager: StorageService) {
         self.storageManager = storageManager
         fetchAnswerString()
     }
