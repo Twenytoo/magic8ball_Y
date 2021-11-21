@@ -9,5 +9,6 @@ target 'MagicEightBall' do
   pod 'RealmSwift', '~>10'
   pod 'SwiftLint'
   pod 'SwiftGen', '~> 6.5'
+  pod 'SnapKit', '~> 5.0.0'
 
 end

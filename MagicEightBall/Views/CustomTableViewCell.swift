@@ -6,20 +6,18 @@
 //
 
 import UIKit
+import SnapKit
 
-// Customization of TableViewCell
 class CustomTableViewCell: UITableViewCell {
-//    Creating Label
     private let answerLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .cyan
         label.font = .systemFont(ofSize: 17, weight: .bold)
         return label
     }()
-//    Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .purple
+        contentView.backgroundColor = .black
         contentView.addSubview(answerLabel)
     }
     required init?(coder: NSCoder) {
@@ -27,13 +25,17 @@ class CustomTableViewCell: UITableViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        answerLabel.frame = CGRect(x: 10,
-                                   y: 0,
-                                   width: contentView.frame.width,
-                                   height: contentView.frame.height)
+        addConstraintsForCell()
     }
-//    Configurating cell
+///    Configurating cell
     func configure(text: String) {
         answerLabel.text = text
+    }
+    func addConstraintsForCell() {
+        answerLabel.snp.makeConstraints { make in
+            make.leading.equalTo(contentView).inset(40)
+            make.width.height.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
     }
 }

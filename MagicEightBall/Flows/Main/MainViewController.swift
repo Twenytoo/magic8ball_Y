@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import SnapKit
 import RealmSwift
 
 class MainViewController: UIViewController {
-    private var answerLabel = UILabel()
+    private let answerLabel = UILabel()
+    private let imageBallView = UIImageView()
+    private let settingsButton = UIButton()
     private var viewModel: MainViewModelType
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
@@ -21,6 +24,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpInterface()
+        setupConstraints()
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
@@ -41,37 +45,51 @@ class MainViewController: UIViewController {
             self.answerLabel.text = answer
         }
     }
-    private func addButton() -> UIButton {
-        let settingsButton = UIButton(frame: CGRect(x: 115, y: 500, width: 200, height: 100))
-        settingsButton.setTitleColor(.cyan, for: .normal)
-        settingsButton.setTitle(L10n.settings, for: .normal)
-        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
-        return settingsButton
-    }
     @objc private func buttonDidTap() {
-        let setVC = SettingsViewController()
-        present(UINavigationController(rootViewController: setVC), animated: true)
+        let storageManager = StorageManager()
+        let settingsModel = SettingsModel(storageManager: storageManager)
+        let settingViewModel = SettingViewModel(settingsModel: settingsModel)
+        let settingsVC = SettingsViewController(viewModel: settingViewModel)
+        present(UINavigationController(rootViewController: settingsVC), animated: true)
     }
 }
 // MARK: - Setting UI
 private extension MainViewController {
     func setUpInterface() {
         self.view.backgroundColor = .black
-///     ImageView with Magic Ball image
+        ///     ImageView with Magic Ball image
         let imageBall = UIImage(asset: Asset.magicBallPNG)
-        let imageBallView = UIImageView(image: imageBall)
-        imageBallView.frame = CGRect(x: 20, y: 100, width: 400, height: 400)
-        self.view.addSubview(imageBallView)
-///     Label for answer
-        answerLabel.frame = CGRect(x: 0, y: 0, width: 90, height: 30)
+        imageBallView.image = imageBall
+        imageBallView.contentMode = .scaleAspectFit
+        ///     Label for answer
         answerLabel.text = L10n.someAnswer
         answerLabel.textColor = .white
         answerLabel.textAlignment = .center
         answerLabel.adjustsFontSizeToFitWidth = true
         answerLabel.numberOfLines = 2
-        answerLabel.center = imageBallView.center
+        ///     Button for present Settings ViewController
+        settingsButton.setTitleColor(.cyan, for: .normal)
+        settingsButton.setTitle(L10n.settings, for: .normal)
+        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+        self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
-        self.view.addSubview(addButton())
+        self.view.addSubview(settingsButton)
+    }
+// MARK: - Contraints
+    func setupConstraints() {
+        imageBallView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
+        }
+        answerLabel.snp.makeConstraints { make in
+            make.center.equalTo(imageBallView)
+            make.width.equalTo(imageBallView).multipliedBy(0.2)
+        }
+        settingsButton.snp.makeConstraints {make in
+            make.top.equalTo(imageBallView.snp.bottom).offset(140)
+            make.centerX.equalTo(imageBallView)
+            make.width.equalTo(imageBallView.snp.width).multipliedBy(0.5)
+        }
     }
 }
