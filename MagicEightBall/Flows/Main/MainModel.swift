@@ -29,6 +29,9 @@ class MainModel: MainModelType {
     func saveTouches() {
         secureStorageService.countTouches += 1
         secureStorageService.saveTouches()
+    }
+    func loadTouches () -> Int {
         secureStorageService.loadTouches()
+        return secureStorageService.countTouches
     }
 }

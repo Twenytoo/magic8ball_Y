@@ -22,4 +22,7 @@ class MainViewModel: MainViewModelType {
     func saveTouches() {
         mainModel.saveTouches()
     }
+    func loadTouches () -> String {
+        return String(mainModel.loadTouches())
+    }
 }

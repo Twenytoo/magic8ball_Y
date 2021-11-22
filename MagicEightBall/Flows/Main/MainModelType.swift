@@ -15,4 +15,5 @@ protocol MainModelType {
     var completionHandler: ((String) -> Void)? { get set }
     func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
     func saveTouches()
+    func loadTouches () -> Int
 }
