@@ -27,10 +27,8 @@ class NetworkManager: NetworkService {
         if let url = URL(string: urlString) {
             URLSession.shared.dataTask(with: url) {data, _, error in
                 if error != nil {
-                    DispatchQueue.main.async {
-                        let answer = self.dbManager.showAnswerWithoutConnection()
-                        completion(answer)
-                    }
+                    let answer = self.dbManager.showAnswerWithoutConnection()
+                    completion(answer)
                 }
                 if let data = data {
                     if let answer = self.parseJSON(withData: data) {

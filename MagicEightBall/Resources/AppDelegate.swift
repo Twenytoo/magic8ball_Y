@@ -15,7 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         let networkManager = NetworkManager()
         let storageManager = StorageManager()
-        let mainModel = MainModel(networkManager: networkManager, storageManager: storageManager)
+        let secureStorageService = SecureStorageService()
+        let mainModel = MainModel(networkManager: networkManager,
+                                  storageManager: storageManager,
+                                  secureStorageService: secureStorageService)
         let mainViewModel = MainViewModel(mainModel: mainModel)
         let mainVC = MainViewController(viewModel: mainViewModel)
         storageManager.answers = realm.objects(Answer.self)

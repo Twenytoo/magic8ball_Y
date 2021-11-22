@@ -10,7 +10,7 @@ import UIKit
 class MainViewModel: MainViewModelType {
     private let mainModel: MainModelType
     lazy var completionHandler = self.mainModel.completionHandler
-    init(mainModel: MainModelType = MainModel()) {
+    init(mainModel: MainModelType) {
         self.mainModel = mainModel
     }
     func fetchAnswerByURL(completion: @escaping (String) -> Void) {
@@ -18,5 +18,8 @@ class MainViewModel: MainViewModelType {
             let answerString = answer!.uppercased()
             completion(answerString)
         }
+    }
+    func saveTouches() {
+        mainModel.saveTouches()
     }
 }

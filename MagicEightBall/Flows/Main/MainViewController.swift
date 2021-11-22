@@ -28,8 +28,11 @@ class MainViewController: UIViewController {
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
+        viewModel.saveTouches()
         viewModel.fetchAnswerByURL {answer in
-            self.updateAnswerLabel(answer: answer)
+            DispatchQueue.main.async {
+                self.updateAnswerLabel(answer: answer)
+            }
         }
         UIView.transition(with: self.answerLabel,
                           duration: 0.5,
