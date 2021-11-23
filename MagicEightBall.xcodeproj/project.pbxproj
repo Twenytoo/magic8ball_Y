@@ -22,8 +22,8 @@
 		138A905E27452DCF00424EA3 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A905D27452DCF00424EA3 /* MainModel.swift */; };
 		138A906027452E2700424EA3 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A905F27452E2700424EA3 /* SettingsModel.swift */; };
 		138A90682745301C00424EA3 /* MainViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90632745301C00424EA3 /* MainViewModelType.swift */; };
-		138A90692745301C00424EA3 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90642745301C00424EA3 /* StorageService.swift */; };
-		138A906A2745301C00424EA3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90652745301C00424EA3 /* NetworkService.swift */; };
+		138A90692745301C00424EA3 /* StorageServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90642745301C00424EA3 /* StorageServiceType.swift */; };
+		138A906A2745301C00424EA3 /* NetworkServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90652745301C00424EA3 /* NetworkServiceType.swift */; };
 		138A906B2745301C00424EA3 /* SettingsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90662745301C00424EA3 /* SettingsViewModelType.swift */; };
 		138A906C2745301C00424EA3 /* DBManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90672745301C00424EA3 /* DBManagerProtocol.swift */; };
 		138A906E274533F200424EA3 /* MainModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A906D274533F200424EA3 /* MainModelType.swift */; };
@@ -34,6 +34,8 @@
 		139640D5271EFEB30088FCD7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139640D4271EFEB30088FCD7 /* StorageManager.swift */; };
 		13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */; };
 		13A9A222271B138F00133716 /* AnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A221271B138F00133716 /* AnswerModel.swift */; };
+		13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */; };
+		13AB3AC1274BB4C2004F0796 /* SecureStorageServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3AC0274BB4C2004F0796 /* SecureStorageServiceType.swift */; };
 		BCE777B9C71D53D79D6BE9B6 /* Pods_MagicEightBall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3415F0C809DAC4EE5489D0 /* Pods_MagicEightBall.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +57,8 @@
 		138A905D27452DCF00424EA3 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		138A905F27452E2700424EA3 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		138A90632745301C00424EA3 /* MainViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModelType.swift; sourceTree = "<group>"; };
-		138A90642745301C00424EA3 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
-		138A90652745301C00424EA3 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		138A90642745301C00424EA3 /* StorageServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageServiceType.swift; sourceTree = "<group>"; };
+		138A90652745301C00424EA3 /* NetworkServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkServiceType.swift; sourceTree = "<group>"; };
 		138A90662745301C00424EA3 /* SettingsViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModelType.swift; sourceTree = "<group>"; };
 		138A90672745301C00424EA3 /* DBManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManagerProtocol.swift; sourceTree = "<group>"; };
 		138A906D274533F200424EA3 /* MainModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModelType.swift; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 		139640D4271EFEB30088FCD7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		13A9A221271B138F00133716 /* AnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerModel.swift; sourceTree = "<group>"; };
+		13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageService.swift; sourceTree = "<group>"; };
+		13AB3AC0274BB4C2004F0796 /* SecureStorageServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageServiceType.swift; sourceTree = "<group>"; };
 		2BB3D003DDC0401FBCBD13D6 /* Pods-MagicEightBall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicEightBall.release.xcconfig"; path = "Target Support Files/Pods-MagicEightBall/Pods-MagicEightBall.release.xcconfig"; sourceTree = "<group>"; };
 		3B3415F0C809DAC4EE5489D0 /* Pods_MagicEightBall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicEightBall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CA7053E74B1551A335EB8DE /* Pods-MagicEightBall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicEightBall.debug.xcconfig"; path = "Target Support Files/Pods-MagicEightBall/Pods-MagicEightBall.debug.xcconfig"; sourceTree = "<group>"; };
@@ -166,7 +170,9 @@
 				136752FA27144FD800ADC62C /* MainViewController.swift */,
 				1372444127182838007A08E9 /* DecodedData.swift */,
 				1372443F27182402007A08E9 /* NetworkManager.swift */,
-				138A90652745301C00424EA3 /* NetworkService.swift */,
+				138A90652745301C00424EA3 /* NetworkServiceType.swift */,
+				13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */,
+				13AB3AC0274BB4C2004F0796 /* SecureStorageServiceType.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -181,7 +187,7 @@
 				1372443C27180CA8007A08E9 /* SettingsViewController.swift */,
 				139640D4271EFEB30088FCD7 /* StorageManager.swift */,
 				138A90672745301C00424EA3 /* DBManagerProtocol.swift */,
-				138A90642745301C00424EA3 /* StorageService.swift */,
+				138A90642745301C00424EA3 /* StorageServiceType.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -353,6 +359,7 @@
 			files = (
 				1372444227182838007A08E9 /* DecodedData.swift in Sources */,
 				138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */,
+				13AB3AC1274BB4C2004F0796 /* SecureStorageServiceType.swift in Sources */,
 				13894E69273EB067000EA2C5 /* Assets.swift in Sources */,
 				13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */,
 				138A906E274533F200424EA3 /* MainModelType.swift in Sources */,
@@ -360,7 +367,7 @@
 				138A906B2745301C00424EA3 /* SettingsViewModelType.swift in Sources */,
 				138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */,
 				13894E68273EB067000EA2C5 /* Strings.swift in Sources */,
-				138A90692745301C00424EA3 /* StorageService.swift in Sources */,
+				138A90692745301C00424EA3 /* StorageServiceType.swift in Sources */,
 				138A905E27452DCF00424EA3 /* MainModel.swift in Sources */,
 				13A9A222271B138F00133716 /* AnswerModel.swift in Sources */,
 				136752FB27144FD800ADC62C /* MainViewController.swift in Sources */,
@@ -368,7 +375,8 @@
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
 				139640D5271EFEB30088FCD7 /* StorageManager.swift in Sources */,
-				138A906A2745301C00424EA3 /* NetworkService.swift in Sources */,
+				138A906A2745301C00424EA3 /* NetworkServiceType.swift in Sources */,
+				13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */,
 				138A906C2745301C00424EA3 /* DBManagerProtocol.swift in Sources */,
 				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,
 				1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */,

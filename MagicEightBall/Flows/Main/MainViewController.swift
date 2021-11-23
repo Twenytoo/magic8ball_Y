@@ -11,6 +11,7 @@ import RealmSwift
 
 class MainViewController: UIViewController {
     private let answerLabel = UILabel()
+    private let countLabel = UILabel()
     private let imageBallView = UIImageView()
     private let settingsButton = UIButton()
     private var viewModel: MainViewModelType
@@ -28,8 +29,14 @@ class MainViewController: UIViewController {
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
+        viewModel.increaseAndSaveTouches()
+        DispatchQueue.main.async {
+            self.setupCounLabel()
+        }
         viewModel.fetchAnswerByURL {answer in
-            self.updateAnswerLabel(answer: answer)
+            DispatchQueue.main.async {
+                self.updateAnswerLabel(answer: answer)
+            }
         }
         UIView.transition(with: self.answerLabel,
                           duration: 0.5,
@@ -67,14 +74,21 @@ private extension MainViewController {
         answerLabel.textAlignment = .center
         answerLabel.adjustsFontSizeToFitWidth = true
         answerLabel.numberOfLines = 2
+        ///     Count label
+        countLabel.text = "Shakes – 0"
+        countLabel.textColor = .cyan
+        countLabel.textAlignment = .center
+        countLabel.font = countLabel.font.withSize(20)
         ///     Button for present Settings ViewController
         settingsButton.setTitleColor(.cyan, for: .normal)
         settingsButton.setTitle(L10n.settings, for: .normal)
-        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
         settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
+        self.view.addSubview(countLabel)
         self.view.addSubview(settingsButton)
+        setupCounLabel()
     }
 // MARK: - Contraints
     func setupConstraints() {
@@ -83,13 +97,19 @@ private extension MainViewController {
             make.trailing.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
         answerLabel.snp.makeConstraints { make in
-            make.center.equalTo(imageBallView)
+            make.center.equalTo(imageBallView).inset(20)
             make.width.equalTo(imageBallView).multipliedBy(0.2)
+        }
+        countLabel.snp.makeConstraints { make in
+            make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(25)
         }
         settingsButton.snp.makeConstraints {make in
             make.top.equalTo(imageBallView.snp.bottom).offset(140)
             make.centerX.equalTo(imageBallView)
             make.width.equalTo(imageBallView.snp.width).multipliedBy(0.5)
         }
+    }
+    func setupCounLabel() {
+        countLabel.text = "Shakes – \(viewModel.loadTouches())"
     }
 }
