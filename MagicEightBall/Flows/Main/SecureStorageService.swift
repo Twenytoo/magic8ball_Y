@@ -8,31 +8,30 @@
 import Foundation
 import Locksmith
 
+enum StorageKey: String {
+    case keyForTouches = "touches"
+}
+enum StorageDictionary: String {
+    case countOfTouches = "count_of_touches"
+}
+
 class SecureStorageService: SecureStorageServiceType {
-    var countTouches = 0
-    func saveData () {
+    func saveData (key: StorageKey, value: Any, dictionary: StorageDictionary) {
         do {
-            try Locksmith.saveData(data: ["touches": countTouches], forUserAccount: "count_of_touches")
+            try Locksmith.saveData(data: [key.rawValue: value], forUserAccount: dictionary.rawValue)
         } catch {
             print("Unable to save – ", error)
         }
     }
-    func updateData () {
+    func updateData (key: StorageKey, value: Any, dictionary: StorageDictionary) {
         do {
-            try Locksmith.updateData(data: ["touches": countTouches], forUserAccount: "count_of_touches")
+            try Locksmith.updateData(data: [key.rawValue: value], forUserAccount: dictionary.rawValue)
         } catch {
             print("Unable to update – ", error)
         }
     }
-    func saveTouches() {
-        if countTouches == 1 {
-            saveData()
-        } else {
-            updateData()
-        }
-    }
-    func loadTouches () {
-        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "count_of_touches") else { return }
-        self.countTouches = dictionary["touches"] as? Int ?? 0
+    func loadData (key: StorageKey, dictionary: StorageDictionary) -> Any? {
+        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: dictionary.rawValue) else { return nil}
+        return dictionary[key.rawValue]
     }
 }

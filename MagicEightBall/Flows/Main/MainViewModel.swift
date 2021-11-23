@@ -19,7 +19,8 @@ class MainViewModel: MainViewModelType {
             completion(answerString)
         }
     }
-    func saveTouches() {
+    func increaseAndSaveTouches() {
+        mainModel.increaseTouches()
         mainModel.saveTouches()
     }
     func loadTouches () -> String {

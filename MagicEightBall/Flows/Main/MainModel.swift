@@ -8,6 +8,7 @@
 import Foundation
 
 class MainModel: MainModelType {
+    var countTouches = 0
     var answer: String!
     var networkManager: NetworkService
     var storageManager: StorageService
@@ -26,12 +27,24 @@ class MainModel: MainModelType {
             completion(answer)
         }
     }
+    func increaseTouches() {
+        countTouches += 1
+    }
     func saveTouches() {
-        secureStorageService.countTouches += 1
-        secureStorageService.saveTouches()
+        if countTouches == 1 {
+            secureStorageService.saveData(key: StorageKey.keyForTouches,
+                                          value: countTouches,
+                                          dictionary: StorageDictionary.countOfTouches)
+        } else {
+            secureStorageService.updateData(key: StorageKey.keyForTouches,
+                                            value: countTouches,
+                                            dictionary: StorageDictionary.countOfTouches)
+        }
     }
     func loadTouches () -> Int {
-        secureStorageService.loadTouches()
-        return secureStorageService.countTouches
+        let touches = secureStorageService.loadData(key: StorageKey.keyForTouches,
+                                                          dictionary: StorageDictionary.countOfTouches) as? Int
+        countTouches = touches ?? 0
+        return countTouches
     }
 }

@@ -10,6 +10,6 @@ import UIKit
 protocol MainViewModelType {
     var completionHandler: ((String) -> Void)? { get set }
     func fetchAnswerByURL(completion: @escaping (String) -> Void)
-    func saveTouches()
+    func increaseAndSaveTouches()
     func loadTouches () -> String
 }

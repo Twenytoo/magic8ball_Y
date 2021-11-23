@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        viewModel.saveTouches()
+        viewModel.increaseAndSaveTouches()
         DispatchQueue.main.async {
             self.setupCounLabel()
         }

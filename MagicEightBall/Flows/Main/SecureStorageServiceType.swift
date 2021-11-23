@@ -8,9 +8,7 @@
 import Foundation
 
 protocol SecureStorageServiceType {
-    var countTouches: Int {get set}
-    func saveData ()
-    func updateData ()
-    func saveTouches ()
-    func loadTouches ()
+    func saveData (key: StorageKey, value: Any, dictionary: StorageDictionary)
+    func updateData (key: StorageKey, value: Any, dictionary: StorageDictionary)
+    func loadData (key: StorageKey, dictionary: StorageDictionary) -> Any?
 }
