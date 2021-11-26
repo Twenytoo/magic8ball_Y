@@ -7,6 +7,11 @@
 
 import Foundation
 
+protocol AnswersModelType {
+    var answers: [Answer]! { get set }
+    func getAllObejcts()
+    var storageManager: StorageServiceProtocol { get set }
+}
 class AnswersModel: AnswersModelType {
     let dateFormatter = DateFormatter()
     var answers: [Answer]!

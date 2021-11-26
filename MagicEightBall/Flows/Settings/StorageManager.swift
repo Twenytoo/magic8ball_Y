@@ -7,7 +7,24 @@
 
 import Foundation
 import CoreData
-
+// MARK: - Protocols
+protocol StorageServiceProtocol {
+    var answers: [AnswerEntity] { get set}
+    func getObjects<T: NSManagedObject> (
+            _ request: NSFetchRequest<T>,
+            completion: @escaping (Result<[T], Error>) -> Void
+        )
+    func getAllObejcts()
+    func deleteEntity(answer: AnswerEntity)
+    func updateEntity(answer: AnswerEntity, text: String)
+}
+protocol GetAnswerFromDBProtocol: AnyObject {
+    func showAnswerWithoutConnection() -> String
+}
+protocol CreateAnswerProtocol {
+    func createEntity(text: String)
+}
+// MARK: - Class
 class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAnswerProtocol {
     let context = AppDelegate.context!
     var answers = [AnswerEntity]()

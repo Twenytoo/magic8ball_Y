@@ -6,7 +6,20 @@
 //
 
 import Foundation
-
+// MARK: - Protocol
+protocol MainModelType {
+    var countTouches: Int {get set}
+    var answer: String! { get set }
+    var networkManager: NetworkService { get set }
+    var storageManager: StorageServiceProtocol { get set }
+    var secureStorageService: SecureStorageServiceType { get set }
+    var completionHandler: ((String) -> Void)? { get set }
+    func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
+    func saveTouches()
+    func loadTouches () -> Int
+    func increaseTouches()
+}
+// MARK: - Class
 class MainModel: MainModelType {
     var countTouches = 0
     var answer: String!

@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol AnswerViewModelType {
+    var answers: [Answer]! { get set }
+    func getAnswers()
+}
 class AnswerViewModel: AnswerViewModelType {
     var answers: [Answer]!
     let answerModel: AnswersModelType

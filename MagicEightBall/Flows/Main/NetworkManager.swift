@@ -6,7 +6,12 @@
 //
 
 import UIKit
-
+//    MARK: - Protocol
+protocol NetworkService {
+    var completionHandler: ((String) -> Void)? { get set }
+    func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
+}
+//    MARK: - Class
 class NetworkManager: NetworkService {
     /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String) -> Void)?

@@ -66,7 +66,7 @@ private extension MainViewController {
         answerLabel.textAlignment = .center
         answerLabel.adjustsFontSizeToFitWidth = true
         answerLabel.numberOfLines = 2
-        ///     Count label
+        ///    Count label
         countLabel.text = "Shakes – 0"
         countLabel.textColor = .darkGray
         countLabel.textAlignment = .center
