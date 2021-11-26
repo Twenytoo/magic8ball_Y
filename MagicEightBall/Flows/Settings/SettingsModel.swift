@@ -17,21 +17,16 @@ class SettingsModel: SettingsModelType {
     }
     func addNewAnswer(answer: String) {
         storageManager.createEntity(text: answer)
-//        let newAnswer = Answer(name: answer)
-//        storageManager.saveObject(newAnswer)
     }
     func deleteAnswer(answer: String) {
         for answerEntity in storageManager.answers where answerEntity.text == answer {
             storageManager.deleteEntity(answer: answerEntity)
         }
-//        for answerTypeAnswer in storageManager.answers where answerTypeAnswer.answerText == answer {
-//            storageManager.deleteObject(answerTypeAnswer)
-//        }
     }
     private func fetchAnswerString() {
         var temp = [String]()
         for answer in storageManager.answers {
-            temp.append(answer.text ?? "Ошибка")
+            temp.append(answer.text ?? L10n.error)
         }
         self.answers = temp
     }

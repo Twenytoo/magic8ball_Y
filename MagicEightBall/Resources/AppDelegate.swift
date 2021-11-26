@@ -13,18 +13,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let window = UIWindow(frame: UIScreen.main.bounds)
+//        Managers
         let networkManager = NetworkManager()
-//        let storageManager = StorageManager()
-        let storageManager = CoreDataManager()
+        let storageManager = StorageManager()
         let secureStorageService = SecureStorageService()
         let mainModel = MainModel(networkManager: networkManager,
                                   storageManager: storageManager,
                                   secureStorageService: secureStorageService)
+//        Main View Controller
         let mainViewModel = MainViewModel(mainModel: mainModel)
         let mainVC = MainViewController(viewModel: mainViewModel)
-//        storageManager.answers = realm.objects(Answer.self)
-        window.rootViewController = mainVC
+        let mainNavVC = UINavigationController(rootViewController: mainVC)
+        mainNavVC.title = "MAIN"
+//        Setttings View Controller
+        let settingsModel = SettingsModel(storageManager: storageManager)
+        let settingViewModel = SettingViewModel(settingsModel: settingsModel)
+        let settingsVC = SettingsViewController(viewModel: settingViewModel)
+        let settingsNavVC = UINavigationController(rootViewController: settingsVC)
+        settingsNavVC.title = "SETTINGS"
+//        AnswersHistory View Controller
+        let answerHistoryVC = AnswersHistory()
+        let answerHistoryNavVC = UINavigationController(rootViewController: answerHistoryVC)
+        answerHistoryNavVC.title = "HISTORY"
+//        TabBar View Controller
+        let tabBarViewController = UITabBarController()
+        tabBarViewController.setViewControllers([mainNavVC, settingsNavVC, answerHistoryNavVC],
+                                                animated: true)
+        tabBarViewController.modalPresentationStyle = .fullScreen
+//        Window
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = tabBarViewController
         window.makeKeyAndVisible()
         self.window = window
         return true
@@ -32,26 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data stack
     static let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
     lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-        */
         let container = NSPersistentContainer(name: "Answers")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
@@ -66,8 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             do {
                 try context.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }

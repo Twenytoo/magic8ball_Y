@@ -31,13 +31,12 @@
 		138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */; };
 		138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033227439E36004D4FA8 /* SettingViewModel.swift */; };
 		138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033327439E36004D4FA8 /* MainViewModel.swift */; };
-		139640D5271EFEB30088FCD7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139640D4271EFEB30088FCD7 /* StorageManager.swift */; };
 		13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */; };
-		13A9A222271B138F00133716 /* AnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A221271B138F00133716 /* AnswerModel.swift */; };
 		13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */; };
 		13AB3AC1274BB4C2004F0796 /* SecureStorageServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3AC0274BB4C2004F0796 /* SecureStorageServiceType.swift */; };
 		13B1C03B2750EFE000439669 /* Answers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C0392750EFE000439669 /* Answers.xcdatamodeld */; };
-		13B1C03D2750F08000439669 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C03C2750F08000439669 /* CoreDataManager.swift */; };
+		13B1C03D2750F08000439669 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C03C2750F08000439669 /* StorageManager.swift */; };
+		13B1C0402751099700439669 /* AnswersHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C03F2751099700439669 /* AnswersHistory.swift */; };
 		BCE777B9C71D53D79D6BE9B6 /* Pods_MagicEightBall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3415F0C809DAC4EE5489D0 /* Pods_MagicEightBall.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,13 +67,12 @@
 		138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
 		138E033227439E36004D4FA8 /* SettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		138E033327439E36004D4FA8 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		139640D4271EFEB30088FCD7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		13A9A221271B138F00133716 /* AnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerModel.swift; sourceTree = "<group>"; };
 		13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageService.swift; sourceTree = "<group>"; };
 		13AB3AC0274BB4C2004F0796 /* SecureStorageServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageServiceType.swift; sourceTree = "<group>"; };
 		13B1C03A2750EFE000439669 /* Answers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Answers.xcdatamodel; sourceTree = "<group>"; };
-		13B1C03C2750F08000439669 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		13B1C03C2750F08000439669 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		13B1C03F2751099700439669 /* AnswersHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersHistory.swift; sourceTree = "<group>"; };
 		2BB3D003DDC0401FBCBD13D6 /* Pods-MagicEightBall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicEightBall.release.xcconfig"; path = "Target Support Files/Pods-MagicEightBall/Pods-MagicEightBall.release.xcconfig"; sourceTree = "<group>"; };
 		3B3415F0C809DAC4EE5489D0 /* Pods_MagicEightBall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicEightBall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CA7053E74B1551A335EB8DE /* Pods-MagicEightBall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicEightBall.debug.xcconfig"; path = "Target Support Files/Pods-MagicEightBall/Pods-MagicEightBall.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 				138A905A27452D2800424EA3 /* Flows */,
 				1372443A27180B2C007A08E9 /* Views */,
 				1372443927180B17007A08E9 /* Resources */,
-				138A90622745301C00424EA3 /* Protocols */,
 			);
 			path = MagicEightBall;
 			sourceTree = "<group>";
@@ -157,7 +154,7 @@
 		138A905A27452D2800424EA3 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				138A906127452E4F00424EA3 /* Answer */,
+				13B1C03E2751097C00439669 /* AnswerHistory */,
 				138A905B27452D7400424EA3 /* Main */,
 				138A905C27452D7900424EA3 /* Settings */,
 			);
@@ -189,8 +186,7 @@
 				138E033227439E36004D4FA8 /* SettingViewModel.swift */,
 				138A90662745301C00424EA3 /* SettingsViewModelType.swift */,
 				1372443C27180CA8007A08E9 /* SettingsViewController.swift */,
-				139640D4271EFEB30088FCD7 /* StorageManager.swift */,
-				13B1C03C2750F08000439669 /* CoreDataManager.swift */,
+				13B1C03C2750F08000439669 /* StorageManager.swift */,
 				138A90642745301C00424EA3 /* StorageServiceProtocol.swift */,
 				138A90672745301C00424EA3 /* GetAnswerFromDBProtocol.swift */,
 				13B1C0392750EFE000439669 /* Answers.xcdatamodeld */,
@@ -198,19 +194,12 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		138A906127452E4F00424EA3 /* Answer */ = {
+		13B1C03E2751097C00439669 /* AnswerHistory */ = {
 			isa = PBXGroup;
 			children = (
-				13A9A221271B138F00133716 /* AnswerModel.swift */,
+				13B1C03F2751099700439669 /* AnswersHistory.swift */,
 			);
-			path = Answer;
-			sourceTree = "<group>";
-		};
-		138A90622745301C00424EA3 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
+			path = AnswerHistory;
 			sourceTree = "<group>";
 		};
 		1720584EF2E15C4D6F3EEE66 /* Frameworks */ = {
@@ -369,7 +358,7 @@
 				13894E69273EB067000EA2C5 /* Assets.swift in Sources */,
 				13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */,
 				138A906E274533F200424EA3 /* MainModelType.swift in Sources */,
-				13B1C03D2750F08000439669 /* CoreDataManager.swift in Sources */,
+				13B1C03D2750F08000439669 /* StorageManager.swift in Sources */,
 				138A90682745301C00424EA3 /* MainViewModelType.swift in Sources */,
 				138A906B2745301C00424EA3 /* SettingsViewModelType.swift in Sources */,
 				138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */,
@@ -377,18 +366,17 @@
 				138A90692745301C00424EA3 /* StorageServiceProtocol.swift in Sources */,
 				13B1C03B2750EFE000439669 /* Answers.xcdatamodeld in Sources */,
 				138A905E27452DCF00424EA3 /* MainModel.swift in Sources */,
-				13A9A222271B138F00133716 /* AnswerModel.swift in Sources */,
 				136752FB27144FD800ADC62C /* MainViewController.swift in Sources */,
 				138A906027452E2700424EA3 /* SettingsModel.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
-				139640D5271EFEB30088FCD7 /* StorageManager.swift in Sources */,
 				138A906A2745301C00424EA3 /* NetworkServiceType.swift in Sources */,
 				13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */,
 				138A906C2745301C00424EA3 /* GetAnswerFromDBProtocol.swift in Sources */,
 				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,
 				1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */,
 				138A907027454A6500424EA3 /* SettingsModelType.swift in Sources */,
+				13B1C0402751099700439669 /* AnswersHistory.swift in Sources */,
 				138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

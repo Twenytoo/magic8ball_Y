@@ -17,7 +17,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
         return tableView
     }()
-    //    var message: String!
     init(viewModel: SettingsViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -29,7 +28,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .black
+        tableView.backgroundColor = .lightGray
         addBarButtonItems()
         view.addSubview(tableView)
     }
@@ -78,9 +77,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         addAnswer.addAction(doneAction)
         present(addAnswer, animated: true)
     }
-    @objc private func dismissSelf(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
+//    @objc private func dismissSelf(_ sender: UIBarButtonItem) {
+//        dismiss(animated: true, completion: nil)
+//    }
 }
 
 private extension SettingsViewController {
@@ -89,9 +88,9 @@ private extension SettingsViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addAnswerByBarButton))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: .checkmark,
-                                                           style: .plain,
-                                                           target: self,
-                                                           action: #selector(dismissSelf(_:)))
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: .checkmark,
+//                                                           style: .plain,
+//                                                           target: self,
+//                                                           action: #selector(dismissSelf(_:)))
     }
 }

@@ -4,18 +4,17 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 
 // Deadlock with two queues
 
-//let mySerialQueue = DispatchQueue(label: "my_serial_queue")
+// let mySerialQueue = DispatchQueue(label: "my_serial_queue")
 //
-//mySerialQueue.async {
+// mySerialQueue.async {
 //        print("Test print #1")
 //        mySerialQueue.sync {
 //            print("deadlock not happened")
 //        }
-//}
-//print("End")
+// }
+// print("End")
 
-
-//DispatchWorkItem
+// DispatchWorkItem
 
 let backgroundQueue = DispatchQueue(label: "my_background_queue", qos: .background, attributes: .concurrent)
 let myWorkItem = DispatchWorkItem(qos: .userInteractive) {
@@ -27,4 +26,3 @@ let myWorkItem = DispatchWorkItem(qos: .userInteractive) {
 backgroundQueue.asyncAfter(deadline: .now() + .seconds(2), execute: myWorkItem)
 myWorkItem.cancel()
 print("Work item is canceled")
-
