@@ -11,9 +11,9 @@ class NetworkManager: NetworkService {
     /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String) -> Void)?
     /// Shows answers from DB in case of unsuccessful internet connection
-    private var dbManager: GetAnswerFromDBProtocol
-    init(dbManager: GetAnswerFromDBProtocol = StorageManager()) {
-        self.dbManager = dbManager
+    private var dbManager: CreateAnswerProtocol & GetAnswerFromDBProtocol
+    init() {
+        self.dbManager = StorageManager()
     }
     // MARK: - Getting data from Network
     /// Receiving data from the Internet using URLSession
@@ -33,6 +33,7 @@ class NetworkManager: NetworkService {
                 if let data = data {
                     if let answer = self.parseJSON(withData: data) {
                         completion(answer)
+                        self.dbManager.createEntity(text: answer)
                     }
                 }
             }.resume()

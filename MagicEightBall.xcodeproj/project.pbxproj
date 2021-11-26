@@ -36,7 +36,13 @@
 		13AB3AC1274BB4C2004F0796 /* SecureStorageServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3AC0274BB4C2004F0796 /* SecureStorageServiceType.swift */; };
 		13B1C03B2750EFE000439669 /* Answers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C0392750EFE000439669 /* Answers.xcdatamodeld */; };
 		13B1C03D2750F08000439669 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C03C2750F08000439669 /* StorageManager.swift */; };
-		13B1C0402751099700439669 /* AnswersHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C03F2751099700439669 /* AnswersHistory.swift */; };
+		13B1C0402751099700439669 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C03F2751099700439669 /* HistoryViewController.swift */; };
+		13B1C0422751142D00439669 /* AnwersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C0412751142D00439669 /* AnwersModel.swift */; };
+		13B1C0442751197400439669 /* AnswersModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C0432751197400439669 /* AnswersModelType.swift */; };
+		13B1C04627511A5800439669 /* AnswerViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C04527511A5800439669 /* AnswerViewModelType.swift */; };
+		13B1C04827511AAA00439669 /* AnswerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C04727511AAA00439669 /* AnswerViewModel.swift */; };
+		13B1C04A27511C9000439669 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C04927511C9000439669 /* Answer.swift */; };
+		13B1C04C2751298900439669 /* CreateAnswerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C04B2751298900439669 /* CreateAnswerProtocol.swift */; };
 		BCE777B9C71D53D79D6BE9B6 /* Pods_MagicEightBall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3415F0C809DAC4EE5489D0 /* Pods_MagicEightBall.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +78,13 @@
 		13AB3AC0274BB4C2004F0796 /* SecureStorageServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageServiceType.swift; sourceTree = "<group>"; };
 		13B1C03A2750EFE000439669 /* Answers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Answers.xcdatamodel; sourceTree = "<group>"; };
 		13B1C03C2750F08000439669 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		13B1C03F2751099700439669 /* AnswersHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersHistory.swift; sourceTree = "<group>"; };
+		13B1C03F2751099700439669 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		13B1C0412751142D00439669 /* AnwersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnwersModel.swift; sourceTree = "<group>"; };
+		13B1C0432751197400439669 /* AnswersModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersModelType.swift; sourceTree = "<group>"; };
+		13B1C04527511A5800439669 /* AnswerViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewModelType.swift; sourceTree = "<group>"; };
+		13B1C04727511AAA00439669 /* AnswerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewModel.swift; sourceTree = "<group>"; };
+		13B1C04927511C9000439669 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
+		13B1C04B2751298900439669 /* CreateAnswerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAnswerProtocol.swift; sourceTree = "<group>"; };
 		2BB3D003DDC0401FBCBD13D6 /* Pods-MagicEightBall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicEightBall.release.xcconfig"; path = "Target Support Files/Pods-MagicEightBall/Pods-MagicEightBall.release.xcconfig"; sourceTree = "<group>"; };
 		3B3415F0C809DAC4EE5489D0 /* Pods_MagicEightBall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicEightBall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CA7053E74B1551A335EB8DE /* Pods-MagicEightBall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicEightBall.debug.xcconfig"; path = "Target Support Files/Pods-MagicEightBall/Pods-MagicEightBall.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +201,7 @@
 				13B1C03C2750F08000439669 /* StorageManager.swift */,
 				138A90642745301C00424EA3 /* StorageServiceProtocol.swift */,
 				138A90672745301C00424EA3 /* GetAnswerFromDBProtocol.swift */,
+				13B1C04B2751298900439669 /* CreateAnswerProtocol.swift */,
 				13B1C0392750EFE000439669 /* Answers.xcdatamodeld */,
 			);
 			path = Settings;
@@ -197,7 +210,12 @@
 		13B1C03E2751097C00439669 /* AnswerHistory */ = {
 			isa = PBXGroup;
 			children = (
-				13B1C03F2751099700439669 /* AnswersHistory.swift */,
+				13B1C04927511C9000439669 /* Answer.swift */,
+				13B1C03F2751099700439669 /* HistoryViewController.swift */,
+				13B1C0412751142D00439669 /* AnwersModel.swift */,
+				13B1C0432751197400439669 /* AnswersModelType.swift */,
+				13B1C04727511AAA00439669 /* AnswerViewModel.swift */,
+				13B1C04527511A5800439669 /* AnswerViewModelType.swift */,
 			);
 			path = AnswerHistory;
 			sourceTree = "<group>";
@@ -353,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1372444227182838007A08E9 /* DecodedData.swift in Sources */,
+				13B1C0422751142D00439669 /* AnwersModel.swift in Sources */,
 				138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */,
 				13AB3AC1274BB4C2004F0796 /* SecureStorageServiceType.swift in Sources */,
 				13894E69273EB067000EA2C5 /* Assets.swift in Sources */,
@@ -362,11 +381,14 @@
 				138A90682745301C00424EA3 /* MainViewModelType.swift in Sources */,
 				138A906B2745301C00424EA3 /* SettingsViewModelType.swift in Sources */,
 				138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */,
+				13B1C04C2751298900439669 /* CreateAnswerProtocol.swift in Sources */,
 				13894E68273EB067000EA2C5 /* Strings.swift in Sources */,
+				13B1C04827511AAA00439669 /* AnswerViewModel.swift in Sources */,
 				138A90692745301C00424EA3 /* StorageServiceProtocol.swift in Sources */,
 				13B1C03B2750EFE000439669 /* Answers.xcdatamodeld in Sources */,
 				138A905E27452DCF00424EA3 /* MainModel.swift in Sources */,
 				136752FB27144FD800ADC62C /* MainViewController.swift in Sources */,
+				13B1C04A27511C9000439669 /* Answer.swift in Sources */,
 				138A906027452E2700424EA3 /* SettingsModel.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
@@ -374,9 +396,11 @@
 				13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */,
 				138A906C2745301C00424EA3 /* GetAnswerFromDBProtocol.swift in Sources */,
 				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,
+				13B1C0442751197400439669 /* AnswersModelType.swift in Sources */,
 				1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */,
 				138A907027454A6500424EA3 /* SettingsModelType.swift in Sources */,
-				13B1C0402751099700439669 /* AnswersHistory.swift in Sources */,
+				13B1C0402751099700439669 /* HistoryViewController.swift in Sources */,
+				13B1C04627511A5800439669 /* AnswerViewModelType.swift in Sources */,
 				138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

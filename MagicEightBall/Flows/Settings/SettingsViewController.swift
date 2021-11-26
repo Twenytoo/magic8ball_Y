@@ -77,9 +77,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         addAnswer.addAction(doneAction)
         present(addAnswer, animated: true)
     }
-//    @objc private func dismissSelf(_ sender: UIBarButtonItem) {
-//        dismiss(animated: true, completion: nil)
-//    }
 }
 
 private extension SettingsViewController {
@@ -88,9 +85,5 @@ private extension SettingsViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addAnswerByBarButton))
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: .checkmark,
-//                                                           style: .plain,
-//                                                           target: self,
-//                                                           action: #selector(dismissSelf(_:)))
     }
 }

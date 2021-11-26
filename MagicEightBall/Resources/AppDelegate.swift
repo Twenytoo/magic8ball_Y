@@ -32,7 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settingsNavVC = UINavigationController(rootViewController: settingsVC)
         settingsNavVC.title = "SETTINGS"
 //        AnswersHistory View Controller
-        let answerHistoryVC = AnswersHistory()
+        let answerModel = AnswersModel(storagemanager: storageManager)
+        let answerViewModel = AnswerViewModel(answerModel: answerModel)
+        let answerHistoryVC = AnswersHistory(answerViewModel: answerViewModel)
         let answerHistoryNavVC = UINavigationController(rootViewController: answerHistoryVC)
         answerHistoryNavVC.title = "HISTORY"
 //        TabBar View Controller

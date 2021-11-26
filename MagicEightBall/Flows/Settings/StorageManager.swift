@@ -11,15 +11,13 @@ import CoreData
 enum Entities {
     case answerEntity
 }
-class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol {
+class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAnswerProtocol {
     let context = AppDelegate.context!
     var answers = [AnswerEntity]()
     init() {
         getAllObejcts()
     }
-//    func getAllObejcts(entity: NSManagedObject, entityName: Entities)
     func getAllObejcts() {
-//        let fetchRequest = NSFetchRequest<entity>(entityName: entityName)
         do {
             answers = try context.fetch(AnswerEntity.fetchRequest())
         } catch {
@@ -29,6 +27,7 @@ class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol {
     func createEntity(text: String) {
         let newEntity = AnswerEntity(context: context)
         newEntity.text = text
+        newEntity.date = Date()
         do {
             try context.save()
         } catch {

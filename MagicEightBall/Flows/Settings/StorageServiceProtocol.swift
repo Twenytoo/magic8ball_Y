@@ -11,7 +11,7 @@ import CoreData
 
 protocol StorageServiceProtocol {
     var answers: [AnswerEntity] { get set}
-    func createEntity(text: String)
+    func getAllObejcts()
     func deleteEntity(answer: AnswerEntity)
     func updateEntity(answer: AnswerEntity, text: String)
 }

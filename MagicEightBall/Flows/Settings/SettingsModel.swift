@@ -10,8 +10,8 @@ import RealmSwift
 
 class SettingsModel: SettingsModelType {
     var answers: [String]?
-    var storageManager: StorageServiceProtocol
-    init(storageManager: StorageServiceProtocol) {
+    var storageManager: StorageServiceProtocol & CreateAnswerProtocol
+    init(storageManager: StorageServiceProtocol & CreateAnswerProtocol) {
         self.storageManager = storageManager
         fetchAnswerString()
     }

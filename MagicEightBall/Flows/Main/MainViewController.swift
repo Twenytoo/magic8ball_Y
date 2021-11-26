@@ -13,7 +13,6 @@ class MainViewController: UIViewController {
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
-//    private let settingsButton = UIButton()
     private var viewModel: MainViewModelType
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
@@ -52,13 +51,6 @@ class MainViewController: UIViewController {
             self.answerLabel.text = answer
         }
     }
-//    @objc private func buttonDidTap() {
-//        let storageManager = StorageManager()
-//        let settingsModel = SettingsModel(storageManager: storageManager)
-//        let settingViewModel = SettingViewModel(settingsModel: settingsModel)
-//        let settingsVC = SettingsViewController(viewModel: settingViewModel)
-//        present(UINavigationController(rootViewController: settingsVC), animated: true)
-//    }
 }
 // MARK: - Setting UI
 private extension MainViewController {
@@ -79,16 +71,9 @@ private extension MainViewController {
         countLabel.textColor = .darkGray
         countLabel.textAlignment = .center
         countLabel.font = countLabel.font.withSize(20)
-//        ///     Button for present Settings ViewController
-//        settingsButton.setTitleColor(.cyan, for: .normal)
-//        settingsButton.setTitle(L10n.settings, for: .normal)
-//        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
-//        settingsButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
-//        Adding subviews
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
-//        self.view.addSubview(settingsButton)
         setupCountLabel()
     }
 // MARK: - Contraints
@@ -104,11 +89,6 @@ private extension MainViewController {
         countLabel.snp.makeConstraints { make in
             make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(25)
         }
-//        settingsButton.snp.makeConstraints {make in
-//            make.top.equalTo(imageBallView.snp.bottom).offset(140)
-//            make.centerX.equalTo(imageBallView)
-//            make.width.equalTo(imageBallView.snp.width).multipliedBy(0.5)
-//        }
     }
     func setupCountLabel() {
         countLabel.text = "Shakes – \(viewModel.loadTouches())"

@@ -10,7 +10,7 @@ import RealmSwift
 
 protocol SettingsModelType {
     var answers: [String]? { get set }
-    var storageManager: StorageServiceProtocol { get set }
+    var storageManager: StorageServiceProtocol & CreateAnswerProtocol { get set }
     func addNewAnswer(answer: String)
     func deleteAnswer(answer: String)
 }
