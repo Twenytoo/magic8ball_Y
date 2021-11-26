@@ -11,7 +11,7 @@ protocol MainModelType {
     var countTouches: Int {get set}
     var answer: String! { get set }
     var networkManager: NetworkService { get set }
-    var storageManager: StorageService { get set }
+    var storageManager: StorageServiceProtocol { get set }
     var secureStorageService: SecureStorageServiceType { get set }
     var completionHandler: ((String) -> Void)? { get set }
     func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)

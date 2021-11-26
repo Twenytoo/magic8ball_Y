@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:AnswerEntity+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:AnswerEntity+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:MagicEightBall.xcodeproj">
    </FileRef>
    <FileRef

@@ -11,11 +11,11 @@ class MainModel: MainModelType {
     var countTouches = 0
     var answer: String!
     var networkManager: NetworkService
-    var storageManager: StorageService
+    var storageManager: StorageServiceProtocol
     var secureStorageService: SecureStorageServiceType
     lazy var completionHandler = networkManager.completionHandler
     init(networkManager: NetworkService,
-         storageManager: StorageService,
+         storageManager: StorageServiceProtocol,
          secureStorageService: SecureStorageServiceType) {
         self.networkManager = networkManager
         self.storageManager = storageManager

@@ -53,7 +53,8 @@ class MainViewController: UIViewController {
         }
     }
     @objc private func buttonDidTap() {
-        let storageManager = StorageManager()
+//        let storageManager = StorageManager()
+        let storageManager = CoreDataManager()
         let settingsModel = SettingsModel(storageManager: storageManager)
         let settingViewModel = SettingViewModel(settingsModel: settingsModel)
         let settingsVC = SettingsViewController(viewModel: settingViewModel)

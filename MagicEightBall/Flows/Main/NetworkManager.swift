@@ -12,7 +12,7 @@ class NetworkManager: NetworkService {
     var completionHandler: ((String) -> Void)?
     /// Shows answers from DB in case of unsuccessful internet connection
     private var dbManager: DBManagerProtocol
-    init(dbManager: DBManagerProtocol = StorageManager()) {
+    init(dbManager: DBManagerProtocol = CoreDataManager()) {
         self.dbManager = dbManager
     }
     // MARK: - Getting data from Network
