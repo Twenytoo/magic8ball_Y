@@ -25,7 +25,7 @@
 		138A90692745301C00424EA3 /* StorageServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90642745301C00424EA3 /* StorageServiceProtocol.swift */; };
 		138A906A2745301C00424EA3 /* NetworkServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90652745301C00424EA3 /* NetworkServiceType.swift */; };
 		138A906B2745301C00424EA3 /* SettingsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90662745301C00424EA3 /* SettingsViewModelType.swift */; };
-		138A906C2745301C00424EA3 /* DBManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90672745301C00424EA3 /* DBManagerProtocol.swift */; };
+		138A906C2745301C00424EA3 /* GetAnswerFromDBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A90672745301C00424EA3 /* GetAnswerFromDBProtocol.swift */; };
 		138A906E274533F200424EA3 /* MainModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A906D274533F200424EA3 /* MainModelType.swift */; };
 		138A907027454A6500424EA3 /* SettingsModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A906F27454A6500424EA3 /* SettingsModelType.swift */; };
 		138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */; };
@@ -62,7 +62,7 @@
 		138A90642745301C00424EA3 /* StorageServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageServiceProtocol.swift; sourceTree = "<group>"; };
 		138A90652745301C00424EA3 /* NetworkServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkServiceType.swift; sourceTree = "<group>"; };
 		138A90662745301C00424EA3 /* SettingsViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModelType.swift; sourceTree = "<group>"; };
-		138A90672745301C00424EA3 /* DBManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManagerProtocol.swift; sourceTree = "<group>"; };
+		138A90672745301C00424EA3 /* GetAnswerFromDBProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAnswerFromDBProtocol.swift; sourceTree = "<group>"; };
 		138A906D274533F200424EA3 /* MainModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModelType.swift; sourceTree = "<group>"; };
 		138A906F27454A6500424EA3 /* SettingsModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelType.swift; sourceTree = "<group>"; };
 		138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 				139640D4271EFEB30088FCD7 /* StorageManager.swift */,
 				13B1C03C2750F08000439669 /* CoreDataManager.swift */,
 				138A90642745301C00424EA3 /* StorageServiceProtocol.swift */,
-				138A90672745301C00424EA3 /* DBManagerProtocol.swift */,
+				138A90672745301C00424EA3 /* GetAnswerFromDBProtocol.swift */,
 				13B1C0392750EFE000439669 /* Answers.xcdatamodeld */,
 			);
 			path = Settings;
@@ -385,7 +385,7 @@
 				139640D5271EFEB30088FCD7 /* StorageManager.swift in Sources */,
 				138A906A2745301C00424EA3 /* NetworkServiceType.swift in Sources */,
 				13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */,
-				138A906C2745301C00424EA3 /* DBManagerProtocol.swift in Sources */,
+				138A906C2745301C00424EA3 /* GetAnswerFromDBProtocol.swift in Sources */,
 				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,
 				1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */,
 				138A907027454A6500424EA3 /* SettingsModelType.swift in Sources */,

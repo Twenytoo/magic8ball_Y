@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol DBManagerProtocol: AnyObject {
+protocol GetAnswerFromDBProtocol: AnyObject {
     func showAnswerWithoutConnection() -> String
 }

@@ -8,13 +8,12 @@
 import Foundation
 import CoreData
 
-class CoreDataManager: StorageServiceProtocol, DBManagerProtocol {
+class CoreDataManager: StorageServiceProtocol, GetAnswerFromDBProtocol {
     let context = AppDelegate.context!
-    var answers = [AnswerEntity] ()
+    var answers = [AnswerEntity]()
     init() {
         getAllObejcts()
     }
-    
     func getAllObejcts() {
         do {
             answers = try context.fetch(AnswerEntity.fetchRequest())
@@ -31,7 +30,6 @@ class CoreDataManager: StorageServiceProtocol, DBManagerProtocol {
             print(error)
         }
     }
-    
     func deleteEntity(answer: AnswerEntity) {
         context.delete(answer)
         do {
@@ -40,7 +38,6 @@ class CoreDataManager: StorageServiceProtocol, DBManagerProtocol {
             print(error)
         }
     }
-    
     func updateEntity(answer: AnswerEntity, text: String) {
         answer.text = text
         do {
@@ -50,6 +47,10 @@ class CoreDataManager: StorageServiceProtocol, DBManagerProtocol {
         }
     }
     func showAnswerWithoutConnection() -> String {
-        return "ЗАГЛУШКА"
+        if let answer = self.answers.randomElement()?.text {
+            return answer
+        } else {
+            return L10n.add
+        }
     }
 }
