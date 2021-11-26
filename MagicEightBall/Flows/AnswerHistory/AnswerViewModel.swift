@@ -16,7 +16,7 @@ class AnswerViewModel: AnswerViewModelType {
     }
     func getAnswers() {
         getAllObejcts()
-        answers = answerModel.answers
+        answers = answerModel.answers.reversed()
     }
     func getAllObejcts() {
         answerModel.getAllObejcts()

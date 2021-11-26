@@ -24,19 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainViewModel = MainViewModel(mainModel: mainModel)
         let mainVC = MainViewController(viewModel: mainViewModel)
         let mainNavVC = UINavigationController(rootViewController: mainVC)
-        mainNavVC.title = "MAIN"
+        mainNavVC.title = L10n.main
 //        Setttings View Controller
         let settingsModel = SettingsModel(storageManager: storageManager)
         let settingViewModel = SettingViewModel(settingsModel: settingsModel)
         let settingsVC = SettingsViewController(viewModel: settingViewModel)
         let settingsNavVC = UINavigationController(rootViewController: settingsVC)
-        settingsNavVC.title = "SETTINGS"
+        settingsNavVC.title = L10n.settings
 //        AnswersHistory View Controller
         let answerModel = AnswersModel(storagemanager: storageManager)
         let answerViewModel = AnswerViewModel(answerModel: answerModel)
         let answerHistoryVC = AnswersHistory(answerViewModel: answerViewModel)
         let answerHistoryNavVC = UINavigationController(rootViewController: answerHistoryVC)
-        answerHistoryNavVC.title = "HISTORY"
+        answerHistoryNavVC.title = L10n.history
 //        TabBar View Controller
         let tabBarViewController = UITabBarController()
         tabBarViewController.setViewControllers([mainNavVC, settingsNavVC, answerHistoryNavVC],

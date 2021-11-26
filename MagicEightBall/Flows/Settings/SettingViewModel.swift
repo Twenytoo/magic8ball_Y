@@ -6,14 +6,14 @@
 //
 
 import Foundation
-import RealmSwift
+
 
 class SettingViewModel: SettingsViewModelType {
-    var answers: [String]!
+    var answers = [String]()
     var settingsModel: SettingsModelType
     init(settingsModel: SettingsModelType) {
         self.settingsModel = settingsModel
-        fullAnswers()
+        getAnswerFromEntity()
     }
     /// Adds the new object of Answer type in the database
     /// Creates an instance of Answer type from String type.
@@ -27,13 +27,15 @@ class SettingViewModel: SettingsViewModelType {
     func deleteAnswer(answer: String) {
         settingsModel.deleteAnswer(answer: answer)
     }
-    func fullAnswers() {
-        var temp = [String]()
-        if let answers = settingsModel.answers {
-            for answer in answers {
-                temp.append(answer)
-            }
+    func getAnswerFromEntity() {
+        settingsModel.getAnswersFromDB()
+        print("getAnswersFromDB CALLED settingsModel")
+        let entyties = settingsModel.answers
+        print(entyties.count)
+        for entity in entyties {
+            print("TEXT!!!!!\(String(describing: entity.text))")
+            let answer = entity.text ?? L10n.error
+            self.answers.append(answer)
         }
-        self.answers = temp
     }
 }

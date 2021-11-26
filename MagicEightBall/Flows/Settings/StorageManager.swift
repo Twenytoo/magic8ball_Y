@@ -8,15 +8,27 @@
 import Foundation
 import CoreData
 
-enum Entities {
-    case answerEntity
-}
 class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAnswerProtocol {
     let context = AppDelegate.context!
     var answers = [AnswerEntity]()
     init() {
         getAllObejcts()
     }
+    public func getObjects<T: NSManagedObject> (
+            _ request: NSFetchRequest<T>,
+            completion: @escaping (Result<[T], Error>) -> Void
+        ) {
+            let context = context
+            context.perform {
+                do {
+                    let result = try context.fetch(request)
+                    completion(.success(result))
+                } catch let error {
+                    completion(.failure(error))
+                }
+            }
+        }
+
     func getAllObejcts() {
         do {
             answers = try context.fetch(AnswerEntity.fetchRequest())

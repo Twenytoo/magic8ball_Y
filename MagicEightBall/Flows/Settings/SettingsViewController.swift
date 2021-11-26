@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //    SettingViewModel
@@ -44,7 +43,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: L10n.cell, for: indexPath)
         guard let answerCell = cell as? CustomTableViewCell else {return UITableViewCell()}
-        answerCell.configure(text: viewModel.answers[indexPath.row])
+        answerCell.configureTextAnswer(text: viewModel.answers[indexPath.row])
         return answerCell
     }
     // MARK: - Table view delegate

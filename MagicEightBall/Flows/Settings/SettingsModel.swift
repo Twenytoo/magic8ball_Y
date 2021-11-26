@@ -6,28 +6,35 @@
 //
 
 import Foundation
-import RealmSwift
+import CoreData
 
 class SettingsModel: SettingsModelType {
-    var answers: [String]?
+    var answers = [AnswerEntity]()
     var storageManager: StorageServiceProtocol & CreateAnswerProtocol
     init(storageManager: StorageServiceProtocol & CreateAnswerProtocol) {
         self.storageManager = storageManager
-        fetchAnswerString()
     }
     func addNewAnswer(answer: String) {
         storageManager.createEntity(text: answer)
+        getAnswersFromDB()
     }
     func deleteAnswer(answer: String) {
         for answerEntity in storageManager.answers where answerEntity.text == answer {
             storageManager.deleteEntity(answer: answerEntity)
         }
     }
-    private func fetchAnswerString() {
-        var temp = [String]()
-        for answer in storageManager.answers {
-            temp.append(answer.text ?? L10n.error)
+    func getAnswersFromDB() {
+        let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
+        storageManager.getObjects(fetchRequest) { result in
+                switch result {
+                case .success(let answerEntities):
+                    self.setAnswers(answer: answerEntities)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
         }
-        self.answers = temp
+    }
+    func setAnswers(answer: [AnswerEntity]){
+        answers = answer
     }
 }

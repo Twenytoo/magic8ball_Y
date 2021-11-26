@@ -15,10 +15,17 @@ class CustomTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize: 17, weight: .bold)
         return label
     }()
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 15, weight: .light)
+        return label
+    }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .white
         contentView.addSubview(answerLabel)
+        contentView.addSubview(dateLabel)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -28,14 +35,23 @@ class CustomTableViewCell: UITableViewCell {
         addConstraintsForCell()
     }
 ///    Configurating cell
-    func configure(text: String) {
+    func configureTextAnswer(text: String) {
         answerLabel.text = text
+    }
+    func configureTextDate(text: String) {
+        dateLabel.text = text
     }
     func addConstraintsForCell() {
         answerLabel.snp.makeConstraints { make in
             make.leading.equalTo(contentView).inset(40)
             make.width.equalToSuperview()
-            make.height.equalTo(50)
+            make.height.equalTo(100)
+            make.centerY.equalToSuperview()
+        }
+        dateLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(300)
+            make.height.equalTo(100)
+            make.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
         }
     }

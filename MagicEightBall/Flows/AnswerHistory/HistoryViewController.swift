@@ -13,6 +13,7 @@ class AnswersHistory: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .magenta
+        title = L10n.history
 
     }
     init(answerViewModel: AnswerViewModelType) {
@@ -31,13 +32,14 @@ class AnswersHistory: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return answerViewModel.answers.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "historyCell")
-        let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath)
-        cell.textLabel?.text = "\(answerViewModel.answers[indexPath.row].text) \(answerViewModel.answers[indexPath.row].date)"
-        return cell
+        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
+        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.cell, for: indexPath)
+        guard let answerCell = cell as? CustomTableViewCell else {return UITableViewCell()}
+        answerCell.configureTextAnswer(text: answerViewModel.answers[indexPath.row].text)
+        answerCell.configureTextDate(text: answerViewModel.answers[indexPath.row].date)
+        return answerCell
     }
 }

@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import RealmSwift
 
 class MainViewController: UIViewController {
     private let answerLabel = UILabel()
@@ -55,6 +54,7 @@ class MainViewController: UIViewController {
 // MARK: - Setting UI
 private extension MainViewController {
     func setUpInterface() {
+        title = L10n.main
         self.view.backgroundColor = .white
         ///     ImageView with Magic Ball image
         let imageBall = UIImage(asset: Asset.magicBallPNG)

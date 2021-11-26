@@ -14,7 +14,7 @@ class AnswersModel: AnswersModelType {
     init(storagemanager: StorageServiceProtocol) {
         self.storageManager = storagemanager
         fetchAnswerString()
-        dateFormatter.dateStyle = .short
+        dateFormatter.dateStyle = .medium
     }
     private func fetchAnswerString() {
         var temp = [Answer]()
