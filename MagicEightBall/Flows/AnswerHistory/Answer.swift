@@ -9,8 +9,8 @@ import Foundation
 
 class Answer {
     var text: String
-    var date: String
-    init(text: String, date: String) {
+    var date: Date
+    init(text: String, date: Date) {
         self.text = text
         self.date = date
     }

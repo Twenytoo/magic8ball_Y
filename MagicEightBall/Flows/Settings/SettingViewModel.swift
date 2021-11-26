@@ -6,14 +6,15 @@
 //
 
 import Foundation
-//MARK: - Protocols
+// MARK: - Protocols
 protocol SettingsViewModelType {
     var answers: [String] { get set }
     var settingsModel: SettingsModelType {get set}
     func addNewAnswer(answer: String)
     func deleteAnswer(answer: String)
+    func reloadTable(answer: String)
 }
-//MARK: - Class
+// MARK: - Class
 class SettingViewModel: SettingsViewModelType {
     var answers = [String]()
     var settingsModel: SettingsModelType
@@ -34,12 +35,13 @@ class SettingViewModel: SettingsViewModelType {
         settingsModel.deleteAnswer(answer: answer)
     }
     func getAnswerFromEntity() {
-       settingsModel.getAnswersFromDB { answerEntity in
-            var answersString = [String]()
+        settingsModel.getAnswersFromDB { answerEntity in
             for answer in answerEntity {
-                answersString.append(answer.text ?? L10n.error)
+                self.answers.append(answer.text ?? L10n.error)
             }
-            self.answers = answersString
         }
+    }
+    func reloadTable(answer: String) {
+        answers.append(answer)
     }
 }

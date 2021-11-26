@@ -24,7 +24,7 @@ class AnswersModel: AnswersModelType {
     private func fetchAnswerString() {
         var temp = [Answer]()
         for answer in storageManager.answers {
-            temp.append(Answer(text: answer.text ?? "", date: dateFormatter.string(from: answer.date ?? Date())))
+            temp.append(Answer(text: answer.text ?? "", date: answer.date ?? Date()))
         }
         self.answers = temp
     }

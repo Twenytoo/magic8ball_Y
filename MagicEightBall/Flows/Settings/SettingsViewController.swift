@@ -10,14 +10,16 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //    SettingViewModel
     private var viewModel: SettingsViewModelType
+    private var answerViewModel: AnswerViewModelType
     //    Creating table view
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
         return tableView
     }()
-    init(viewModel: SettingsViewModelType) {
+    init(viewModel: SettingsViewModelType, answerViewModel: AnswerViewModelType) {
         self.viewModel = viewModel
+        self.answerViewModel = answerViewModel
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -25,16 +27,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = .lightGray
+        setTableView()
         addBarButtonItems()
-        view.addSubview(tableView)
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
-        title = L10n.settings
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,6 +53,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
             self.viewModel.deleteAnswer(answer: answer)
             self.viewModel.answers.remove(at: indexPath.row)
+            self.answerViewModel.deleteAnswer(text: answer)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
@@ -69,6 +69,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let doneAction = UIAlertAction(title: L10n.done, style: .default) { _ in
             if let addAnswerTextField = addAnswer.textFields?[0].text {
                 self.viewModel.answers.append(addAnswerTextField)
+                self.answerViewModel.addAnswer(answer: addAnswerTextField)
                 self.viewModel.addNewAnswer(answer: addAnswerTextField)
                 self.tableView.reloadData()
             }
@@ -84,5 +85,14 @@ private extension SettingsViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addAnswerByBarButton))
+    }
+    func setTableView() {
+        title = L10n.settings
+        tableView.rowHeight = 44
+        tableView.frame = view.bounds
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .lightGray
+        view.addSubview(tableView)
     }
 }
