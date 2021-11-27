@@ -27,7 +27,6 @@ protocol CreateAnswerProtocol {
 class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAnswerProtocol {
     var delegate: SettingsModelType?
     let context = AppDelegate.context!
-    var answers = [AnswerEntity]()
     init() {
     }
     public func getObjects<T: NSManagedObject> (
@@ -48,22 +47,17 @@ class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAns
         let newEntity = AnswerEntity(context: context)
         newEntity.text = text
         newEntity.date = Date()
-        do {
-            try context.save()
-        } catch {
-            print(error)
-        }
+        saveContext()
     }
     func deleteEntity(answer: AnswerEntity) {
         context.delete(answer)
-        do {
-            try context.save()
-        } catch {
-            print(error)
-        }
+        saveContext()
     }
     func updateEntity(answer: AnswerEntity, text: String) {
         answer.text = text
+        saveContext()
+    }
+    private func saveContext() {
         do {
             try context.save()
         } catch {
