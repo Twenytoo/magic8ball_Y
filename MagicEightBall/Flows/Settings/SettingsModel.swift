@@ -24,14 +24,13 @@ class SettingsModel: SettingsModelType {
     }
     func addNewAnswer(answer: String) {
         storageManager.createEntity(text: answer)
-        //    МОЖЕТ ТУТ НЕ ХВАТАЕТ ФУНКЦИИ getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> [String]))
     }
     func deleteAnswer(answer: String) {
         for answerEntity in storageManager.answers where answerEntity.text == answer {
             storageManager.deleteEntity(answer: answerEntity)
         }
     }
-    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))  {
+    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
         let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
         storageManager.getObjects(fetchRequest) { result in
             switch result {
@@ -42,7 +41,7 @@ class SettingsModel: SettingsModelType {
             }
         }
     }
-    func setAnswers(answer: [AnswerEntity]){
+    func setAnswers(answer: [AnswerEntity]) {
         answers = answer
     }
 }
