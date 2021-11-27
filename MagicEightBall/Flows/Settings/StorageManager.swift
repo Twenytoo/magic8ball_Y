@@ -14,7 +14,6 @@ protocol StorageServiceProtocol {
             _ request: NSFetchRequest<T>,
             completion: @escaping (Result<[T], Error>) -> Void
         )
-    func getAllObejcts()
     func deleteEntity(answer: AnswerEntity)
     func updateEntity(answer: AnswerEntity, text: String)
 }
@@ -29,7 +28,6 @@ class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAns
     let context = AppDelegate.context!
     var answers = [AnswerEntity]()
     init() {
-        getAllObejcts()
     }
     public func getObjects<T: NSManagedObject> (
             _ request: NSFetchRequest<T>,
@@ -45,14 +43,7 @@ class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAns
                 }
             }
         }
-
-    func getAllObejcts() {
-        do {
-            answers = try context.fetch(AnswerEntity.fetchRequest())
-        } catch {
-            print(error)
-        }
-    }
+    
     func createEntity(text: String) {
         let newEntity = AnswerEntity(context: context)
         newEntity.text = text

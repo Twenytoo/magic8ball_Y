@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import CoreData
 
 protocol AnswersModelType {
     var answers: [Answer]! { get set }
-    func getAllObejcts()
+    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))
     var storageManager: StorageServiceProtocol { get set }
 }
 class AnswersModel: AnswersModelType {
@@ -19,7 +20,7 @@ class AnswersModel: AnswersModelType {
     init(storagemanager: StorageServiceProtocol) {
         self.storageManager = storagemanager
         fetchAnswerString()
-        dateFormatter.dateStyle = .medium
+//        dateFormatter.dateStyle = .medium
     }
     private func fetchAnswerString() {
         var temp = [Answer]()
@@ -28,8 +29,15 @@ class AnswersModel: AnswersModelType {
         }
         self.answers = temp
     }
-    func getAllObejcts() {
-        fetchAnswerString()
-        storageManager.getAllObejcts()
+    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
+        let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
+        storageManager.getObjects(fetchRequest) { result in
+            switch result {
+            case .success(let answerEntities):
+                completion(answerEntities)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

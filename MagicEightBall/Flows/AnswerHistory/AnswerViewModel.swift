@@ -23,12 +23,16 @@ class AnswerViewModel: AnswerViewModelType {
         getAnswers()
     }
     func getAnswers() {
-        getAllObejcts()
+        getAnswerFromEntity()
         dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
-        answers = answerModel.answers.reversed()
     }
-    func getAllObejcts() {
-        answerModel.getAllObejcts()
+    func getAnswerFromEntity() {
+        answerModel.getAnswersFromDB { answersEntity in
+            for answerEntity in answersEntity {
+                let answer = Answer(text: answerEntity.text ?? L10n.error, date: answerEntity.date ?? Date())
+                self.answers.append(answer)
+            }
+        }
     }
     func addAnswer(answer: String) {
         let answer = Answer(text: answer, date: Date())
