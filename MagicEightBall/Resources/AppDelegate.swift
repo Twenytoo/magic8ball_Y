@@ -39,8 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainVC = MainViewController(viewModel: mainViewModel)
         let mainNavVC = UINavigationController(rootViewController: mainVC)
         mainNavVC.title = L10n.main
-
-        
         //        TabBar View Controller
         let tabBarViewController = UITabBarController()
         tabBarViewController.setViewControllers([mainNavVC, settingsNavVC, answerHistoryNavVC],

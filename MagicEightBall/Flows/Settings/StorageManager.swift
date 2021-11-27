@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 // MARK: - Protocols
 protocol StorageServiceProtocol {
-    var answers: [AnswerEntity] { get set}
+    var delegate: SettingsModelType? { get set}
     func getObjects<T: NSManagedObject> (
             _ request: NSFetchRequest<T>,
             completion: @escaping (Result<[T], Error>) -> Void
@@ -25,6 +25,7 @@ protocol CreateAnswerProtocol {
 }
 // MARK: - Class
 class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAnswerProtocol {
+    var delegate: SettingsModelType?
     let context = AppDelegate.context!
     var answers = [AnswerEntity]()
     init() {
@@ -43,7 +44,6 @@ class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAns
                 }
             }
         }
-    
     func createEntity(text: String) {
         let newEntity = AnswerEntity(context: context)
         newEntity.text = text
@@ -71,7 +71,7 @@ class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAns
         }
     }
     func showAnswerWithoutConnection() -> String {
-        if let answer = self.answers.randomElement()?.text {
+        if let answer = delegate?.answers.randomElement()?.text {
             return answer
         } else {
             return L10n.add

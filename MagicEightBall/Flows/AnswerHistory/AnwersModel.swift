@@ -19,6 +19,7 @@ class AnswersModel: AnswersModelType {
     }
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
         let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         storageManager.getObjects(fetchRequest) { result in
             switch result {
             case .success(let answerEntities):

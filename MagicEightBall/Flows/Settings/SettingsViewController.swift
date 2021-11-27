@@ -9,7 +9,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //    SettingViewModel
-    private var viewModel: SettingsViewModelType
+    private var settingsViewModel: SettingsViewModelType
     private var answerViewModel: AnswerViewModelType
     //    Creating table view
     private let tableView: UITableView = {
@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return tableView
     }()
     init(viewModel: SettingsViewModelType, answerViewModel: AnswerViewModelType) {
-        self.viewModel = viewModel
+        self.settingsViewModel = viewModel
         self.answerViewModel = answerViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,22 +37,22 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.answers.isEmpty ? 0 : viewModel.answers.count
+        return settingsViewModel.answers.isEmpty ? 0 : settingsViewModel.answers.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: L10n.cell, for: indexPath)
         guard let answerCell = cell as? CustomTableViewCell else {return UITableViewCell()}
-        answerCell.configureTextAnswer(text: viewModel.answers[indexPath.row])
+        answerCell.configureTextAnswer(text: settingsViewModel.answers[indexPath.row])
         return answerCell
     }
     // MARK: - Table view delegate
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
     UISwipeActionsConfiguration? {
-        let answer = viewModel.answers[indexPath.row]
+        let answer = settingsViewModel.answers[indexPath.row]
         let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
-            self.viewModel.deleteAnswer(answer: answer)
-            self.viewModel.answers.remove(at: indexPath.row)
+            self.settingsViewModel.deleteAnswer(answer: answer)
+            self.settingsViewModel.answers.remove(at: indexPath.row)
             self.answerViewModel.deleteAnswer(text: answer)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -68,9 +68,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         addAnswer.addAction(cancelAction)
         let doneAction = UIAlertAction(title: L10n.done, style: .default) { _ in
             if let addAnswerTextField = addAnswer.textFields?[0].text {
-                self.viewModel.answers.append(addAnswerTextField)
+                self.settingsViewModel.answers.append(addAnswerTextField)
                 self.answerViewModel.addAnswer(answer: addAnswerTextField)
-                self.viewModel.addNewAnswer(answer: addAnswerTextField)
+                self.settingsViewModel.addNewAnswer(answer: addAnswerTextField)
                 self.tableView.reloadData()
             }
         }

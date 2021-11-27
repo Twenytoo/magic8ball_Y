@@ -21,12 +21,14 @@ class SettingsModel: SettingsModelType {
     var storageManager: StorageServiceProtocol & CreateAnswerProtocol
     init(storageManager: StorageServiceProtocol & CreateAnswerProtocol) {
         self.storageManager = storageManager
+        self.storageManager.delegate = self
+        setAnswers()
     }
     func addNewAnswer(answer: String) {
         storageManager.createEntity(text: answer)
     }
     func deleteAnswer(answer: String) {
-        for answerEntity in storageManager.answers where answerEntity.text == answer {
+        for answerEntity in self.answers where answerEntity.text == answer {
             storageManager.deleteEntity(answer: answerEntity)
         }
     }
@@ -41,7 +43,9 @@ class SettingsModel: SettingsModelType {
             }
         }
     }
-    func setAnswers(answer: [AnswerEntity]) {
-        answers = answer
+    func setAnswers() {
+        getAnswersFromDB { answers in
+            self.answers = answers
+        }
     }
 }
