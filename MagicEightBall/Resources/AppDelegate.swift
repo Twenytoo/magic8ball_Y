@@ -18,15 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let answerModel = AnswersModel(storagemanager: storageManager)
         let answerViewModel = AnswerViewModel(answerModel: answerModel)
         let answerHistoryVC = HistoryViewController(answerViewModel: answerViewModel)
-        answerModel.fetchControllerDelegate = answerHistoryVC
         let answerHistoryNavVC = UINavigationController(rootViewController: answerHistoryVC)
         answerHistoryNavVC.title = L10n.history
         //        Setttings View Controller
         let settingsModel = SettingsModel(storageManager: storageManager)
         let settingViewModel = SettingViewModel(settingsModel: settingsModel)
-        let settingsVC = SettingsViewController(viewModel: settingViewModel, answerViewModel: answerViewModel)
+        let settingsVC = SettingsViewController(viewModel: settingViewModel)
         let settingsNavVC = UINavigationController(rootViewController: settingsVC)
         settingsNavVC.title = L10n.settings
+        settingsModel.fetchControllerDelegate = settingsVC
         //        Managers
         let getAnswerWithoutConnectionManager = GetAnswerWithoutConnection(storageManager: storageManager)
         let networkManager = NetworkManager(createAnswerManager: settingsModel,

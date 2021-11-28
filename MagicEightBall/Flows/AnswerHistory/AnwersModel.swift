@@ -14,7 +14,6 @@ protocol AnswersModelType {
 }
 class AnswersModel: AnswersModelType {
     private let context: NSManagedObjectContext?
-    weak var fetchControllerDelegate: NSFetchedResultsControllerDelegate?
     var storageManager: StorageServiceProtocol
     init(storagemanager: StorageServiceProtocol) {
         self.storageManager = storagemanager

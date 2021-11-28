@@ -10,7 +10,7 @@ import Foundation
 protocol AnswerViewModelType {
     func getAnswerFromEntity(complition: @escaping ([Answer]) -> Void)
     func getTextOfAnswer(indexPath: Int) -> String
-    func getDateOfAnswer(indexPath: Int) -> String 
+    func getDateOfAnswer(indexPath: Int) -> String
 }
 class AnswerViewModel: AnswerViewModelType {
     let dateFormatter = DateFormatter()

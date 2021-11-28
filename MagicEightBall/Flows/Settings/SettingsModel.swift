@@ -21,6 +21,7 @@ protocol CreateAnswerProtocol {
 // MARK: - Class
 class SettingsModel: SettingsModelType, CreateAnswerProtocol {
     var answers = [AnswerEntity]()
+    weak var fetchControllerDelegate: NSFetchedResultsControllerDelegate?
     private let context: NSManagedObjectContext?
     private let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
     var storageManager: StorageServiceProtocol
@@ -40,6 +41,7 @@ class SettingsModel: SettingsModelType, CreateAnswerProtocol {
         guard let context = context else { return }
         for answerEntity in self.answers where answerEntity.text == answer {
             context.delete(answerEntity)
+            storageManager.saveContext()
         }
     }
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {

@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class HistoryViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class HistoryViewController: UITableViewController {
     let answerViewModel: AnswerViewModelType
 
     override func viewDidLoad() {
@@ -48,25 +48,5 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         title = L10n.history
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
         tableView.rowHeight = 44
-    }
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-    }
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
-        case .move:
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-        case .update:
-            tableView.reloadRows(at: [indexPath!], with: .fade)
-        default:
-            break
-        }
     }
 }
