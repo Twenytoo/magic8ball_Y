@@ -6,20 +6,22 @@
 //
 
 import UIKit
+import CoreData
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController,
+                              UITableViewDelegate,
+                              UITableViewDataSource,
+                              NSFetchedResultsControllerDelegate {
     //    SettingViewModel
     private var settingsViewModel: SettingsViewModelType
-//    private var answerViewModel: AnswerViewModelType
     //    Creating table view
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
         return tableView
     }()
-    init(viewModel: SettingsViewModelType, answerViewModel: AnswerViewModelType) {
+    init(viewModel: SettingsViewModelType) {
         self.settingsViewModel = viewModel
-//        self.answerViewModel = answerViewModel
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -52,6 +54,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let answer = settingsViewModel.getAnswer(indexPath: indexPath.row)
         let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
             self.settingsViewModel.deleteAnswer(answer: answer)
+            self.tableView.reloadData()
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
         return deleteAction
