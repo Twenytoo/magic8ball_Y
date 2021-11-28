@@ -16,9 +16,12 @@ class NetworkManager: NetworkService {
     /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String) -> Void)?
     /// Shows answers from DB in case of unsuccessful internet connection
-    private var dbManager: CreateAnswerProtocol & GetAnswerFromDBProtocol
-    init(dbManager: CreateAnswerProtocol & GetAnswerFromDBProtocol) {
-        self.dbManager = dbManager
+    private var createAnswerManager: CreateAnswerProtocol
+    private var getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol
+    init(createAnswerManager: CreateAnswerProtocol,
+         getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol) {
+        self.createAnswerManager = createAnswerManager
+        self.getAnswerWithoutConnectionManager = getAnswerWithoutConnectionManager
     }
     // MARK: - Getting data from Network
     /// Receiving data from the Internet using URLSession
@@ -32,18 +35,18 @@ class NetworkManager: NetworkService {
         if let url = URL(string: urlString) {
             URLSession.shared.dataTask(with: url) {data, _, error in
                 if error != nil {
-                    let answer = self.dbManager.showAnswerWithoutConnection()
+                    let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
                     completion(answer)
                 }
                 if let data = data {
                     if let answer = self.parseJSON(withData: data) {
                         completion(answer)
-                        self.dbManager.createEntity(text: answer)
+                        self.createAnswerManager.createEntity(text: answer)
                     }
                 }
             }.resume()
         } else {
-            let answer = self.dbManager.showAnswerWithoutConnection()
+            let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
             completion(answer)
         }
     }

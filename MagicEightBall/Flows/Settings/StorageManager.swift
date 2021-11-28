@@ -16,14 +16,11 @@ protocol StorageServiceProtocol {
     func deleteEntity(answer: AnswerEntity)
     func updateEntity(answer: AnswerEntity, text: String)
 }
-protocol GetAnswerFromDBProtocol: AnyObject {
-    func showAnswerWithoutConnection() -> String
-}
 protocol CreateAnswerProtocol {
     func createEntity(text: String)
 }
 // MARK: - Class
-class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAnswerProtocol {
+class StorageManager: StorageServiceProtocol, CreateAnswerProtocol {
     var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>?
     var context = AppDelegate.context!
     init() {
@@ -59,8 +56,5 @@ class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAns
         } catch {
             print(error)
         }
-    }
-    func showAnswerWithoutConnection() -> String {
-        return L10n.answer
     }
 }

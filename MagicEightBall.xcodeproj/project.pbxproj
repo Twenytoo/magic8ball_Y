@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		132576F527537D96009846FF /* GetAnswerWithoutConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132576F427537D96009846FF /* GetAnswerWithoutConnection.swift */; };
 		132F50B0273EACF000B24FDC /* myStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 132F50AE273EACF000B24FDC /* myStrings.strings */; };
 		136752F727144FD800ADC62C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136752F627144FD800ADC62C /* AppDelegate.swift */; };
 		136752FB27144FD800ADC62C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136752FA27144FD800ADC62C /* MainViewController.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		132576F427537D96009846FF /* GetAnswerWithoutConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAnswerWithoutConnection.swift; sourceTree = "<group>"; };
 		132F50AF273EACF000B24FDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/myStrings.strings; sourceTree = "<group>"; };
 		136752F327144FD800ADC62C /* MagicEightBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagicEightBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		136752F627144FD800ADC62C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				138E033227439E36004D4FA8 /* SettingViewModel.swift */,
 				1372443C27180CA8007A08E9 /* SettingsViewController.swift */,
 				13B1C0392750EFE000439669 /* Answers.xcdatamodeld */,
+				132576F427537D96009846FF /* GetAnswerWithoutConnection.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				132576F527537D96009846FF /* GetAnswerWithoutConnection.swift in Sources */,
 				1372444227182838007A08E9 /* DecodedData.swift in Sources */,
 				13B1C0422751142D00439669 /* AnwersModel.swift in Sources */,
 				138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */,
