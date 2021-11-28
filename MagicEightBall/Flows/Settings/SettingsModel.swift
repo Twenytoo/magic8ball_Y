@@ -18,10 +18,12 @@ protocol SettingsModelType {
 // MARK: - Class
 class SettingsModel: SettingsModelType {
     var answers = [AnswerEntity]()
+    private let context: NSManagedObjectContext?
+    private let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
     var storageManager: StorageServiceProtocol & CreateAnswerProtocol
     init(storageManager: StorageServiceProtocol & CreateAnswerProtocol) {
         self.storageManager = storageManager
-        self.storageManager.delegate = self
+        self.context = storageManager.context
         setAnswers()
     }
     func addNewAnswer(answer: String) {
@@ -33,8 +35,14 @@ class SettingsModel: SettingsModelType {
         }
     }
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
+        guard let context = context else { return }
         let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
-        storageManager.getObjects(fetchRequest) { result in
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                    managedObjectContext: context,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        storageManager.getObjects(fetchController: controller) { result in
             switch result {
             case .success(let answerEntities):
                 completion(answerEntities)

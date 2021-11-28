@@ -15,14 +15,10 @@ protocol NetworkService {
 class NetworkManager: NetworkService {
     /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String) -> Void)?
-    private var answerViewModel: AnswerViewModelType
-    private var settingViewModel: SettingsViewModelType
     /// Shows answers from DB in case of unsuccessful internet connection
     private var dbManager: CreateAnswerProtocol & GetAnswerFromDBProtocol
-    init(dbManager: CreateAnswerProtocol & GetAnswerFromDBProtocol, answerViewModel: AnswerViewModelType, settingViewModel: SettingsViewModelType ) {
+    init(dbManager: CreateAnswerProtocol & GetAnswerFromDBProtocol) {
         self.dbManager = dbManager
-        self.answerViewModel = answerViewModel
-        self.settingViewModel = settingViewModel
     }
     // MARK: - Getting data from Network
     /// Receiving data from the Internet using URLSession
@@ -43,8 +39,6 @@ class NetworkManager: NetworkService {
                     if let answer = self.parseJSON(withData: data) {
                         completion(answer)
                         self.dbManager.createEntity(text: answer)
-                        self.answerViewModel.addAnswer(answer: answer)
-                        self.settingViewModel.reloadTable(answer: answer)
                     }
                 }
             }.resume()

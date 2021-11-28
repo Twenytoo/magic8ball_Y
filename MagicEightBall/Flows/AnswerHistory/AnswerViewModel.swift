@@ -8,40 +8,39 @@
 import Foundation
 
 protocol AnswerViewModelType {
-    var answers: [Answer] { get set }
-    func addAnswer(answer: String)
-    func deleteAnswer(text: String)
-    func getAnswers()
-    func getDateByString (indexPath: Int ) -> String
+    func getAnswerFromEntity(complition: @escaping ([Answer]) -> Void)
+    func getTextOfAnswer(indexPath: Int) -> String
+    func getDateOfAnswer(indexPath: Int) -> String 
 }
 class AnswerViewModel: AnswerViewModelType {
     let dateFormatter = DateFormatter()
-    var answers = [Answer]()
     let answerModel: AnswersModelType
     init(answerModel: AnswersModelType) {
         self.answerModel = answerModel
-        getAnswers()
-    }
-    func getAnswers() {
-        getAnswerFromEntity()
         dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
     }
-    func getAnswerFromEntity() {
-        answerModel.getAnswersFromDB { answersEntity in
-            for answerEntity in answersEntity {
-                let answer = Answer(text: answerEntity.text ?? L10n.error, date: answerEntity.date ?? Date())
-                self.answers.append(answer)
+    func getAnswerFromEntity(complition: @escaping ([Answer]) -> Void) {
+            answerModel.getAnswersFromDB { answersEntity in
+                var answersArray = [Answer]()
+                for answerEntity in answersEntity {
+                    let answer = Answer(text: answerEntity.text ?? L10n.error, date: answerEntity.date ?? Date())
+                    answersArray.append(answer)
+                }
+                complition(answersArray)
             }
         }
+    func getTextOfAnswer(indexPath: Int) -> String {
+        var answerText = ""
+        answerModel.getAnswersFromDB { answers in
+            answerText = answers[indexPath].text ?? L10n.error
+        }
+        return answerText
     }
-    func addAnswer(answer: String) {
-        let answer = Answer(text: answer, date: Date())
-        answers.insert(answer, at: 0)
-    }
-    func deleteAnswer(text: String) {
-        answers = answers.filter({ $0.text != text})
-    }
-    func getDateByString (indexPath: Int ) -> String {
-        return dateFormatter.string(from: answers[indexPath].date)
+    func getDateOfAnswer(indexPath: Int) -> String {
+        var answerDate = ""
+        answerModel.getAnswersFromDB { [weak self] answers in
+            answerDate = self?.dateFormatter.string(from: answers[indexPath].date ?? Date()) ?? L10n.error
+        }
+        return answerDate
     }
 }

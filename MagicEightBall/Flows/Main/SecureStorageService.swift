@@ -7,20 +7,20 @@
 
 import Foundation
 import Locksmith
-//    MARK: - Protocols
+// MARK: - Protocols
 protocol SecureStorageServiceType {
     func saveData (key: StorageKey, value: Any, dictionary: StorageDictionary)
     func updateData (key: StorageKey, value: Any, dictionary: StorageDictionary)
     func loadData (key: StorageKey, dictionary: StorageDictionary) -> Any?
 }
-//    MARK: - Enums
+// MARK: - Enums
 enum StorageKey: String {
     case keyForTouches = "touches"
 }
 enum StorageDictionary: String {
     case countOfTouches = "count_of_touches"
 }
-//    MARK: - Class
+// MARK: - Class
 class SecureStorageService: SecureStorageServiceType {
     func saveData (key: StorageKey, value: Any, dictionary: StorageDictionary) {
         do {

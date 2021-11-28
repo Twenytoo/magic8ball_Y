@@ -154,11 +154,11 @@
 		138A905B27452D7400424EA3 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				1372443F27182402007A08E9 /* NetworkManager.swift */,
 				138A905D27452DCF00424EA3 /* MainModel.swift */,
 				138E033327439E36004D4FA8 /* MainViewModel.swift */,
 				136752FA27144FD800ADC62C /* MainViewController.swift */,
 				1372444127182838007A08E9 /* DecodedData.swift */,
-				1372443F27182402007A08E9 /* NetworkManager.swift */,
 				13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */,
 			);
 			path = Main;
@@ -167,10 +167,10 @@
 		138A905C27452D7900424EA3 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				13B1C03C2750F08000439669 /* StorageManager.swift */,
 				138A905F27452E2700424EA3 /* SettingsModel.swift */,
 				138E033227439E36004D4FA8 /* SettingViewModel.swift */,
 				1372443C27180CA8007A08E9 /* SettingsViewController.swift */,
-				13B1C03C2750F08000439669 /* StorageManager.swift */,
 				13B1C0392750EFE000439669 /* Answers.xcdatamodeld */,
 			);
 			path = Settings;

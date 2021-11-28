@@ -9,11 +9,10 @@ import Foundation
 import CoreData
 // MARK: - Protocols
 protocol StorageServiceProtocol {
-    var delegate: SettingsModelType? { get set}
-    func getObjects<T: NSManagedObject> (
-            _ request: NSFetchRequest<T>,
-            completion: @escaping (Result<[T], Error>) -> Void
-        )
+    var context: NSManagedObjectContext { get set }
+    func getObjects<T: NSManagedObject>(
+                fetchController: NSFetchedResultsController<T>,
+                completion: @escaping (Result<[T], Error>) -> Void)
     func deleteEntity(answer: AnswerEntity)
     func updateEntity(answer: AnswerEntity, text: String)
 }
@@ -25,23 +24,20 @@ protocol CreateAnswerProtocol {
 }
 // MARK: - Class
 class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAnswerProtocol {
-    var delegate: SettingsModelType?
-    let context = AppDelegate.context!
+    var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>?
+    var context = AppDelegate.context!
     init() {
     }
-    public func getObjects<T: NSManagedObject> (
-            _ request: NSFetchRequest<T>,
-            completion: @escaping (Result<[T], Error>) -> Void
-        ) {
-            let context = context
-            context.perform {
+    public func getObjects<T: NSManagedObject>(
+                fetchController: NSFetchedResultsController<T>,
+                completion: @escaping (Result<[T], Error>) -> Void) {
                 do {
-                    let result = try context.fetch(request)
+                    try fetchController.performFetch()
+                    guard let result = fetchController.fetchedObjects else { return }
                     completion(.success(result))
                 } catch let error {
                     completion(.failure(error))
                 }
-            }
         }
     func createEntity(text: String) {
         let newEntity = AnswerEntity(context: context)
@@ -65,10 +61,6 @@ class StorageManager: StorageServiceProtocol, GetAnswerFromDBProtocol, CreateAns
         }
     }
     func showAnswerWithoutConnection() -> String {
-        if let answer = delegate?.answers.randomElement()?.text {
-            return answer
-        } else {
-            return L10n.add
-        }
+        return L10n.answer
     }
 }

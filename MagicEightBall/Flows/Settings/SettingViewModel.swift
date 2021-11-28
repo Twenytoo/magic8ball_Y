@@ -8,19 +8,19 @@
 import Foundation
 // MARK: - Protocols
 protocol SettingsViewModelType {
-    var answers: [String] { get set }
     var settingsModel: SettingsModelType {get set}
+    func getAnswer(indexPath: Int) -> String
+    func getCountOfAnswers() -> Int
     func addNewAnswer(answer: String)
     func deleteAnswer(answer: String)
-    func reloadTable(answer: String)
+    func getTextOfAnswer(indexPath: Int) -> String
 }
 // MARK: - Class
 class SettingViewModel: SettingsViewModelType {
-    var answers = [String]()
     var settingsModel: SettingsModelType
     init(settingsModel: SettingsModelType) {
         self.settingsModel = settingsModel
-        getAnswerFromEntity()
+//        getAnswerFromEntity()
     }
     /// Adds the new object of Answer type in the database
     /// Creates an instance of Answer type from String type.
@@ -34,14 +34,25 @@ class SettingViewModel: SettingsViewModelType {
     func deleteAnswer(answer: String) {
         settingsModel.deleteAnswer(answer: answer)
     }
-    func getAnswerFromEntity() {
-        settingsModel.getAnswersFromDB { answerEntity in
-            for answer in answerEntity {
-                self.answers.append(answer.text ?? L10n.error)
-            }
+    func getAnswer(indexPath: Int) -> String {
+        var answer = ""
+        settingsModel.getAnswersFromDB { answers in
+            answer = answers[indexPath].text ?? L10n.error
         }
+        return answer
     }
-    func reloadTable(answer: String) {
-        answers.append(answer)
+    func getCountOfAnswers() -> Int {
+        var count = 0
+        settingsModel.getAnswersFromDB { answers in
+            count = answers.count
+        }
+        return count
+    }
+    func getTextOfAnswer(indexPath: Int) -> String {
+        var answerText = ""
+        settingsModel.getAnswersFromDB { answers in
+            answerText = answers[indexPath].text ?? L10n.error
+        }
+        return answerText
     }
 }

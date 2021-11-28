@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storageManager = StorageManager()
         let answerModel = AnswersModel(storagemanager: storageManager)
         let answerViewModel = AnswerViewModel(answerModel: answerModel)
-        let answerHistoryVC = AnswersHistory(answerViewModel: answerViewModel)
+        let answerHistoryVC = HistoryViewController(answerViewModel: answerViewModel)
+        answerModel.fetchControllerDelegate = answerHistoryVC
         let answerHistoryNavVC = UINavigationController(rootViewController: answerHistoryVC)
         answerHistoryNavVC.title = L10n.history
         //        Setttings View Controller
@@ -27,9 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settingsNavVC = UINavigationController(rootViewController: settingsVC)
         settingsNavVC.title = L10n.settings
         //        Managers
-        let networkManager = NetworkManager(dbManager: storageManager,
-                                            answerViewModel: answerViewModel,
-                                            settingViewModel: settingViewModel)
+        let networkManager = NetworkManager(dbManager: storageManager)
         let secureStorageService = SecureStorageService()
         //        Main View Controller
         let mainModel = MainModel(networkManager: networkManager,
