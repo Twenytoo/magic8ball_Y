@@ -57,6 +57,7 @@ class SettingsViewController: UIViewController,
             self.tableView.reloadData()
         }
         let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
+        self.tableView.reloadData()
         return deleteAction
     }
     /// Calls the alert to create a new answer on pressing a BarButton
