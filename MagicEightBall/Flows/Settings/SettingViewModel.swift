@@ -20,7 +20,6 @@ class SettingViewModel: SettingsViewModelType {
     var settingsModel: SettingsModelType
     init(settingsModel: SettingsModelType) {
         self.settingsModel = settingsModel
-//        getAnswerFromEntity()
     }
     /// Adds the new object of Answer type in the database
     /// Creates an instance of Answer type from String type.

@@ -6,12 +6,12 @@
 //
 
 import UIKit
-//    MARK: - Protocol
+// MARK: - Protocol
 protocol NetworkService {
     var completionHandler: ((String) -> Void)? { get set }
     func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
 }
-//    MARK: - Class
+// MARK: - Class
 class NetworkManager: NetworkService {
     /// Handles an instance of String type in case of unsuccessful internet connection
     var completionHandler: ((String) -> Void)?
@@ -33,15 +33,15 @@ class NetworkManager: NetworkService {
         // The address where the data is received
         let urlString = L10n.url
         if let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url) {data, _, error in
+            URLSession.shared.dataTask(with: url) {[weak self] data, _, error in
                 if error != nil {
-                    let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
+                    let answer = self?.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
                     completion(answer)
                 }
                 if let data = data {
-                    if let answer = self.parseJSON(withData: data) {
+                    if let answer = self?.parseJSON(withData: data) {
                         completion(answer)
-                        self.createAnswerManager.createEntity(text: answer)
+                        self?.createAnswerManager.addNewAnswer(answer: answer)
                     }
                 }
             }.resume()

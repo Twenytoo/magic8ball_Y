@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         settingsNavVC.title = L10n.settings
         //        Managers
         let getAnswerWithoutConnectionManager = GetAnswerWithoutConnection(storageManager: storageManager)
-        let networkManager = NetworkManager(createAnswerManager: storageManager,
+        let networkManager = NetworkManager(createAnswerManager: settingsModel,
                                             getAnswerWithoutConnectionManager: getAnswerWithoutConnectionManager)
         let secureStorageService = SecureStorageService()
         //        Main View Controller

@@ -10,28 +10,36 @@ import CoreData
 // MARK: - Protocols
 protocol SettingsModelType {
     var answers: [AnswerEntity] { get set }
-    var storageManager: StorageServiceProtocol & CreateAnswerProtocol { get set }
+    var storageManager: StorageServiceProtocol { get set }
     func addNewAnswer(answer: String)
     func deleteAnswer(answer: String)
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))
 }
+protocol CreateAnswerProtocol {
+    func addNewAnswer(answer: String)
+}
 // MARK: - Class
-class SettingsModel: SettingsModelType {
+class SettingsModel: SettingsModelType, CreateAnswerProtocol {
     var answers = [AnswerEntity]()
     private let context: NSManagedObjectContext?
     private let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
-    var storageManager: StorageServiceProtocol & CreateAnswerProtocol
-    init(storageManager: StorageServiceProtocol & CreateAnswerProtocol) {
+    var storageManager: StorageServiceProtocol
+    init(storageManager: StorageServiceProtocol) {
         self.storageManager = storageManager
         self.context = storageManager.context
         setAnswers()
     }
     func addNewAnswer(answer: String) {
-        storageManager.createEntity(text: answer)
+        guard let context = context else { return }
+        let newEntity = AnswerEntity(context: context)
+            newEntity.text = answer
+            newEntity.date = Date()
+            storageManager.saveContext()
     }
     func deleteAnswer(answer: String) {
+        guard let context = context else { return }
         for answerEntity in self.answers where answerEntity.text == answer {
-            storageManager.deleteEntity(answer: answerEntity)
+            context.delete(answerEntity)
         }
     }
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {

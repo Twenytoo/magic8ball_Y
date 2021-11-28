@@ -13,14 +13,10 @@ protocol StorageServiceProtocol {
     func getObjects<T: NSManagedObject>(
                 fetchController: NSFetchedResultsController<T>,
                 completion: @escaping (Result<[T], Error>) -> Void)
-    func deleteEntity(answer: AnswerEntity)
-    func updateEntity(answer: AnswerEntity, text: String)
-}
-protocol CreateAnswerProtocol {
-    func createEntity(text: String)
+    func saveContext()
 }
 // MARK: - Class
-class StorageManager: StorageServiceProtocol, CreateAnswerProtocol {
+class StorageManager: StorageServiceProtocol {
     var fetchResultController: NSFetchedResultsController<NSFetchRequestResult>?
     var context = AppDelegate.context!
     init() {
@@ -36,21 +32,7 @@ class StorageManager: StorageServiceProtocol, CreateAnswerProtocol {
                     completion(.failure(error))
                 }
         }
-    func createEntity(text: String) {
-        let newEntity = AnswerEntity(context: context)
-        newEntity.text = text
-        newEntity.date = Date()
-        saveContext()
-    }
-    func deleteEntity(answer: AnswerEntity) {
-        context.delete(answer)
-        saveContext()
-    }
-    func updateEntity(answer: AnswerEntity, text: String) {
-        answer.text = text
-        saveContext()
-    }
-    private func saveContext() {
+    func saveContext() {
         do {
             try context.save()
         } catch {
