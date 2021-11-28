@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 
 class HistoryViewController: UITableViewController {
     let answerViewModel: AnswerViewModelType
@@ -30,11 +29,7 @@ class HistoryViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 0
-            answerViewModel.getAnswerFromEntity { answers in
-                count = answers.count
-        }
-        return count
+        return answerViewModel.getCountOfAnswers()
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: L10n.cell, for: indexPath)

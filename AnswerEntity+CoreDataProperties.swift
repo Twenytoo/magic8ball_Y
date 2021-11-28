@@ -9,13 +9,11 @@
 import Foundation
 import CoreData
 
-
 extension AnswerEntity {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<AnswerEntity> {
         return NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
     }
-
     @NSManaged public var text: String?
     @NSManaged public var date: Date?
 

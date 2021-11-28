@@ -11,21 +11,19 @@ protocol AnswerViewModelType {
     func getAnswerFromEntity(complition: @escaping ([Answer]) -> Void)
     func getTextOfAnswer(indexPath: Int) -> String
     func getDateOfAnswer(indexPath: Int) -> String
+    func getCountOfAnswers() -> Int
 }
 class AnswerViewModel: AnswerViewModelType {
-    let dateFormatter = DateFormatter()
+    let dateFormatter: DateFormatter
     let answerModel: AnswersModelType
-    init(answerModel: AnswersModelType) {
+    init(answerModel: AnswersModelType, dateFormatter: DateFormatter = DateFormatter()) {
         self.answerModel = answerModel
-        dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
+        self.dateFormatter = dateFormatter
+        self.dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
     }
     func getAnswerFromEntity(complition: @escaping ([Answer]) -> Void) {
             answerModel.getAnswersFromDB { answersEntity in
-                var answersArray = [Answer]()
-                for answerEntity in answersEntity {
-                    let answer = Answer(text: answerEntity.text ?? L10n.error, date: answerEntity.date ?? Date())
-                    answersArray.append(answer)
-                }
+                let answersArray = answersEntity.map {$0.toAnswer()}
                 complition(answersArray)
             }
         }
@@ -42,5 +40,12 @@ class AnswerViewModel: AnswerViewModelType {
             answerDate = self?.dateFormatter.string(from: answers[indexPath].date ?? Date()) ?? L10n.error
         }
         return answerDate
+    }
+    func getCountOfAnswers() -> Int {
+        var count = 0
+        answerModel.getAnswersFromDB { answers in
+            count = answers.count
+        }
+        return count
     }
 }

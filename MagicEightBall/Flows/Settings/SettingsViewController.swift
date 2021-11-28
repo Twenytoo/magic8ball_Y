@@ -6,12 +6,10 @@
 //
 
 import UIKit
-import CoreData
 
 class SettingsViewController: UIViewController,
                               UITableViewDelegate,
-                              UITableViewDataSource,
-                              NSFetchedResultsControllerDelegate {
+                              UITableViewDataSource {
     //    SettingViewModel
     private var settingsViewModel: SettingsViewModelType
     //    Creating table view

@@ -7,9 +7,9 @@
 
 import Foundation
 
-class Answer {
-    var text: String
-    var date: Date
+struct Answer {
+    let text: String
+    let date: Date
     init(text: String, date: Date) {
         self.text = text
         self.date = date
