@@ -19,6 +19,7 @@ class StorageManager: StorageServiceProtocol {
     var answers = [AnswerEntity]()
     private let persistentContainer: NSPersistentContainer
     private let context: NSManagedObjectContext
+    private let backgroundContext: NSManagedObjectContext
     init() {
         persistentContainer = {
             let container = NSPersistentContainer(name: "Answers")
@@ -30,13 +31,13 @@ class StorageManager: StorageServiceProtocol {
             return container
         }()
         context = persistentContainer.viewContext
+        backgroundContext = persistentContainer.newBackgroundContext()
     }
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
-        let context = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                    managedObjectContext: context,
+                                                    managedObjectContext: backgroundContext,
                                                     sectionNameKeyPath: nil,
                                                     cacheName: nil)
         getObjects(fetchController: controller) { result in
@@ -62,25 +63,29 @@ class StorageManager: StorageServiceProtocol {
     }
     // MARK: - Core Data Saving support
     private func saveContext () {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        backgroundContext.perform {
+            if self.backgroundContext.hasChanges {
+                do {
+                    try self.backgroundContext.save()
+                } catch {
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
             }
         }
     }
     func createAnswerEntity(answer: String) {
-        let newEntity = AnswerEntity(context: context)
-                    newEntity.text = answer
-                    newEntity.date = Date()
-                    saveContext()
+        let newEntity = AnswerEntity(context: backgroundContext)
+        newEntity.text = answer
+        newEntity.date = Date()
+        saveContext()
     }
     func deleteEnity (answer: String) {
         for answerEntity in self.answers where answerEntity.text == answer {
-            context.delete(answerEntity)
-            saveContext()
+            backgroundContext.perform {
+                self.backgroundContext.delete(answerEntity)
+                self.saveContext()
+            }
         }
     }
 }
@@ -90,3 +95,4 @@ extension AnswerEntity {
         return Answer(text: self.text ?? L10n.error, date: self.date ?? Date())
     }
 }
+
