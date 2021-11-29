@@ -8,7 +8,6 @@
 import UIKit
 // MARK: - Protocol
 protocol MainViewModelType {
-    var completionHandler: ((String) -> Void)? { get set }
     func fetchAnswerByURL(completion: @escaping (String) -> Void)
     func increaseAndSaveTouches()
     func loadTouches () -> String
@@ -16,7 +15,6 @@ protocol MainViewModelType {
 // MARK: - Class
 class MainViewModel: MainViewModelType {
     private let mainModel: MainModelType
-    lazy var completionHandler = self.mainModel.completionHandler
     init(mainModel: MainModelType) {
         self.mainModel = mainModel
     }

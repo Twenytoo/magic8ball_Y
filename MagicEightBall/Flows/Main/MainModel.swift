@@ -13,7 +13,6 @@ protocol MainModelType {
     var networkManager: NetworkService { get set }
     var storageManager: StorageServiceProtocol { get set }
     var secureStorageService: SecureStorageServiceType { get set }
-    var completionHandler: ((String) -> Void)? { get set }
     func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
     func saveTouches()
     func loadTouches () -> Int
@@ -26,7 +25,6 @@ class MainModel: MainModelType {
     var networkManager: NetworkService
     var storageManager: StorageServiceProtocol
     var secureStorageService: SecureStorageServiceType
-    lazy var completionHandler = networkManager.completionHandler
     init(networkManager: NetworkService,
          storageManager: StorageServiceProtocol,
          secureStorageService: SecureStorageServiceType) {
@@ -36,8 +34,13 @@ class MainModel: MainModelType {
     }
 
     func fetchAnswerByURL(completion: @escaping (String?) -> Void) {
-        networkManager.fetchAnswerByURL { answer in
-            completion(answer)
+        networkManager.fetchAnswerByURL { result in
+            switch result {
+            case .success(let answer):
+                completion(answer)
+            case .failure(let error):
+                print("Something went wrong \(error)")
+            }
         }
     }
     func increaseTouches() {

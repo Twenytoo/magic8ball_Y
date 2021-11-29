@@ -17,18 +17,18 @@ protocol StorageServiceProtocol {
 // MARK: - Class
 class StorageManager: StorageServiceProtocol {
     var answers = [AnswerEntity]()
-    weak var fetchControllerDelegate: NSFetchedResultsControllerDelegate?
-    private let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Answers")
-        container.loadPersistentStores(completionHandler: { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
+    private let persistentContainer: NSPersistentContainer
     private let context: NSManagedObjectContext
     init() {
+        persistentContainer = {
+            let container = NSPersistentContainer(name: "Answers")
+            container.loadPersistentStores(completionHandler: { (_, error) in
+                if let error = error as NSError? {
+                    fatalError("Unresolved error \(error), \(error.userInfo)")
+                }
+            })
+            return container
+        }()
         context = persistentContainer.viewContext
     }
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
@@ -85,8 +85,6 @@ class StorageManager: StorageServiceProtocol {
     }
 }
 
-extension SettingsViewController: NSFetchedResultsControllerDelegate {
-}
 extension AnswerEntity {
     func toAnswer() -> Answer {
         return Answer(text: self.text ?? L10n.error, date: self.date ?? Date())
