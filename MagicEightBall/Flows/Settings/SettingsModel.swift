@@ -6,29 +6,32 @@
 //
 
 import Foundation
-import RealmSwift
 
-class SettingsModel: SettingsModelType {
-    var answers: [String]?
-    var storageManager: StorageService
-    init(storageManager: StorageService) {
+// MARK: - Protocols
+protocol SettingsModelType {
+    var storageManager: StorageServiceProtocol { get set }
+    func addNewAnswer(answer: String)
+    func deleteAnswer(answer: String)
+    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))
+}
+protocol CreateAnswerProtocol {
+    func addNewAnswer(answer: String)
+}
+// MARK: - Class
+class SettingsModel: SettingsModelType, CreateAnswerProtocol {
+    var storageManager: StorageServiceProtocol
+    init(storageManager: StorageServiceProtocol) {
         self.storageManager = storageManager
-        fetchAnswerString()
     }
     func addNewAnswer(answer: String) {
-        let newAnswer = Answer(name: answer)
-        storageManager.saveObject(newAnswer)
+        storageManager.createAnswerEntity(answer: answer)
     }
     func deleteAnswer(answer: String) {
-        for answerTypeAnswer in storageManager.answers where answerTypeAnswer.answerText == answer {
-            storageManager.deleteObject(answerTypeAnswer)
-        }
+        storageManager.deleteEnity(answer: answer)
     }
-    private func fetchAnswerString() {
-        var temp = [String]()
-        for answer in storageManager.answers {
-            temp.append(answer.answerText)
+    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
+        storageManager.getAnswersFromDB { answers in
+            completion(answers)
         }
-        self.answers = temp
     }
 }

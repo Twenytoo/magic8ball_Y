@@ -6,14 +6,20 @@
 //
 
 import Foundation
-import RealmSwift
-
+// MARK: - Protocols
+protocol SettingsViewModelType {
+    var settingsModel: SettingsModelType {get set}
+    func getAnswer(indexPath: Int) -> String
+    func getCountOfAnswers() -> Int
+    func addNewAnswer(answer: String)
+    func deleteAnswer(answer: String)
+    func getTextOfAnswer(indexPath: Int) -> String
+}
+// MARK: - Class
 class SettingViewModel: SettingsViewModelType {
-    var answers: [String]!
     var settingsModel: SettingsModelType
     init(settingsModel: SettingsModelType) {
         self.settingsModel = settingsModel
-        fullAnswers()
     }
     /// Adds the new object of Answer type in the database
     /// Creates an instance of Answer type from String type.
@@ -27,13 +33,25 @@ class SettingViewModel: SettingsViewModelType {
     func deleteAnswer(answer: String) {
         settingsModel.deleteAnswer(answer: answer)
     }
-    func fullAnswers() {
-        var temp = [String]()
-        if let answers = settingsModel.answers {
-            for answer in answers {
-                temp.append(answer)
-            }
+    func getAnswer(indexPath: Int) -> String {
+        var answer = ""
+        settingsModel.getAnswersFromDB { answers in
+            answer = answers[indexPath].text ?? L10n.error
         }
-        self.answers = temp
+        return answer
+    }
+    func getCountOfAnswers() -> Int {
+        var count = 0
+        settingsModel.getAnswersFromDB { answers in
+            count = answers.count
+        }
+        return count
+    }
+    func getTextOfAnswer(indexPath: Int) -> String {
+        var answerText = ""
+        settingsModel.getAnswersFromDB { answers in
+            answerText = answers[indexPath].text ?? L10n.error
+        }
+        return answerText
     }
 }

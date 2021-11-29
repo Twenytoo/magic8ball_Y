@@ -6,10 +6,15 @@
 //
 
 import UIKit
-
+// MARK: - Protocol
+protocol MainViewModelType {
+    func fetchAnswerByURL(completion: @escaping (String) -> Void)
+    func increaseAndSaveTouches()
+    func loadTouches () -> String
+}
+// MARK: - Class
 class MainViewModel: MainViewModelType {
     private let mainModel: MainModelType
-    lazy var completionHandler = self.mainModel.completionHandler
     init(mainModel: MainModelType) {
         self.mainModel = mainModel
     }

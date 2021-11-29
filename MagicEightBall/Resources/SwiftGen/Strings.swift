@@ -24,8 +24,12 @@ internal enum L10n {
   internal static let done = L10n.tr("myStrings", "done")
   /// Enter your answer
   internal static let enter = L10n.tr("myStrings", "enter")
-  /// Error opening realm: 
+  /// ERROR
   internal static let error = L10n.tr("myStrings", "error")
+  /// HISTORY
+  internal static let history = L10n.tr("myStrings", "history")
+  /// MAIN
+  internal static let main = L10n.tr("myStrings", "main")
   /// SETTINGS
   internal static let settings = L10n.tr("myStrings", "settings")
   /// SOME ANSWER

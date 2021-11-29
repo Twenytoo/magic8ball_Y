@@ -1,66 +1,92 @@
 //
-//  StorageManager.swift
+//  CoreDataManager.swift
 //  MagicEightBall
 //
-//  Created by Артём on 19.10.2021.
+//  Created by Артём on 26.11.2021.
 //
 
-import RealmSwift
-
-/// Entry point for working with the Realm database
-let realm = StorageManager.createRealm()
-
-/// Manager for working with Realm database
-class StorageManager: StorageService, DBManagerProtocol {
-    /// The array for answers from Realm
-    var answers: Results<Answer>!
+import Foundation
+import CoreData
+// MARK: - Protocols
+protocol StorageServiceProtocol {
+    func createAnswerEntity(answer: String)
+    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))
+    func deleteEnity (answer: String)
+    var answers: [AnswerEntity] { get set }
+}
+// MARK: - Class
+class StorageManager: StorageServiceProtocol {
+    var answers = [AnswerEntity]()
+    private let persistentContainer: NSPersistentContainer
+    private let context: NSManagedObjectContext
     init() {
-        answers = realm.objects(Answer.self)
+        persistentContainer = {
+            let container = NSPersistentContainer(name: "Answers")
+            container.loadPersistentStores(completionHandler: { (_, error) in
+                if let error = error as NSError? {
+                    fatalError("Unresolved error \(error), \(error.userInfo)")
+                }
+            })
+            return container
+        }()
+        context = persistentContainer.viewContext
     }
-    /// Saves the object of Answer type in the database
-    ///
-    /// Pass the object of Answer type to store it in the database
-    ///
-    /// - Parameter answer: an instance of Answer
-    /// - Returns: Void
-    func saveObject(_ answer: Answer) {
-        do {
-            try? realm.write {
-                realm.add(answer)
+    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                    managedObjectContext: context,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        getObjects(fetchController: controller) { result in
+            switch result {
+            case .success(let answerEntities):
+                completion(answerEntities)
+                self.answers = answerEntities
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
-    /// Removes the object of Answer type in the database
-    ///
-    /// Pass the object of Answer type to delete it in the database
-    ///
-    /// - Parameter answer: an instance of Answer
-    /// - Returns: Void
-    func deleteObject(_ answer: Answer) {
+    public func getObjects<T: NSManagedObject>(
+        fetchController: NSFetchedResultsController<T>,
+        completion: @escaping (Result<[T], Error>) -> Void) {
         do {
-            try? realm.write {
-                realm.delete(answer)
+            try fetchController.performFetch()
+            guard let result = fetchController.fetchedObjects else { return }
+            completion(.success(result))
+        } catch let error {
+            completion(.failure(error))
+        }
+    }
+    // MARK: - Core Data Saving support
+    private func saveContext () {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
     }
-    // Creating realm instatce
-    static func createRealm() -> Realm {
-        do {
-          return try Realm()
-        } catch let error as NSError {
-          fatalError("Error opening realm: \(error)")
+    func createAnswerEntity(answer: String) {
+        let newEntity = AnswerEntity(context: context)
+                    newEntity.text = answer
+                    newEntity.date = Date()
+                    saveContext()
+    }
+    func deleteEnity (answer: String) {
+        for answerEntity in self.answers where answerEntity.text == answer {
+            context.delete(answerEntity)
+            saveContext()
         }
-      }
-    /// Returns the answer from database in case of unsuccessful internet connection
-    /// Takes a random element from the database and turns it into string format. If the database is empty.
-    /// It will inform the user that new answers need to be added.
-    ///
-    /// - Returns: Answer of String type
-    func showAnswerWithoutConnection() -> String {
-        if let answer = self.answers.randomElement()?.answerText {
-            return answer
-        } else {
-            return L10n.add
-        }
+    }
+}
+
+extension AnswerEntity {
+    func toAnswer() -> Answer {
+        return Answer(text: self.text ?? L10n.error, date: self.date ?? Date())
     }
 }
