@@ -6,6 +6,12 @@
 //
 
 import Foundation
+// MARK: - Enum
+enum MyError: String, Error {
+    case invaliData         = "The data recieved from the server was invalid. Please try again! "
+    case invalidURL         = "This URL created an invalid request. Please try again."
+    case unableToComplete   = "Internet connection failed. You will see the answers from your store"
+}
 // MARK: - Protocol
 protocol MainModelType {
     var countTouches: Int {get set}
@@ -13,7 +19,8 @@ protocol MainModelType {
     var networkManager: NetworkService { get set }
     var storageManager: StorageServiceProtocol { get set }
     var secureStorageService: SecureStorageServiceType { get set }
-    func fetchAnswerByURL(completion: @escaping (_ answer: String?) -> Void)
+    func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void,
+                          completionError: @escaping (MyError) -> Void)
     func saveTouches()
     func loadTouches () -> Int
     func increaseTouches()
@@ -22,6 +29,7 @@ protocol MainModelType {
 class MainModel: MainModelType {
     var countTouches = 0
     var answer: String!
+    var internetFetchSuccess: Bool
     var networkManager: NetworkService
     var storageManager: StorageServiceProtocol
     var secureStorageService: SecureStorageServiceType
@@ -31,15 +39,20 @@ class MainModel: MainModelType {
         self.networkManager = networkManager
         self.storageManager = storageManager
         self.secureStorageService = secureStorageService
+        self.internetFetchSuccess = true
     }
-
-    func fetchAnswerByURL(completion: @escaping (String?) -> Void) {
+    func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void,
+                          completionError: @escaping (MyError) -> Void) {
         networkManager.fetchAnswerByURL { result in
             switch result {
-            case .success(let answer):
-                completion(answer)
-            case .failure(let error):
-                print("Something went wrong \(error)")
+            case.success(let answer):
+                let answerString = answer.uppercased()
+                completionSuccess(answerString)
+            case.failure(let error):
+                if self.internetFetchSuccess {
+                    completionError(error)
+                    self.internetFetchSuccess = false
+                }
             }
         }
     }

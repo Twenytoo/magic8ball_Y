@@ -31,9 +31,13 @@ class MainViewController: UIViewController {
         DispatchQueue.main.async {
             self.setupCountLabel()
         }
-        viewModel.fetchAnswerByURL {answer in
+        viewModel.fetchAnswerByURL { answer in
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
+            }
+        } completionError: { error in
+            DispatchQueue.main.async {
+                self.presentErrorAlert(error: error)
             }
         }
         UIView.transition(with: self.answerLabel,
@@ -49,6 +53,12 @@ class MainViewController: UIViewController {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
         }
+    }
+    private func presentErrorAlert(error: MyError) {
+        let alert = UIAlertController(title: "Oops...", message: error.rawValue, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: L10n.done, style: .default, handler: nil)
+        alert.addAction(okButton)
+        present(alert, animated: true, completion: nil)
     }
 }
 // MARK: - Setting UI
