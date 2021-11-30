@@ -46,17 +46,15 @@ class SettingsViewController: UIViewController,
         return answerCell
     }
     // MARK: - Table view delegate
-    func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) ->
-    UISwipeActionsConfiguration? {
-        let answer = settingsViewModel.getAnswer(indexPath: indexPath.row)
-        let deleteItem = UIContextualAction(style: .destructive, title: L10n.delete) {  (_, _, _) in
-            self.settingsViewModel.deleteAnswer(answer: answer)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: L10n.delete, style: .destructive) { _ in
+            self.settingsViewModel.deleteAnswerAt(indexPath: indexPath.row)
             self.tableView.reloadData()
-        }
-        let deleteAction = UISwipeActionsConfiguration(actions: [deleteItem])
-        self.tableView.reloadData()
-        return deleteAction
+        })
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(sheet, animated: true, completion: nil)
     }
     /// Calls the alert to create a new answer on pressing a BarButton
     @objc private func addAnswerByBarButton() {

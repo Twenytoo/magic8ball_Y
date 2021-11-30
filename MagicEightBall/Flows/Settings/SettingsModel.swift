@@ -11,7 +11,7 @@ import Foundation
 protocol SettingsModelType {
     var storageManager: StorageServiceProtocol { get set }
     func addNewAnswer(answer: String)
-    func deleteAnswer(answer: String)
+    func deleteAnswerAt(indexPath: Int)
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))
 }
 protocol CreateAnswerProtocol {
@@ -26,8 +26,8 @@ class SettingsModel: SettingsModelType, CreateAnswerProtocol {
     func addNewAnswer(answer: String) {
         storageManager.createAnswerEntity(answer: answer)
     }
-    func deleteAnswer(answer: String) {
-        storageManager.deleteEnity(answer: answer)
+    func deleteAnswerAt(indexPath: Int) {
+        storageManager.deleteAnswerAt(indexPath: indexPath)
     }
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
         storageManager.getAnswersFromDB { answers in

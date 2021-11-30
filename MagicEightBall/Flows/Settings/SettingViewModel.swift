@@ -12,7 +12,7 @@ protocol SettingsViewModelType {
     func getAnswer(indexPath: Int) -> String
     func getCountOfAnswers() -> Int
     func addNewAnswer(answer: String)
-    func deleteAnswer(answer: String)
+    func deleteAnswerAt(indexPath: Int)
     func getTextOfAnswer(indexPath: Int) -> String
 }
 // MARK: - Class
@@ -30,8 +30,8 @@ class SettingViewModel: SettingsViewModelType {
     func addNewAnswer(answer: String) {
         settingsModel.addNewAnswer(answer: answer)
     }
-    func deleteAnswer(answer: String) {
-        settingsModel.deleteAnswer(answer: answer)
+    func deleteAnswerAt(indexPath: Int) {
+        settingsModel.deleteAnswerAt(indexPath: indexPath)
     }
     func getAnswer(indexPath: Int) -> String {
         var answer = ""

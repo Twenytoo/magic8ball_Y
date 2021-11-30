@@ -11,12 +11,11 @@ import CoreData
 protocol StorageServiceProtocol {
     func createAnswerEntity(answer: String)
     func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))
-    func deleteEnity (answer: String)
-    var answers: [AnswerEntity] { get set }
+    func deleteAnswerAt(indexPath: Int)
 }
 // MARK: - Class
 class StorageManager: StorageServiceProtocol {
-    var answers = [AnswerEntity]()
+    private var answers = [AnswerEntity]()
     private let persistentContainer: NSPersistentContainer
     private let context: NSManagedObjectContext
     private let backgroundContext: NSManagedObjectContext
@@ -62,11 +61,11 @@ class StorageManager: StorageServiceProtocol {
         }
     }
     // MARK: - Core Data Saving support
-    private func saveContext () {
+    private func saveBackgroundContext (for backgroundContext: NSManagedObjectContext) {
         backgroundContext.perform {
-            if self.backgroundContext.hasChanges {
+            if backgroundContext.hasChanges {
                 do {
-                    try self.backgroundContext.save()
+                    try backgroundContext.save()
                 } catch {
                     let nserror = error as NSError
                     fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
@@ -78,14 +77,13 @@ class StorageManager: StorageServiceProtocol {
         let newEntity = AnswerEntity(context: backgroundContext)
         newEntity.text = answer
         newEntity.date = Date()
-        saveContext()
+        saveBackgroundContext(for: backgroundContext)
     }
-    func deleteEnity (answer: String) {
-        for answerEntity in self.answers where answerEntity.text == answer {
-            backgroundContext.perform {
-                self.backgroundContext.delete(answerEntity)
-                self.saveContext()
-            }
+    func deleteAnswerAt(indexPath: Int) {
+        let answer = answers[indexPath]
+        backgroundContext.perform {
+            self.backgroundContext.delete(answer)
+            self.saveBackgroundContext(for: self.backgroundContext)
         }
     }
 }
@@ -95,4 +93,3 @@ extension AnswerEntity {
         return Answer(text: self.text ?? L10n.error, date: self.date ?? Date())
     }
 }
-

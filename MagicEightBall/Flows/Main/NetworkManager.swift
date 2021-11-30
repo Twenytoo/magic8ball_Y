@@ -6,9 +6,10 @@
 //
 
 import UIKit
+
 // MARK: - Protocol
 protocol NetworkService {
-    func fetchAnswerByURL(completion: @escaping (Result<String, Error>) -> Void)
+    func fetchAnswerByURL(completion: @escaping (Result<String, MyError>) -> Void)
 }
 // MARK: - Class
 class NetworkManager: NetworkService {
@@ -28,25 +29,26 @@ class NetworkManager: NetworkService {
     /// where an instance of ViewController is created on the main queue and receives an instance of the String type
     /// from there and is handler by the complitionHandler
     /// - Returns: The function returns Void, but calls the function URLSession
-    func fetchAnswerByURL(completion: @escaping (Result<String, Error>) -> Void) {
+    func fetchAnswerByURL(completion: @escaping (Result<String, MyError>) -> Void) {
         guard let url = URL(string: L10n.url) else {
             let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
-                completion(.success(answer))
+            completion(.success(answer))
+            completion(.failure(.invalidURL))
             return
         }
             URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-                if let error = error {
+                if error != nil {
                     if let answer = self?.getAnswerWithoutConnectionManager.showAnswerWithoutConnection() {
                         completion(.success(answer))
                     }
-                    completion(.failure(error))
+                    completion(.failure(.unableToComplete))
                 }
                 guard let data = data else {
-                    completion(.failure(error!))
+                    completion(.failure(.invaliData))
                     return
                 }
                 guard let answer = self?.parseJSON(withData: data) else {
-                    completion(.failure(error!))
+                    completion(.failure(.invaliData))
                     return
                 }
                 self?.createAnswerManager.addNewAnswer(answer: answer)
