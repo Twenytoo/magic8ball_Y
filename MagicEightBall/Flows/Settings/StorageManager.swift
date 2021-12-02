@@ -74,12 +74,20 @@ class StorageManager: StorageServiceProtocol {
         }
     }
     func createAnswerEntity(answer: String) {
-        let newEntity = AnswerEntity(context: backgroundContext)
-        newEntity.text = answer
-        newEntity.date = Date()
-        saveBackgroundContext(for: backgroundContext)
+//        let newEntity = AnswerEntity(context: backgroundContext)
+//        newEntity.text = answer
+//        newEntity.date = Date()
+//        saveBackgroundContext(for: backgroundContext)
     }
     func deleteAnswerAt(indexPath: Int) {
+//        for id in 0...50 {
+//            let answer = answers[id]
+//            backgroundContext.perform {
+//                self.backgroundContext.delete(answer)
+//                self.saveBackgroundContext(for: self.backgroundContext)
+//            }
+//        }
+        
         let answer = answers[indexPath]
         backgroundContext.perform {
             self.backgroundContext.delete(answer)

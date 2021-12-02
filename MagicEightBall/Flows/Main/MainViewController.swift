@@ -32,11 +32,12 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setUpInterface()
         setupConstraints()
-        setAnmination()
+        setAnimnation()
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        animateAnswerLabel()
+        shakeBallAnimation()
+//        animateAnswerLabel()
         viewModel.increaseAndSaveTouches()
         DispatchQueue.main.async {
             self.setupCountLabel()
@@ -47,7 +48,6 @@ class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
                 self.activityIndicator.stopAnimating()
-//                self.animateAnswerLabel()
             }
         } completionError: { error in
             DispatchQueue.main.async {
@@ -93,9 +93,13 @@ private extension MainViewController {
         answerLabel.numberOfLines = 2
         ///    Count label
         countLabel.text = "Shakes – 0"
-        countLabel.textColor = .darkGray
+        countLabel.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
         countLabel.textAlignment = .center
-        countLabel.font = countLabel.font.withSize(20)
+        countLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
+        countLabel.layer.shadowColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        countLabel.layer.shadowOffset = CGSize(width: 2, height: 1)
+        countLabel.layer.shadowOpacity = 0.7
+        countLabel.layer.shadowRadius = 0.5
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
@@ -127,7 +131,7 @@ private extension MainViewController {
         countLabel.text = "Shakes – \(viewModel.loadTouches())"
     }
     // MARK: - Animation
-    func setAnmination() {
+    func setAnimnation() {
         animator = UIDynamicAnimator(referenceView: view)
         gravity = UIGravityBehavior()
         collider = UICollisionBehavior()
@@ -142,19 +146,46 @@ private extension MainViewController {
         animator?.addBehavior(itemBehviour!)
     }
     func animateAnswerLabel() {
-        let label = UILabel()
-        label.text = answerLabel.text
-        label.frame = CGRect(x: answerLabel.frame.origin.x,
+//        Answer label animation
+        let labelAnswer = UILabel()
+        labelAnswer.text = answerLabel.text
+        labelAnswer.frame = CGRect(x: answerLabel.frame.origin.x,
                              y: answerLabel.frame.origin.y,
                              width: answerLabel.frame.width,
                              height: answerLabel.frame.height)
-        label.textColor = .white
-        label.textAlignment = .center
-        label.adjustsFontSizeToFitWidth = true
-        label.numberOfLines = 2
-        self.view.addSubview(label)
-        self.gravity?.addItem(label)
-        self.collider?.addItem(label)
-        self.itemBehviour?.addItem(label)
+        labelAnswer.textColor = .white
+        labelAnswer.textAlignment = .center
+        labelAnswer.adjustsFontSizeToFitWidth = true
+        labelAnswer.numberOfLines = 2
+        self.view.addSubview(labelAnswer)
+        self.gravity?.addItem(labelAnswer)
+        self.collider?.addItem(labelAnswer)
+        self.itemBehviour?.addItem(labelAnswer)
+//        Count label animation
+        let labelCount = UILabel()
+        labelCount.text = "\(viewModel.loadTouches())"
+        labelCount.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
+        labelCount.textAlignment = .center
+        labelCount.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
+        labelCount.frame = CGRect(x: countLabel.frame.origin.x,
+                             y: countLabel.frame.origin.y,
+                             width: countLabel.frame.width,
+                             height: countLabel.frame.height)
+        labelCount.textAlignment = .right
+        self.view.addSubview(labelCount)
+        self.gravity?.addItem(labelCount)
+        self.collider?.addItem(labelCount)
+        self.itemBehviour?.addItem(labelCount)
+    }
+    func shakeBallAnimation() {
+        let shakeAnimation = CABasicAnimation(keyPath: "position")
+        shakeAnimation.fromValue = NSValue(cgPoint: CGPoint(x: imageBallView.center.x - 5,
+                                                            y: imageBallView.center.y - 3))
+        shakeAnimation.toValue = NSValue(cgPoint: CGPoint(x: imageBallView.center.x + 10,
+                                                          y: imageBallView.center.y + 3))
+        shakeAnimation.duration = 0.1
+        shakeAnimation.repeatCount = 30
+        shakeAnimation.autoreverses = true
+        imageBallView.layer.add(shakeAnimation, forKey: "position")
     }
 }
