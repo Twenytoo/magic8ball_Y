@@ -9,10 +9,17 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
+    //    Views
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
     private let activityIndicator  = UIActivityIndicatorView()
+    //    Animation
+    var animator: UIDynamicAnimator?
+    var gravity: UIGravityBehavior?
+    var collider: UICollisionBehavior?
+    var itemBehviour: UIDynamicItemBehavior?
+    //    Model
     private var viewModel: MainViewModelType
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
@@ -25,9 +32,11 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setUpInterface()
         setupConstraints()
+        setAnmination()
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
+        animateAnswerLabel()
         viewModel.increaseAndSaveTouches()
         DispatchQueue.main.async {
             self.setupCountLabel()
@@ -38,6 +47,7 @@ class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
                 self.activityIndicator.stopAnimating()
+//                self.animateAnswerLabel()
             }
         } completionError: { error in
             DispatchQueue.main.async {
@@ -70,7 +80,7 @@ class MainViewController: UIViewController {
 private extension MainViewController {
     func setUpInterface() {
         title = L10n.main
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .black
         ///     ImageView with Magic Ball image
         let imageBall = UIImage(asset: Asset.magicBallPNG)
         imageBallView.image = imageBall
@@ -95,7 +105,7 @@ private extension MainViewController {
         activityIndicator.color = .white
         setupCountLabel()
     }
-// MARK: - Contraints
+    // MARK: - Contraints
     func setupConstraints() {
         imageBallView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -115,5 +125,36 @@ private extension MainViewController {
     }
     func setupCountLabel() {
         countLabel.text = "Shakes – \(viewModel.loadTouches())"
+    }
+    // MARK: - Animation
+    func setAnmination() {
+        animator = UIDynamicAnimator(referenceView: view)
+        gravity = UIGravityBehavior()
+        collider = UICollisionBehavior()
+        itemBehviour = UIDynamicItemBehavior()
+        collider?.translatesReferenceBoundsIntoBoundary = true
+        collider?.collisionMode = .everything
+        itemBehviour?.elasticity = 0.7
+        itemBehviour?.friction = 0.7
+        itemBehviour?.allowsRotation = true
+        animator?.addBehavior(gravity!)
+        animator?.addBehavior(collider!)
+        animator?.addBehavior(itemBehviour!)
+    }
+    func animateAnswerLabel() {
+        let label = UILabel()
+        label.text = answerLabel.text
+        label.frame = CGRect(x: answerLabel.frame.origin.x,
+                             y: answerLabel.frame.origin.y,
+                             width: answerLabel.frame.width,
+                             height: answerLabel.frame.height)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 2
+        self.view.addSubview(label)
+        self.gravity?.addItem(label)
+        self.collider?.addItem(label)
+        self.itemBehviour?.addItem(label)
     }
 }
