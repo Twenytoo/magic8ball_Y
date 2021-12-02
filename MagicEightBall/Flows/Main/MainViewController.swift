@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
+    private let activityIndicator  = UIActivityIndicatorView()
     private var viewModel: MainViewModelType
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
@@ -31,9 +32,12 @@ class MainViewController: UIViewController {
         DispatchQueue.main.async {
             self.setupCountLabel()
         }
+        if answerLabel.text == L10n.someAnswer { answerLabel.text = ""}
+        activityIndicator.startAnimating()
         viewModel.fetchAnswerByURL { answer in
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
+                self.activityIndicator.stopAnimating()
             }
         } completionError: { error in
             DispatchQueue.main.async {
@@ -44,7 +48,8 @@ class MainViewController: UIViewController {
                           duration: 0.5,
                           options: .transitionFlipFromTop,
                           animations: nil,
-                          completion: nil)
+                          completion: nil
+        )
     }
     /// Updates the label on the ViewController in the TableViewCell
     /// - Parameter answer:String
@@ -84,6 +89,10 @@ private extension MainViewController {
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
+        self.view.addSubview(activityIndicator)
+        ///     Activity Indcator
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .white
         setupCountLabel()
     }
 // MARK: - Contraints
@@ -98,6 +107,10 @@ private extension MainViewController {
         }
         countLabel.snp.makeConstraints { make in
             make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(25)
+        }
+        activityIndicator.snp.makeConstraints { make in
+            make.centerX.equalTo(answerLabel)
+            make.centerY.equalTo(answerLabel.snp.centerY)
         }
     }
     func setupCountLabel() {
