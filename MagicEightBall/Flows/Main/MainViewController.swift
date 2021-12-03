@@ -50,7 +50,9 @@ class MainViewController: UIViewController {
         viewModel.fetchAnswerByURL { answer in
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
+                if self.isResp {
                 self.animateAnswerLabel()
+                }
             }
         } completionError: { error in
             DispatchQueue.main.async {
@@ -111,10 +113,6 @@ private extension MainViewController {
         countLabel.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
         countLabel.textAlignment = .center
         countLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
-        countLabel.layer.shadowColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-        countLabel.layer.shadowOffset = CGSize(width: 2, height: 1)
-        countLabel.layer.shadowOpacity = 0.7
-        countLabel.layer.shadowRadius = 0.5
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
