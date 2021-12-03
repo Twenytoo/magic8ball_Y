@@ -25,6 +25,8 @@
 		138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */; };
 		138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033227439E36004D4FA8 /* SettingViewModel.swift */; };
 		138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033327439E36004D4FA8 /* MainViewModel.swift */; };
+		1394865C275981990034CCBD /* My_Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394865B275981990034CCBD /* My_Animations.swift */; };
+		1394865E275ACD4A0034CCBD /* AnswersForAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */; };
 		13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */; };
 		13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */; };
 		13B1C03B2750EFE000439669 /* Answers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C0392750EFE000439669 /* Answers.xcdatamodeld */; };
@@ -57,6 +59,8 @@
 		138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
 		138E033227439E36004D4FA8 /* SettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		138E033327439E36004D4FA8 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		1394865B275981990034CCBD /* My_Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = My_Animations.swift; path = "../../../../../Материалы/My_Animations.swift"; sourceTree = "<group>"; };
+		1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersForAnimation.swift; sourceTree = "<group>"; };
 		13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageService.swift; sourceTree = "<group>"; };
 		13B1C03A2750EFE000439669 /* Answers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Answers.xcdatamodel; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 				136752F627144FD800ADC62C /* AppDelegate.swift */,
 				1367530427144FDE00ADC62C /* Info.plist */,
 				136752FF27144FDE00ADC62C /* Assets.xcassets */,
+				1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 				138A905D27452DCF00424EA3 /* MainModel.swift */,
 				138E033327439E36004D4FA8 /* MainViewModel.swift */,
 				136752FA27144FD800ADC62C /* MainViewController.swift */,
+				1394865B275981990034CCBD /* My_Animations.swift */,
 				1372444127182838007A08E9 /* DecodedData.swift */,
 				13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */,
 			);
@@ -354,8 +360,10 @@
 				138A905E27452DCF00424EA3 /* MainModel.swift in Sources */,
 				136752FB27144FD800ADC62C /* MainViewController.swift in Sources */,
 				13B1C04A27511C9000439669 /* Answer.swift in Sources */,
+				1394865E275ACD4A0034CCBD /* AnswersForAnimation.swift in Sources */,
 				138A906027452E2700424EA3 /* SettingsModel.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
+				1394865C275981990034CCBD /* My_Animations.swift in Sources */,
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
 				13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */,
 				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,

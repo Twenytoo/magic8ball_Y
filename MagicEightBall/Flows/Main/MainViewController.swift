@@ -9,11 +9,12 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
+    var isResp = false
+    var is3secPassed = false
     //    Views
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
-    private let activityIndicator  = UIActivityIndicatorView()
     //    Animation
     var animator: UIDynamicAnimator?
     var gravity: UIGravityBehavior?
@@ -36,30 +37,26 @@ class MainViewController: UIViewController {
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        shakeBallAnimation()
-//        animateAnswerLabel()
+        if !isResp {
+            DispatchQueue.main.async {
+                self.flipText()
+            }
+        }
         viewModel.increaseAndSaveTouches()
         DispatchQueue.main.async {
             self.setupCountLabel()
         }
         if answerLabel.text == L10n.someAnswer { answerLabel.text = ""}
-        activityIndicator.startAnimating()
         viewModel.fetchAnswerByURL { answer in
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
-                self.activityIndicator.stopAnimating()
+                self.animateAnswerLabel()
             }
         } completionError: { error in
             DispatchQueue.main.async {
                 self.presentErrorAlert(error: error)
             }
         }
-        UIView.transition(with: self.answerLabel,
-                          duration: 0.5,
-                          options: .transitionFlipFromTop,
-                          animations: nil,
-                          completion: nil
-        )
     }
     /// Updates the label on the ViewController in the TableViewCell
     /// - Parameter answer:String
@@ -67,6 +64,7 @@ class MainViewController: UIViewController {
     private func updateAnswerLabel(answer: String) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
+            self.isResp = true
         }
     }
     private func presentErrorAlert(error: MyError) {
@@ -74,6 +72,23 @@ class MainViewController: UIViewController {
         let okButton = UIAlertAction(title: L10n.done, style: .default, handler: nil)
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
+    }
+    private func flipText() {
+        wait3sec()
+        UIView.transition(with: self.answerLabel,
+                          duration: 0.1,
+                          options: .transitionFlipFromTop) {
+            self.answerLabel.text = self.viewModel.getAnimationAnswer()
+        } completion: { _ in
+            if !self.is3secPassed || !self.isResp {
+                self.flipText()
+            }
+        }
+    }
+    private func wait3sec() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.is3secPassed = true
+        }
     }
 }
 // MARK: - Setting UI
@@ -103,10 +118,6 @@ private extension MainViewController {
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
-        self.view.addSubview(activityIndicator)
-        ///     Activity Indcator
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = .white
         setupCountLabel()
     }
     // MARK: - Contraints
@@ -121,10 +132,6 @@ private extension MainViewController {
         }
         countLabel.snp.makeConstraints { make in
             make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(25)
-        }
-        activityIndicator.snp.makeConstraints { make in
-            make.centerX.equalTo(answerLabel)
-            make.centerY.equalTo(answerLabel.snp.centerY)
         }
     }
     func setupCountLabel() {
@@ -179,9 +186,9 @@ private extension MainViewController {
     }
     func shakeBallAnimation() {
         let shakeAnimation = CABasicAnimation(keyPath: "position")
-        shakeAnimation.fromValue = NSValue(cgPoint: CGPoint(x: imageBallView.center.x - 5,
+        shakeAnimation.fromValue = NSValue(cgPoint: CGPoint(x: imageBallView.center.x - 3,
                                                             y: imageBallView.center.y - 3))
-        shakeAnimation.toValue = NSValue(cgPoint: CGPoint(x: imageBallView.center.x + 10,
+        shakeAnimation.toValue = NSValue(cgPoint: CGPoint(x: imageBallView.center.x + 3,
                                                           y: imageBallView.center.y + 3))
         shakeAnimation.duration = 0.1
         shakeAnimation.repeatCount = 30

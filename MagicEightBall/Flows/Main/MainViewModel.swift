@@ -11,6 +11,7 @@ protocol MainViewModelType {
     func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void, completionError: @escaping (MyError) -> Void)
     func increaseAndSaveTouches()
     func loadTouches () -> String
+    func getAnimationAnswer() -> String
 }
 // MARK: - Class
 class MainViewModel: MainViewModelType {
@@ -32,5 +33,8 @@ class MainViewModel: MainViewModelType {
     }
     func loadTouches () -> String {
         return String(mainModel.loadTouches())
+    }
+    func getAnimationAnswer() -> String {
+        return AnswersForAnimation.answers.randomElement()!
     }
 }
