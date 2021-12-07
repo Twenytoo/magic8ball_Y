@@ -15,11 +15,6 @@ class MainViewController: UIViewController {
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
-    //    Animation
-    var animator: UIDynamicAnimator?
-    var gravity: UIGravityBehavior?
-    var collider: UICollisionBehavior?
-    var itemBehviour: UIDynamicItemBehavior?
     //    Model
     private var viewModel: MainViewModelType
     init(viewModel: MainViewModelType) {
@@ -33,7 +28,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setUpInterface()
         setupConstraints()
-        setAnimnation()
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
@@ -46,13 +40,14 @@ class MainViewController: UIViewController {
         DispatchQueue.main.async {
             self.setupCountLabel()
         }
-        if answerLabel.text == L10n.someAnswer { answerLabel.text = ""}
+        if answerLabel.text == L10n.someAnswer {
+            answerLabel.text = ""
+        }
         viewModel.fetchAnswerByURL { answer in
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
-                if self.isResp {
                 self.animateAnswerLabel()
-                }
+                
             }
         } completionError: { error in
             DispatchQueue.main.async {
@@ -136,61 +131,11 @@ private extension MainViewController {
         countLabel.text = "Shakes – \(viewModel.loadTouches())"
     }
     // MARK: - Animation
-    func setAnimnation() {
-        animator = UIDynamicAnimator(referenceView: view)
-        gravity = UIGravityBehavior()
-        collider = UICollisionBehavior()
-        itemBehviour = UIDynamicItemBehavior()
-        collider?.translatesReferenceBoundsIntoBoundary = true
-        collider?.collisionMode = .everything
-        itemBehviour?.elasticity = 0.7
-        itemBehviour?.friction = 0.7
-        itemBehviour?.allowsRotation = true
-        animator?.addBehavior(gravity!)
-        animator?.addBehavior(collider!)
-        animator?.addBehavior(itemBehviour!)
-    }
     func animateAnswerLabel() {
-//        Answer label animation
-        let labelAnswer = UILabel()
-        labelAnswer.text = answerLabel.text
-        labelAnswer.frame = CGRect(x: answerLabel.frame.origin.x,
-                             y: answerLabel.frame.origin.y,
-                             width: answerLabel.frame.width,
-                             height: answerLabel.frame.height)
-        labelAnswer.textColor = .white
-        labelAnswer.textAlignment = .center
-        labelAnswer.adjustsFontSizeToFitWidth = true
-        labelAnswer.numberOfLines = 2
-        self.view.addSubview(labelAnswer)
-        self.gravity?.addItem(labelAnswer)
-        self.collider?.addItem(labelAnswer)
-        self.itemBehviour?.addItem(labelAnswer)
-//        Count label animation
-        let labelCount = UILabel()
-        labelCount.text = "\(viewModel.loadTouches())"
-        labelCount.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
-        labelCount.textAlignment = .center
-        labelCount.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
-        labelCount.frame = CGRect(x: countLabel.frame.origin.x,
-                             y: countLabel.frame.origin.y,
-                             width: countLabel.frame.width,
-                             height: countLabel.frame.height)
-        labelCount.textAlignment = .right
-        self.view.addSubview(labelCount)
-        self.gravity?.addItem(labelCount)
-        self.collider?.addItem(labelCount)
-        self.itemBehviour?.addItem(labelCount)
-    }
-    func shakeBallAnimation() {
-        let shakeAnimation = CABasicAnimation(keyPath: "position")
-        shakeAnimation.fromValue = NSValue(cgPoint: CGPoint(x: imageBallView.center.x - 3,
-                                                            y: imageBallView.center.y - 3))
-        shakeAnimation.toValue = NSValue(cgPoint: CGPoint(x: imageBallView.center.x + 3,
-                                                          y: imageBallView.center.y + 3))
-        shakeAnimation.duration = 0.1
-        shakeAnimation.repeatCount = 30
-        shakeAnimation.autoreverses = true
-        imageBallView.layer.add(shakeAnimation, forKey: "position")
+        UIView.transition(with: self.answerLabel,
+                          duration: 0.5,
+                          options: .transitionFlipFromTop,
+                          animations: nil,
+                          completion: nil)
     }
 }
