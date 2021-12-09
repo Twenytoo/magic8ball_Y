@@ -9,9 +9,13 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
+    var isResp = false
+    var is3secPassed = false
+    //    Views
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
+    //    Model
     private var viewModel: MainViewModelType
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
@@ -27,24 +31,29 @@ class MainViewController: UIViewController {
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
+        if !isResp {
+            DispatchQueue.main.async {
+                self.flipText()
+            }
+        }
         viewModel.increaseAndSaveTouches()
         DispatchQueue.main.async {
             self.setupCountLabel()
         }
+        if answerLabel.text == L10n.someAnswer {
+            answerLabel.text = ""
+        }
         viewModel.fetchAnswerByURL { answer in
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
+                self.animateAnswerLabel()
+                
             }
         } completionError: { error in
             DispatchQueue.main.async {
                 self.presentErrorAlert(error: error)
             }
         }
-        UIView.transition(with: self.answerLabel,
-                          duration: 0.5,
-                          options: .transitionFlipFromTop,
-                          animations: nil,
-                          completion: nil)
     }
     /// Updates the label on the ViewController in the TableViewCell
     /// - Parameter answer:String
@@ -52,6 +61,7 @@ class MainViewController: UIViewController {
     private func updateAnswerLabel(answer: String) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
+            self.isResp = true
         }
     }
     private func presentErrorAlert(error: MyError) {
@@ -60,12 +70,29 @@ class MainViewController: UIViewController {
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
     }
+    private func flipText() {
+        wait3sec()
+        UIView.transition(with: self.answerLabel,
+                          duration: 0.1,
+                          options: .transitionFlipFromTop) {
+            self.answerLabel.text = self.viewModel.getAnimationAnswer()
+        } completion: { _ in
+            if !self.is3secPassed || !self.isResp {
+                self.flipText()
+            }
+        }
+    }
+    private func wait3sec() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.is3secPassed = true
+        }
+    }
 }
 // MARK: - Setting UI
 private extension MainViewController {
     func setUpInterface() {
         title = L10n.main
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .black
         ///     ImageView with Magic Ball image
         let imageBall = UIImage(asset: Asset.magicBallPNG)
         imageBallView.image = imageBall
@@ -78,15 +105,15 @@ private extension MainViewController {
         answerLabel.numberOfLines = 2
         ///    Count label
         countLabel.text = "Shakes – 0"
-        countLabel.textColor = .darkGray
+        countLabel.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
         countLabel.textAlignment = .center
-        countLabel.font = countLabel.font.withSize(20)
+        countLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
         setupCountLabel()
     }
-// MARK: - Contraints
+    // MARK: - Contraints
     func setupConstraints() {
         imageBallView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -102,5 +129,13 @@ private extension MainViewController {
     }
     func setupCountLabel() {
         countLabel.text = "Shakes – \(viewModel.loadTouches())"
+    }
+    // MARK: - Animation
+    func animateAnswerLabel() {
+        UIView.transition(with: self.answerLabel,
+                          duration: 0.5,
+                          options: .transitionFlipFromTop,
+                          animations: nil,
+                          completion: nil)
     }
 }

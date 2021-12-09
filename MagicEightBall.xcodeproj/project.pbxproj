@@ -19,12 +19,12 @@
 		13894E67273EB067000EA2C5 /* MagicEightBall.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 13894E64273EB067000EA2C5 /* MagicEightBall.xcworkspace */; };
 		13894E68273EB067000EA2C5 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13894E65273EB067000EA2C5 /* Strings.swift */; };
 		13894E69273EB067000EA2C5 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13894E66273EB067000EA2C5 /* Assets.swift */; };
-		13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13894E6F273FEDC5000EA2C5 /* CustomViewForMainVC.swift */; };
 		138A905E27452DCF00424EA3 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A905D27452DCF00424EA3 /* MainModel.swift */; };
 		138A906027452E2700424EA3 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A905F27452E2700424EA3 /* SettingsModel.swift */; };
-		138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */; };
 		138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033227439E36004D4FA8 /* SettingViewModel.swift */; };
 		138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033327439E36004D4FA8 /* MainViewModel.swift */; };
+		1394865C275981990034CCBD /* My_Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394865B275981990034CCBD /* My_Animations.swift */; };
+		1394865E275ACD4A0034CCBD /* AnswersForAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */; };
 		13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */; };
 		13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */; };
 		13B1C03B2750EFE000439669 /* Answers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C0392750EFE000439669 /* Answers.xcdatamodeld */; };
@@ -51,12 +51,12 @@
 		13894E64273EB067000EA2C5 /* MagicEightBall.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = MagicEightBall.xcworkspace; sourceTree = SOURCE_ROOT; };
 		13894E65273EB067000EA2C5 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		13894E66273EB067000EA2C5 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
-		13894E6F273FEDC5000EA2C5 /* CustomViewForMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewForMainVC.swift; sourceTree = "<group>"; };
 		138A905D27452DCF00424EA3 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		138A905F27452E2700424EA3 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
-		138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
 		138E033227439E36004D4FA8 /* SettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		138E033327439E36004D4FA8 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		1394865B275981990034CCBD /* My_Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = My_Animations.swift; path = "../../../../../Материалы/My_Animations.swift"; sourceTree = "<group>"; };
+		1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersForAnimation.swift; sourceTree = "<group>"; };
 		13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageService.swift; sourceTree = "<group>"; };
 		13B1C03A2750EFE000439669 /* Answers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Answers.xcdatamodel; sourceTree = "<group>"; };
@@ -128,6 +128,7 @@
 				136752F627144FD800ADC62C /* AppDelegate.swift */,
 				1367530427144FDE00ADC62C /* Info.plist */,
 				136752FF27144FDE00ADC62C /* Assets.xcassets */,
+				1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -136,9 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */,
-				138E032627438CFA004D4FA8 /* MainNavigationViewController.swift */,
 				1367530127144FDE00ADC62C /* LaunchScreen.storyboard */,
-				13894E6F273FEDC5000EA2C5 /* CustomViewForMainVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -160,6 +159,7 @@
 				138A905D27452DCF00424EA3 /* MainModel.swift */,
 				138E033327439E36004D4FA8 /* MainViewModel.swift */,
 				136752FA27144FD800ADC62C /* MainViewController.swift */,
+				1394865B275981990034CCBD /* My_Animations.swift */,
 				1372444127182838007A08E9 /* DecodedData.swift */,
 				13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */,
 			);
@@ -343,7 +343,6 @@
 				132576F527537D96009846FF /* GetAnswerWithoutConnection.swift in Sources */,
 				1372444227182838007A08E9 /* DecodedData.swift in Sources */,
 				13B1C0422751142D00439669 /* AnwersModel.swift in Sources */,
-				138E032727438CFA004D4FA8 /* MainNavigationViewController.swift in Sources */,
 				13894E69273EB067000EA2C5 /* Assets.swift in Sources */,
 				13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */,
 				13B1C03D2750F08000439669 /* StorageManager.swift in Sources */,
@@ -354,11 +353,12 @@
 				138A905E27452DCF00424EA3 /* MainModel.swift in Sources */,
 				136752FB27144FD800ADC62C /* MainViewController.swift in Sources */,
 				13B1C04A27511C9000439669 /* Answer.swift in Sources */,
+				1394865E275ACD4A0034CCBD /* AnswersForAnimation.swift in Sources */,
 				138A906027452E2700424EA3 /* SettingsModel.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
+				1394865C275981990034CCBD /* My_Animations.swift in Sources */,
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
 				13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */,
-				13894E70273FEDC5000EA2C5 /* CustomViewForMainVC.swift in Sources */,
 				1372443D27180CA8007A08E9 /* SettingsViewController.swift in Sources */,
 				13B1C0402751099700439669 /* HistoryViewController.swift in Sources */,
 				138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */,

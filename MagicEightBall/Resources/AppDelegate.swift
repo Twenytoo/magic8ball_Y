@@ -37,12 +37,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainViewModel = MainViewModel(mainModel: mainModel)
         let mainVC = MainViewController(viewModel: mainViewModel)
         let mainNavVC = UINavigationController(rootViewController: mainVC)
-        mainNavVC.title = L10n.main
+        mainNavVC.navigationBar.isHidden = true
         //        TabBar View Controller
         let tabBarViewController = UITabBarController()
-        tabBarViewController.setViewControllers([mainNavVC, settingsNavVC, answerHistoryNavVC],
-                                                animated: true)
+        tabBarViewController.setViewControllers([mainNavVC,
+                                                 settingsNavVC,
+                                                 answerHistoryNavVC], animated: true)
         tabBarViewController.modalPresentationStyle = .fullScreen
+        tabBarViewController.tabBar.barTintColor = .black
+        tabBarViewController.tabBar.tintColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
+        tabBarViewController.tabBar.items?[0].image = UIImage(systemName: "restart.circle")
+        tabBarViewController.tabBar.items?[1].image = UIImage(systemName: "gear")
+        tabBarViewController.tabBar.items?[2].image = UIImage(systemName: "note.text")
         //        Window
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = tabBarViewController
