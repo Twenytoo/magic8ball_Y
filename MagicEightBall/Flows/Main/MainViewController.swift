@@ -11,9 +11,7 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: UIViewController {
-//    RX
     private let disposeBag = DisposeBag()
-//    OLD
     var isResp = false
     var is3secPassed = false
     //    Views
@@ -37,25 +35,7 @@ class MainViewController: UIViewController {
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        if !isResp {
-            DispatchQueue.main.async {
-                self.flipText()
-            }
-        }
-        viewModel.increaseAndSaveTouches()
-        if answerLabel.text == L10n.someAnswer {
-            answerLabel.text = ""
-        }
-        viewModel.fetchAnswerByURL { answer in
-            DispatchQueue.main.async {
-                self.updateAnswerLabel(answer: answer)
-                self.animateAnswerLabel()
-            }
-        } completionError: { error in
-            DispatchQueue.main.async {
-                self.presentErrorAlert(error: error)
-            }
-        }
+        viewModel.ballDidShake.onNext(())
     }
     /// Updates the label on the ViewController in the TableViewCell
     /// - Parameter answer:String
@@ -130,9 +110,6 @@ private extension MainViewController {
             make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(25)
         }
     }
-//    func setupCountLabel() {
-//        countLabel.text = "Shakes – \(viewModel.loadTouches())"
-//    }
     // MARK: - Animation
     func animateAnswerLabel() {
         UIView.transition(with: self.answerLabel,
@@ -142,13 +119,30 @@ private extension MainViewController {
                           completion: nil)
     }
 }
-//MARK: -RX
+    // MARK: - RX
 extension MainViewController {
     private func setupBindings() {
         viewModel.countTouchesRX
-            .filter { $0 > 0 }
             .map(String.init)
+            .map { count in
+                "Shake - \(count)"
+            }
             .bind(to: countLabel.rx.text)
             .disposed(by: disposeBag)
+        viewModel.answerRx
+            .observeOn(MainScheduler.instance)
+            .subscribe { [weak self] answer in
+                guard let self = self else { return }
+                    if !self.isResp {
+                            self.flipText()
+                    }
+                    if self.answerLabel.text == L10n.someAnswer {
+                        self.answerLabel.text = ""
+                    }
+                    self.updateAnswerLabel(answer: answer)
+                    self.animateAnswerLabel()
+            } onError: { error in
+                print(error)
+            }.disposed(by: disposeBag)
     }
 }

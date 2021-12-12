@@ -8,38 +8,31 @@
 import UIKit
 import RxSwift
 
-
 // MARK: - Protocol
 protocol MainViewModelType {
-    func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void, completionError: @escaping (MyError) -> Void)
-    func increaseAndSaveTouches()
     func loadTouches ()
     func getAnimationAnswer() -> String
-    //rx
+//    Rx
     var countTouchesRX: Observable<Int> { get }
+    var ballDidShake: PublishSubject<Void> { get }
+    var answerRx: Observable<String> { get } 
 }
 // MARK: - Class
 class MainViewModel: MainViewModelType {
-    //    RX
+//    RX
     var countTouchesRX: Observable<Int> {
         mainModel.countTouchesRX
     }
-    //OLD
+    var ballDidShake: PublishSubject<Void> {
+        mainModel.ballDidShake
+    }
+    var answerRx: Observable<String> {
+        mainModel.answerRx.map { $0.text }
+    }
+//    OLD
     private let mainModel: MainModelType
     init(mainModel: MainModelType) {
         self.mainModel = mainModel
-    }
-    func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void,
-                          completionError: @escaping (MyError) -> Void) {
-        mainModel.fetchAnswerByURL { answer in
-            completionSuccess(answer)
-        } completionError: { error in
-            completionError(error)
-        }
-    }
-    func increaseAndSaveTouches() {
-        mainModel.increaseTouches()
-        mainModel.saveTouches()
     }
     func loadTouches () {
         mainModel.loadTouches()
@@ -47,8 +40,4 @@ class MainViewModel: MainViewModelType {
     func getAnimationAnswer() -> String {
         return AnswersForAnimation.answers.randomElement()!
     }
-}
-//MARK: -RX
-extension MainViewModel {
-    
 }

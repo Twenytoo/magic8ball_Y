@@ -16,25 +16,25 @@ enum MyError: String, Error {
 }
 // MARK: - Protocol
 protocol MainModelType {
-    var countTouches: Int {get set}
     var answer: String! { get set }
     var networkManager: NetworkService { get set }
     var storageManager: StorageServiceProtocol { get set }
     var secureStorageService: SecureStorageServiceType { get set }
-    func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void,
-                          completionError: @escaping (MyError) -> Void)
-    func saveTouches()
     func loadTouches()
-    func increaseTouches()
-    //rx
+//    Rx
     var countTouchesRX: BehaviorSubject<Int> {get set}
+    var ballDidShake: PublishSubject<Void> {get set}
+    var answerRx: PublishSubject<Answer> {get set}
 }
 // MARK: - Class
 class MainModel: MainModelType {
     //  Rx
     var countTouchesRX = BehaviorSubject(value: 0)
+    var ballDidShake = PublishSubject<Void>()
+    var answerRx = PublishSubject<Answer>()
+    private let disposeBag = DisposeBag()
+
     //    OLD
-    var countTouches = 0
     var answer: String!
     var internetFetchSuccess: Bool
     var networkManager: NetworkService
@@ -47,33 +47,18 @@ class MainModel: MainModelType {
         self.storageManager = storageManager
         self.secureStorageService = secureStorageService
         self.internetFetchSuccess = true
+        setupBinding()
     }
-    func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void,
-                          completionError: @escaping (MyError) -> Void) {
-        networkManager.fetchAnswerByURL { result in
-            switch result {
-            case.success(let answer):
-                let answerString = answer.uppercased()
-                completionSuccess(answerString)
-            case.failure(let error):
-                if self.internetFetchSuccess {
-                    completionError(error)
-                    self.internetFetchSuccess = false
-                }
-            }
-        }
-    }
-
-    func increaseTouches() {
+    private func increaseTouches() {
         var new = 0
         countTouchesRX
-            .map{$0 + 1}
+            .map { $0 + 1 }
             .subscribe { value in
                 new = value
-            }
+            }.disposed(by: disposeBag)
         countTouchesRX.onNext(new)
     }
-    func saveTouches() {
+    private func saveTouches() {
         countTouchesRX.subscribe { event in
             switch event {
             case .next(let count):
@@ -91,11 +76,19 @@ class MainModel: MainModelType {
             case .completed:
                 print("Completed")
             }
-        }
+        }.disposed(by: disposeBag)
     }
     func loadTouches() {
         let touches = secureStorageService.loadData(key: StorageKey.keyForTouches,
                                                     dictionary: StorageDictionary.countOfTouches) as? Int
         countTouchesRX.onNext(touches ?? 0)
+    }
+    func setupBinding() {
+        _ = ballDidShake.subscribe { [weak self] _ in
+            self?.increaseTouches()
+            self?.saveTouches()
+            self?.networkManager.fetchAnswerByURLRX()
+        }
+        _ = networkManager.answerRx.bind(to: answerRx)
     }
 }
