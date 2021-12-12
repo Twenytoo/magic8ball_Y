@@ -11,9 +11,9 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: UIViewController {
-    //RX
+//    RX
     private let disposeBag = DisposeBag()
-    //OLD
+//    OLD
     var isResp = false
     var is3secPassed = false
     //    Views
@@ -33,6 +33,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setUpInterface()
         setupConstraints()
+        setupBindings()
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
@@ -42,9 +43,6 @@ class MainViewController: UIViewController {
             }
         }
         viewModel.increaseAndSaveTouches()
-        DispatchQueue.main.async {
-            self.setupCountLabel()
-        }
         if answerLabel.text == L10n.someAnswer {
             answerLabel.text = ""
         }
@@ -52,7 +50,6 @@ class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 self.updateAnswerLabel(answer: answer)
                 self.animateAnswerLabel()
-                
             }
         } completionError: { error in
             DispatchQueue.main.async {
@@ -96,6 +93,7 @@ class MainViewController: UIViewController {
 // MARK: - Setting UI
 private extension MainViewController {
     func setUpInterface() {
+        viewModel.loadTouches()
         title = L10n.main
         self.view.backgroundColor = .black
         ///     ImageView with Magic Ball image
@@ -109,14 +107,14 @@ private extension MainViewController {
         answerLabel.adjustsFontSizeToFitWidth = true
         answerLabel.numberOfLines = 2
         ///    Count label
-        countLabel.text = "Shakes – 0"
+//        countLabel.text = "Shakes – 0"
         countLabel.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
         countLabel.textAlignment = .center
         countLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
-        setupCountLabel()
+//        setupCountLabel()
     }
     // MARK: - Contraints
     func setupConstraints() {
@@ -132,9 +130,9 @@ private extension MainViewController {
             make.leading.top.equalTo(view.safeAreaLayoutGuide).inset(25)
         }
     }
-    func setupCountLabel() {
-        countLabel.text = "Shakes – \(viewModel.loadTouches())"
-    }
+//    func setupCountLabel() {
+//        countLabel.text = "Shakes – \(viewModel.loadTouches())"
+//    }
     // MARK: - Animation
     func animateAnswerLabel() {
         UIView.transition(with: self.answerLabel,
@@ -142,5 +140,15 @@ private extension MainViewController {
                           options: .transitionFlipFromTop,
                           animations: nil,
                           completion: nil)
+    }
+}
+//MARK: -RX
+extension MainViewController {
+    private func setupBindings() {
+        viewModel.countTouchesRX
+            .filter { $0 > 0 }
+            .map(String.init)
+            .bind(to: countLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 }

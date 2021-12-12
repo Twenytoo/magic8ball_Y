@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
 // MARK: - Enum
 enum MyError: String, Error {
     case invaliData         = "The data recieved from the server was invalid. Please try again! "
@@ -22,11 +24,16 @@ protocol MainModelType {
     func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void,
                           completionError: @escaping (MyError) -> Void)
     func saveTouches()
-    func loadTouches () -> Int
+    func loadTouches()
     func increaseTouches()
+    //rx
+    var countTouchesRX: BehaviorSubject<Int> {get set}
 }
 // MARK: - Class
 class MainModel: MainModelType {
+    //  Rx
+    var countTouchesRX = BehaviorSubject(value: 0)
+    //    OLD
     var countTouches = 0
     var answer: String!
     var internetFetchSuccess: Bool
@@ -56,24 +63,39 @@ class MainModel: MainModelType {
             }
         }
     }
+
     func increaseTouches() {
-        countTouches += 1
+        var new = 0
+        countTouchesRX
+            .map{$0 + 1}
+            .subscribe { value in
+                new = value
+            }
+        countTouchesRX.onNext(new)
     }
     func saveTouches() {
-        if countTouches == 1 {
-            secureStorageService.saveData(key: StorageKey.keyForTouches,
-                                          value: countTouches,
-                                          dictionary: StorageDictionary.countOfTouches)
-        } else {
-            secureStorageService.updateData(key: StorageKey.keyForTouches,
-                                            value: countTouches,
-                                            dictionary: StorageDictionary.countOfTouches)
+        countTouchesRX.subscribe { event in
+            switch event {
+            case .next(let count):
+                if count == 1 {
+                    self.secureStorageService.saveData(key: StorageKey.keyForTouches,
+                                                       value: count,
+                                                       dictionary: StorageDictionary.countOfTouches)
+                } else {
+                    self.secureStorageService.updateData(key: StorageKey.keyForTouches,
+                                                         value: count,
+                                                         dictionary: StorageDictionary.countOfTouches)
+                }
+            case .error(let error):
+                print(error)
+            case .completed:
+                print("Completed")
+            }
         }
     }
-    func loadTouches () -> Int {
+    func loadTouches() {
         let touches = secureStorageService.loadData(key: StorageKey.keyForTouches,
-                                                          dictionary: StorageDictionary.countOfTouches) as? Int
-        countTouches = touches ?? 0
-        return countTouches
+                                                    dictionary: StorageDictionary.countOfTouches) as? Int
+        countTouchesRX.onNext(touches ?? 0)
     }
 }

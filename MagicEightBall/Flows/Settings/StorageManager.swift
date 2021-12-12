@@ -62,16 +62,16 @@ class StorageManager: StorageServiceProtocol {
     }
     // MARK: - Core Data Saving support
     private func saveBackgroundContext (for backgroundContext: NSManagedObjectContext) {
-        backgroundContext.perform {
-            if backgroundContext.hasChanges {
-                do {
-                    try backgroundContext.save()
-                } catch {
-                    let nserror = error as NSError
-                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-                }
-            }
-        }
+//        backgroundContext.perform {
+//            if backgroundContext.hasChanges {
+//                do {
+//                    try backgroundContext.save()
+//                } catch {
+//                    let nserror = error as NSError
+//                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//                }
+//            }
+//        }
     }
     func createAnswerEntity(answer: String) {
         let newEntity = AnswerEntity(context: backgroundContext)

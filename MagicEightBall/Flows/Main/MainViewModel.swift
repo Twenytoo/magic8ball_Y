@@ -8,18 +8,22 @@
 import UIKit
 import RxSwift
 
+
 // MARK: - Protocol
 protocol MainViewModelType {
     func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void, completionError: @escaping (MyError) -> Void)
     func increaseAndSaveTouches()
-    func loadTouches () -> String
+    func loadTouches ()
     func getAnimationAnswer() -> String
+    //rx
+    var countTouchesRX: Observable<Int> { get }
 }
 // MARK: - Class
 class MainViewModel: MainViewModelType {
-    
-    
-    
+    //    RX
+    var countTouchesRX: Observable<Int> {
+        mainModel.countTouchesRX
+    }
     //OLD
     private let mainModel: MainModelType
     init(mainModel: MainModelType) {
@@ -37,8 +41,8 @@ class MainViewModel: MainViewModelType {
         mainModel.increaseTouches()
         mainModel.saveTouches()
     }
-    func loadTouches () -> String {
-        return String(mainModel.loadTouches())
+    func loadTouches () {
+        mainModel.loadTouches()
     }
     func getAnimationAnswer() -> String {
         return AnswersForAnimation.answers.randomElement()!
