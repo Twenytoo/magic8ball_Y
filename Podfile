@@ -9,5 +9,7 @@ target 'MagicEightBall' do
   pod 'SwiftGen', '~> 6.5'
   pod 'SnapKit', '~> 5.0.0'
   pod 'Locksmith'
+  pod 'RxSwift', '5.0.0'
+  pod 'RxCocoa', '5.0.0'
 
 end

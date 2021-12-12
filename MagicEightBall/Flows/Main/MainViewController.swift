@@ -7,8 +7,13 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class MainViewController: UIViewController {
+    //RX
+    private let disposeBag = DisposeBag()
+    //OLD
     var isResp = false
     var is3secPassed = false
     //    Views

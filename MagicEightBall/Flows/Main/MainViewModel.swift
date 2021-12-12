@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+
 // MARK: - Protocol
 protocol MainViewModelType {
     func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void, completionError: @escaping (MyError) -> Void)
@@ -15,6 +17,10 @@ protocol MainViewModelType {
 }
 // MARK: - Class
 class MainViewModel: MainViewModelType {
+    
+    
+    
+    //OLD
     private let mainModel: MainModelType
     init(mainModel: MainModelType) {
         self.mainModel = mainModel
@@ -37,4 +43,8 @@ class MainViewModel: MainViewModelType {
     func getAnimationAnswer() -> String {
         return AnswersForAnimation.answers.randomElement()!
     }
+}
+//MARK: -RX
+extension MainViewModel {
+    
 }
