@@ -10,16 +10,14 @@ import RxSwift
 
 // MARK: - Protocol
 protocol MainViewModelType {
-    func loadTouches ()
-    func getAnimationAnswer() -> String
-//    Rx
     var countTouchesRX: Observable<Int> { get }
     var ballDidShake: PublishSubject<Void> { get }
-    var answerRx: Observable<String> { get } 
+    var answerRx: Observable<String> { get }
+    func loadTouches()
+    func getAnimationAnswer() -> String
 }
 // MARK: - Class
 class MainViewModel: MainViewModelType {
-//    RX
     var countTouchesRX: Observable<Int> {
         mainModel.countTouchesRX
     }
@@ -29,12 +27,11 @@ class MainViewModel: MainViewModelType {
     var answerRx: Observable<String> {
         mainModel.answerRx.map { $0.text }
     }
-//    OLD
     private let mainModel: MainModelType
     init(mainModel: MainModelType) {
         self.mainModel = mainModel
     }
-    func loadTouches () {
+    func loadTouches() {
         mainModel.loadTouches()
     }
     func getAnimationAnswer() -> String {

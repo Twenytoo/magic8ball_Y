@@ -15,24 +15,14 @@ protocol NetworkService {
 }
 // MARK: - Class
 class NetworkManager: NetworkService {
-    /// Handles an instance of String type in case of unsuccessful internet connection
-//    var completionHandler: ((String) -> Void)?
     var answerRx = PublishSubject<Answer>()
-    /// Shows answers from DB in case of unsuccessful internet connection
-    private var createAnswerManager: CreateAnswerProtocol
-    private var getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol
+    private let createAnswerManager: CreateAnswerProtocol
+    private let getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol
     init(createAnswerManager: CreateAnswerProtocol,
          getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol) {
         self.createAnswerManager = createAnswerManager
         self.getAnswerWithoutConnectionManager = getAnswerWithoutConnectionManager
     }
-    // MARK: - RX
-    // MARK: - Getting data from Network
-    /// Receiving data from the Internet using URLSession
-    /// The function uses url to receive data, response and error using the URLSession
-    /// where an instance of ViewController is created on the main queue and receives an instance of the String type
-    /// from there and is handler by the complitionHandler
-    /// - Returns: The function returns Void, but calls the function URLSession
     func fetchAnswerByURLRX() {
         guard let url = URL(string: L10n.url) else {
             let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()

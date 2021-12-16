@@ -11,15 +11,13 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: UIViewController {
+    private let viewModel: MainViewModelType
     private let disposeBag = DisposeBag()
-    var isResp = false
-    var is3secPassed = false
-    //    Views
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
-    //    Model
-    private var viewModel: MainViewModelType
+    private var isResp = false
+    private var is3secPassed = false
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -29,17 +27,12 @@ class MainViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpInterface()
-        setupConstraints()
-        setupBindings()
+        setup()
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
         viewModel.ballDidShake.onNext(())
     }
-    /// Updates the label on the ViewController in the TableViewCell
-    /// - Parameter answer:String
-    /// - Returns: Void
     private func updateAnswerLabel(answer: String) {
         DispatchQueue.main.async {
             self.answerLabel.text = answer
@@ -52,26 +45,41 @@ class MainViewController: UIViewController {
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
     }
-    private func flipText() {
-        wait3sec()
-        UIView.transition(with: self.answerLabel,
-                          duration: 0.1,
-                          options: .transitionFlipFromTop) {
-            self.answerLabel.text = self.viewModel.getAnimationAnswer()
-        } completion: { _ in
-            if !self.is3secPassed || !self.isResp {
-                self.flipText()
-            }
-        }
-    }
-    private func wait3sec() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            self.is3secPassed = true
-        }
-    }
 }
-// MARK: - Setting UI
+// MARK: - Setup
 private extension MainViewController {
+    func setup() {
+        setUpInterface()
+        setupConstraints()
+        animateAnswerLabel()
+        setupBindings()
+    }
+// MARK: - Binging
+    func setupBindings() {
+        viewModel.countTouchesRX
+            .map(String.init)
+            .map { count in
+                "Shake - \(count)"
+            }
+            .bind(to: countLabel.rx.text)
+            .disposed(by: disposeBag)
+        viewModel.answerRx
+            .observeOn(MainScheduler.instance)
+            .subscribe { [weak self] answer in
+                guard let self = self else { return }
+                    if !self.isResp {
+                            self.flipText()
+                    }
+                    if self.answerLabel.text == L10n.someAnswer {
+                        self.answerLabel.text = ""
+                    }
+                    self.updateAnswerLabel(answer: answer)
+                    self.animateAnswerLabel()
+            } onError: { error in
+                print(error)
+            }.disposed(by: disposeBag)
+    }
+// MARK: - Setting UI
     func setUpInterface() {
         viewModel.loadTouches()
         title = L10n.main
@@ -87,14 +95,13 @@ private extension MainViewController {
         answerLabel.adjustsFontSizeToFitWidth = true
         answerLabel.numberOfLines = 2
         ///    Count label
-//        countLabel.text = "Shakes – 0"
         countLabel.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
         countLabel.textAlignment = .center
         countLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
-//        setupCountLabel()
+
     }
     // MARK: - Contraints
     func setupConstraints() {
@@ -118,31 +125,21 @@ private extension MainViewController {
                           animations: nil,
                           completion: nil)
     }
-}
-    // MARK: - RX
-extension MainViewController {
-    private func setupBindings() {
-        viewModel.countTouchesRX
-            .map(String.init)
-            .map { count in
-                "Shake - \(count)"
+    func flipText() {
+        wait3sec()
+        UIView.transition(with: self.answerLabel,
+                          duration: 0.1,
+                          options: .transitionFlipFromTop) {
+            self.answerLabel.text = self.viewModel.getAnimationAnswer()
+        } completion: { _ in
+            if !self.is3secPassed || !self.isResp {
+                self.flipText()
             }
-            .bind(to: countLabel.rx.text)
-            .disposed(by: disposeBag)
-        viewModel.answerRx
-            .observeOn(MainScheduler.instance)
-            .subscribe { [weak self] answer in
-                guard let self = self else { return }
-                    if !self.isResp {
-                            self.flipText()
-                    }
-                    if self.answerLabel.text == L10n.someAnswer {
-                        self.answerLabel.text = ""
-                    }
-                    self.updateAnswerLabel(answer: answer)
-                    self.animateAnswerLabel()
-            } onError: { error in
-                print(error)
-            }.disposed(by: disposeBag)
+        }
+    }
+    func wait3sec() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.is3secPassed = true
+        }
     }
 }

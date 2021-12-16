@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-// MARK: - Enum
+// MARK: - Errors
 enum MyError: String, Error {
     case invaliData         = "The data recieved from the server was invalid. Please try again! "
     case invalidURL         = "This URL created an invalid request. Please try again."
@@ -16,40 +16,39 @@ enum MyError: String, Error {
 }
 // MARK: - Protocol
 protocol MainModelType {
-    var answer: String! { get set }
-    var networkManager: NetworkService { get set }
-    var storageManager: StorageServiceProtocol { get set }
-    var secureStorageService: SecureStorageServiceType { get set }
     func loadTouches()
-//    Rx
     var countTouchesRX: BehaviorSubject<Int> {get set}
     var ballDidShake: PublishSubject<Void> {get set}
-    var answerRx: PublishSubject<Answer> {get set}
+    var answerRx: Observable<Answer> { get }
 }
 // MARK: - Class
 class MainModel: MainModelType {
-    //  Rx
     var countTouchesRX = BehaviorSubject(value: 0)
     var ballDidShake = PublishSubject<Void>()
-    var answerRx = PublishSubject<Answer>()
+    var answerRx: Observable<Answer> {
+        networkManager.answerRx
+    }
     private let disposeBag = DisposeBag()
-
-    //    OLD
-    var answer: String!
-    var internetFetchSuccess: Bool
-    var networkManager: NetworkService
-    var storageManager: StorageServiceProtocol
-    var secureStorageService: SecureStorageServiceType
+    private let networkManager: NetworkService
+    private let storageManager: StorageServiceProtocol
+    private let secureStorageService: SecureStorageServiceType
     init(networkManager: NetworkService,
          storageManager: StorageServiceProtocol,
          secureStorageService: SecureStorageServiceType) {
         self.networkManager = networkManager
         self.storageManager = storageManager
         self.secureStorageService = secureStorageService
-        self.internetFetchSuccess = true
         setupBinding()
     }
-    private func increaseTouches() {
+    func loadTouches() {
+        let touches = secureStorageService.loadData(key: StorageKey.keyForTouches,
+                                                    dictionary: StorageDictionary.countOfTouches) as? Int
+        countTouchesRX.onNext(touches ?? 0)
+    }
+}
+// MARK: - Private funcs
+private extension MainModel {
+    func increaseTouches() {
         var new = 0
         countTouchesRX
             .map { $0 + 1 }
@@ -58,7 +57,7 @@ class MainModel: MainModelType {
             }.disposed(by: disposeBag)
         countTouchesRX.onNext(new)
     }
-    private func saveTouches() {
+    func saveTouches() {
         countTouchesRX.subscribe { event in
             switch event {
             case .next(let count):
@@ -78,17 +77,11 @@ class MainModel: MainModelType {
             }
         }.disposed(by: disposeBag)
     }
-    func loadTouches() {
-        let touches = secureStorageService.loadData(key: StorageKey.keyForTouches,
-                                                    dictionary: StorageDictionary.countOfTouches) as? Int
-        countTouchesRX.onNext(touches ?? 0)
-    }
     func setupBinding() {
-        _ = ballDidShake.subscribe { [weak self] _ in
+        ballDidShake.subscribe { [weak self] _ in
             self?.increaseTouches()
             self?.saveTouches()
             self?.networkManager.fetchAnswerByURLRX()
-        }
-        _ = networkManager.answerRx.bind(to: answerRx)
+        }.disposed(by: disposeBag)
     }
 }
