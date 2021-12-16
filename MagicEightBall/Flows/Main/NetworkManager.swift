@@ -42,7 +42,6 @@ class NetworkManager: NetworkService {
         }
         URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
-            print("!!!!!!!!!!!!!!")
             if error != nil {
                 let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
                 self.answerRx.onNext(Answer(text: answer, date: Date()))

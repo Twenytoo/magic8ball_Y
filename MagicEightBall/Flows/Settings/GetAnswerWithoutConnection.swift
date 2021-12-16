@@ -17,10 +17,11 @@ class GetAnswerWithoutConnection: GetAnswerFromDBProtocol {
         self.storageManager = storageManager
     }
     func showAnswerWithoutConnection() -> String {
-        var text = L10n.error
-        storageManager.getAnswersFromDB { answers in
-            text = answers.randomElement()?.text ?? L10n.error
-        }
-        return text
+//        var text = L10n.error
+//        storageManager.getAnswersFromDB { answers in
+//            text = answers.randomElement()?.text ?? L10n.error
+//        }
+//        return text
+        return "ПЕРЕДЕЛАТЬ"
     }
 }
