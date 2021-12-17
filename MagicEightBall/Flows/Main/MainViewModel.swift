@@ -10,6 +10,7 @@ import RxSwift
 
 // MARK: - Protocol
 protocol MainViewModelType {
+    var currentAnswer: String { get set }
     var countTouchesRX: Observable<Int> { get }
     var ballDidShake: PublishSubject<Void> { get }
     var answerRx: Observable<String> { get }
@@ -18,6 +19,7 @@ protocol MainViewModelType {
 }
 // MARK: - Class
 class MainViewModel: MainViewModelType {
+    var currentAnswer = ""
     var countTouchesRX: Observable<Int> {
         mainModel.countTouchesRX
     }

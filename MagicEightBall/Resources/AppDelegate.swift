@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                  answerHistoryNavVC], animated: true)
         tabBarViewController.modalPresentationStyle = .fullScreen
         tabBarViewController.tabBar.barTintColor = .black
+        tabBarViewController.tabBar.backgroundColor = .black
         tabBarViewController.tabBar.tintColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
         tabBarViewController.tabBar.items?[0].image = UIImage(systemName: "restart.circle")
         tabBarViewController.tabBar.items?[1].image = UIImage(systemName: "gear")

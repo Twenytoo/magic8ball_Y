@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: UIViewController {
-    private let viewModel: MainViewModelType
+    private var viewModel: MainViewModelType
     private let disposeBag = DisposeBag()
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
@@ -31,12 +31,18 @@ class MainViewController: UIViewController {
     }
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
+        animateFirstRequest()
         viewModel.ballDidShake.onNext(())
     }
     private func updateAnswerLabel(answer: String) {
         DispatchQueue.main.async {
-            self.answerLabel.text = answer
-            self.isResp = true
+            UIView.transition(with: self.answerLabel,
+                              duration: 0.5,
+                              options: .transitionFlipFromTop,
+                              animations: {
+                self.answerLabel.text = answer
+            },
+                              completion: nil)
         }
     }
     private func presentErrorAlert(error: MyError) {
@@ -44,6 +50,13 @@ class MainViewController: UIViewController {
         let okButton = UIAlertAction(title: L10n.done, style: .default, handler: nil)
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
+    }
+    private func animateFirstRequest() {
+        if !self.isResp {
+            DispatchQueue.main.async {
+                self.flipText()
+            }
+        }
     }
 }
 // MARK: - Setup
@@ -54,7 +67,7 @@ private extension MainViewController {
         animateAnswerLabel()
         setupBindings()
     }
-// MARK: - Binging
+    // MARK: - Binging
     func setupBindings() {
         viewModel.countTouchesRX
             .map(String.init)
@@ -67,41 +80,32 @@ private extension MainViewController {
             .observeOn(MainScheduler.instance)
             .subscribe { [weak self] answer in
                 guard let self = self else { return }
-                    if !self.isResp {
-                            self.flipText()
-                    }
-                    if self.answerLabel.text == L10n.someAnswer {
-                        self.answerLabel.text = ""
-                    }
-                    self.updateAnswerLabel(answer: answer)
-                    self.animateAnswerLabel()
+                self.isResp = true
+                self.updateAnswerLabel(answer: answer)
+                self.viewModel.currentAnswer = answer
             } onError: { error in
                 print(error)
             }.disposed(by: disposeBag)
     }
-// MARK: - Setting UI
+    // MARK: - Setting UI
     func setUpInterface() {
         viewModel.loadTouches()
         title = L10n.main
         self.view.backgroundColor = .black
-        ///     ImageView with Magic Ball image
         let imageBall = UIImage(asset: Asset.magicBallPNG)
         imageBallView.image = imageBall
         imageBallView.contentMode = .scaleAspectFit
-        ///     Label for answer
         answerLabel.text = L10n.someAnswer
         answerLabel.textColor = .white
         answerLabel.textAlignment = .center
         answerLabel.adjustsFontSizeToFitWidth = true
         answerLabel.numberOfLines = 2
-        ///    Count label
         countLabel.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
         countLabel.textAlignment = .center
         countLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
         self.view.addSubview(imageBallView)
         self.view.addSubview(answerLabel)
         self.view.addSubview(countLabel)
-
     }
     // MARK: - Contraints
     func setupConstraints() {
@@ -134,6 +138,8 @@ private extension MainViewController {
         } completion: { _ in
             if !self.is3secPassed || !self.isResp {
                 self.flipText()
+            } else {
+                self.answerLabel.text = self.viewModel.currentAnswer
             }
         }
     }
