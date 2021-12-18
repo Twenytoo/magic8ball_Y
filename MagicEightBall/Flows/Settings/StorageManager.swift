@@ -7,14 +7,17 @@
 
 import Foundation
 import CoreData
+import RxSwift
 // MARK: - Protocols
 protocol StorageServiceProtocol {
     func createAnswerEntity(answer: String)
-    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))
     func deleteAnswerAt(indexPath: Int)
+    func getAnswersFromDBRX()
+    var answerRx: BehaviorSubject<[AnswerEntity]> { get }
 }
 // MARK: - Class
 class StorageManager: StorageServiceProtocol {
+    var answerRx = BehaviorSubject<[AnswerEntity]>(value: [])
     private var answers = [AnswerEntity]()
     private let persistentContainer: NSPersistentContainer
     private let context: NSManagedObjectContext
@@ -32,34 +35,17 @@ class StorageManager: StorageServiceProtocol {
         context = persistentContainer.viewContext
         backgroundContext = persistentContainer.newBackgroundContext()
     }
-    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
-        let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                    managedObjectContext: backgroundContext,
-                                                    sectionNameKeyPath: nil,
-                                                    cacheName: nil)
-        getObjects(fetchController: controller) { result in
-            switch result {
-            case .success(let answerEntities):
-                completion(answerEntities)
-                self.answers = answerEntities
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    public func getObjects<T: NSManagedObject>(
+    private func getObjects<T: NSManagedObject>(
         fetchController: NSFetchedResultsController<T>,
         completion: @escaping (Result<[T], Error>) -> Void) {
-        do {
-            try fetchController.performFetch()
-            guard let result = fetchController.fetchedObjects else { return }
-            completion(.success(result))
-        } catch let error {
-            completion(.failure(error))
+            do {
+                try fetchController.performFetch()
+                guard let result = fetchController.fetchedObjects else { return }
+                completion(.success(result))
+            } catch let error {
+                completion(.failure(error))
+            }
         }
-    }
     // MARK: - Core Data Saving support
     private func saveBackgroundContext (for backgroundContext: NSManagedObjectContext) {
         backgroundContext.perform {
@@ -72,6 +58,7 @@ class StorageManager: StorageServiceProtocol {
                 }
             }
         }
+        getAnswersFromDBRX()
     }
     func createAnswerEntity(answer: String) {
         let newEntity = AnswerEntity(context: backgroundContext)
@@ -84,6 +71,27 @@ class StorageManager: StorageServiceProtocol {
         backgroundContext.perform {
             self.backgroundContext.delete(answer)
             self.saveBackgroundContext(for: self.backgroundContext)
+        }
+    }
+}
+
+// MARK: - RX
+extension StorageManager {
+    func getAnswersFromDBRX() {
+            let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                        managedObjectContext: self.backgroundContext,
+                                                        sectionNameKeyPath: nil,
+                                                        cacheName: nil)
+            self.getObjects(fetchController: controller) { result in
+                switch result {
+                case .success(let answerEntities):
+                    self.answerRx.onNext(answerEntities)
+                    self.answers = answerEntities
+                case .failure(let error):
+                    self.answerRx.onError(error)
+                }
         }
     }
 }

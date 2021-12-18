@@ -5,55 +5,56 @@
 //  Created by Артём on 14.10.2021.
 //
 
-import UIKit
+import Foundation
+import RxSwift
 
 // MARK: - Protocol
 protocol NetworkService {
-    func fetchAnswerByURL(completion: @escaping (Result<String, MyError>) -> Void)
+    func fetchAnswerByURLRX()
+    var answerRx: PublishSubject<Answer> { get set }
 }
 // MARK: - Class
 class NetworkManager: NetworkService {
-    /// Handles an instance of String type in case of unsuccessful internet connection
-    var completionHandler: ((String) -> Void)?
-    /// Shows answers from DB in case of unsuccessful internet connection
-    private var createAnswerManager: CreateAnswerProtocol
-    private var getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol
+    var answerRx = PublishSubject<Answer>()
+    private var internetConnection = true
+    private let createAnswerManager: CreateAnswerProtocol
+    private let getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol
     init(createAnswerManager: CreateAnswerProtocol,
          getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol) {
         self.createAnswerManager = createAnswerManager
         self.getAnswerWithoutConnectionManager = getAnswerWithoutConnectionManager
     }
-    // MARK: - Getting data from Network
-    /// Receiving data from the Internet using URLSession
-    /// The function uses url to receive data, response and error using the URLSession
-    /// where an instance of ViewController is created on the main queue and receives an instance of the String type
-    /// from there and is handler by the complitionHandler
-    /// - Returns: The function returns Void, but calls the function URLSession
-    func fetchAnswerByURL(completion: @escaping (Result<String, MyError>) -> Void) {
+    func fetchAnswerByURLRX() {
         guard let url = URL(string: L10n.url) else {
             let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
-            completion(.success(answer))
-            completion(.failure(.invalidURL))
+            answerRx.onNext(Answer(text: answer, date: Date()))
+            answerRx.onError(MyError.invalidURL)
             return
         }
-            URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-                if error != nil {
-                    if let answer = self?.getAnswerWithoutConnectionManager.showAnswerWithoutConnection() {
-                        completion(.success(answer))
-                    }
-                    completion(.failure(.unableToComplete))
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let self = self else { return }
+            if error != nil {
+                let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
+                self.answerRx.onNext(Answer(text: answer, date: Date()))
+                if self.internetConnection {
+//                    self.answerRx.onError(MyError.unableToComplete)
+                    self.internetConnection = false
                 }
+                print(answer)
+            } else {
                 guard let data = data else {
-                    completion(.failure(.invaliData))
+                    self.answerRx.onError(MyError.invalidData)
                     return
                 }
-                guard let answer = self?.parseJSON(withData: data) else {
-                    completion(.failure(.invaliData))
+                guard let answer = self.parseJSON(withData: data) else {
+                    self.answerRx.onError(MyError.invalidData)
                     return
                 }
-                self?.createAnswerManager.addNewAnswer(answer: answer)
-                completion(.success(answer))
-            }.resume()
+                self.internetConnection = true
+                self.createAnswerManager.addNewAnswer(answer: answer)
+                self.answerRx.onNext(Answer(text: answer, date: Date()))
+            }
+        }.resume()
     }
     // MARK: - Parsing JSON data
     /// Parses JSON data

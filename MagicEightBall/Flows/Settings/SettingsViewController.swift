@@ -6,44 +6,23 @@
 //
 
 import UIKit
-
-class SettingsViewController: UIViewController,
-                              UITableViewDelegate,
-                              UITableViewDataSource {
-    //    SettingViewModel
+import RxSwift
+import RxCocoa
+class SettingsViewController: UIViewController, UITableViewDelegate {
     private var settingsViewModel: SettingsViewModelType
-    //    Creating table view
-    private let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
-        return tableView
-    }()
+    private let disposeBag = DisposeBag()
+    private let tableView = UITableView()
     init(viewModel: SettingsViewModelType) {
         self.settingsViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        settingsViewModel.getAnswersFromDBRX()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTableView()
-        addBarButtonItems()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-    // MARK: - Table view data source
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingsViewModel.getCountOfAnswers()
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: L10n.cell, for: indexPath)
-        guard let answerCell = cell as? CustomTableViewCell else {return UITableViewCell()}
-        answerCell.configureTextAnswer(text: settingsViewModel.getTextOfAnswer(indexPath: indexPath.row))
-        return answerCell
+        setup()
     }
     // MARK: - Table view delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -51,7 +30,6 @@ class SettingsViewController: UIViewController,
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         sheet.addAction(UIAlertAction(title: L10n.delete, style: .destructive) { _ in
             self.settingsViewModel.deleteAnswerAt(indexPath: indexPath.row)
-            self.tableView.reloadData()
         })
         sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(sheet, animated: true, completion: nil)
@@ -66,15 +44,20 @@ class SettingsViewController: UIViewController,
         let doneAction = UIAlertAction(title: L10n.done, style: .default) { _ in
             if let addAnswerTextField = addAnswer.textFields?[0].text {
                 self.settingsViewModel.addNewAnswer(answer: addAnswerTextField)
-                self.tableView.reloadData()
             }
         }
         addAnswer.addAction(doneAction)
         present(addAnswer, animated: true)
     }
 }
-
+// MARK: - SETUP
 private extension SettingsViewController {
+    func setup() {
+        title = L10n.settings
+        addBarButtonItems()
+        setTableView()
+        setupBinding()
+    }
     func addBarButtonItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: .add,
                                                             style: .plain,
@@ -82,12 +65,20 @@ private extension SettingsViewController {
                                                             action: #selector(addAnswerByBarButton))
     }
     func setTableView() {
-        title = L10n.settings
         tableView.rowHeight = 44
         tableView.frame = view.bounds
-        tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = .lightGray
+        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: L10n.cell)
         view.addSubview(tableView)
+    }
+    // MARK: - Binding
+    func setupBinding() {
+        settingsViewModel.answersRx
+            .bind(to: tableView
+                    .rx
+                    .items(cellIdentifier: L10n.cell, cellType: CustomTableViewCell.self)) { _, answer, cell in
+                cell.configureTextAnswer(text: answer)
+            }.disposed(by: disposeBag)
     }
 }

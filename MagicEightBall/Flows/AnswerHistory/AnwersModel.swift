@@ -6,19 +6,17 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol AnswersModelType {
-    var storageManager: StorageServiceProtocol { get set }
-    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void))
+    var answersRx: Observable<[Answer]> { get }
 }
 class AnswersModel: AnswersModelType {
-    var storageManager: StorageServiceProtocol
+    var answersRx: Observable<[Answer]> {
+        storageManager.answerRx.map { $0.map {$0.toAnswer()} }
+    }
+    private let storageManager: StorageServiceProtocol
     init(storagemanager: StorageServiceProtocol) {
         self.storageManager = storagemanager
-    }
-    func getAnswersFromDB(completion: @escaping (([AnswerEntity]) -> Void)) {
-        storageManager.getAnswersFromDB { answers in
-            completion(answers)
-        }
     }
 }

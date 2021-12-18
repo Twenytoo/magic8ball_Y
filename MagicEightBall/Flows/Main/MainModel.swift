@@ -6,74 +6,82 @@
 //
 
 import Foundation
-// MARK: - Enum
+import RxSwift
+
+// MARK: - Errors
 enum MyError: String, Error {
-    case invaliData         = "The data recieved from the server was invalid. Please try again! "
+    case invalidData        = "The data recieved from the server was invalid. Please try again! "
     case invalidURL         = "This URL created an invalid request. Please try again."
     case unableToComplete   = "Internet connection failed. You will see the answers from your store"
 }
 // MARK: - Protocol
 protocol MainModelType {
-    var countTouches: Int {get set}
-    var answer: String! { get set }
-    var networkManager: NetworkService { get set }
-    var storageManager: StorageServiceProtocol { get set }
-    var secureStorageService: SecureStorageServiceType { get set }
-    func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void,
-                          completionError: @escaping (MyError) -> Void)
-    func saveTouches()
-    func loadTouches () -> Int
-    func increaseTouches()
+    func loadTouches()
+    var countTouchesRX: BehaviorSubject<Int> {get set}
+    var ballDidShake: PublishSubject<Void> {get set}
+    var answerRx: Observable<Answer> { get }
 }
 // MARK: - Class
 class MainModel: MainModelType {
-    var countTouches = 0
-    var answer: String!
-    var internetFetchSuccess: Bool
-    var networkManager: NetworkService
-    var storageManager: StorageServiceProtocol
-    var secureStorageService: SecureStorageServiceType
+    var countTouchesRX = BehaviorSubject(value: 0)
+    var ballDidShake = PublishSubject<Void>()
+    var answerRx: Observable<Answer> {
+        networkManager.answerRx
+    }
+    private let disposeBag = DisposeBag()
+    private let networkManager: NetworkService
+    private let storageManager: StorageServiceProtocol
+    private let secureStorageService: SecureStorageServiceType
     init(networkManager: NetworkService,
          storageManager: StorageServiceProtocol,
          secureStorageService: SecureStorageServiceType) {
         self.networkManager = networkManager
         self.storageManager = storageManager
         self.secureStorageService = secureStorageService
-        self.internetFetchSuccess = true
+        setupBinding()
     }
-    func fetchAnswerByURL(completionSuccess: @escaping (String) -> Void,
-                          completionError: @escaping (MyError) -> Void) {
-        networkManager.fetchAnswerByURL { result in
-            switch result {
-            case.success(let answer):
-                let answerString = answer.uppercased()
-                completionSuccess(answerString)
-            case.failure(let error):
-                if self.internetFetchSuccess {
-                    completionError(error)
-                    self.internetFetchSuccess = false
-                }
-            }
-        }
+    func loadTouches() {
+        let touches = secureStorageService.loadData(key: StorageKey.keyForTouches,
+                                                    dictionary: StorageDictionary.countOfTouches) as? Int
+        countTouchesRX.onNext(touches ?? 0)
     }
+}
+// MARK: - Private funcs
+private extension MainModel {
     func increaseTouches() {
-        countTouches += 1
+        var new = 0
+        countTouchesRX
+            .map { $0 + 1 }
+            .subscribe { value in
+                new = value
+            }.disposed(by: disposeBag)
+        countTouchesRX.onNext(new)
     }
     func saveTouches() {
-        if countTouches == 1 {
-            secureStorageService.saveData(key: StorageKey.keyForTouches,
-                                          value: countTouches,
-                                          dictionary: StorageDictionary.countOfTouches)
-        } else {
-            secureStorageService.updateData(key: StorageKey.keyForTouches,
-                                            value: countTouches,
-                                            dictionary: StorageDictionary.countOfTouches)
-        }
+        countTouchesRX.subscribe { event in
+            switch event {
+            case .next(let count):
+                if count == 1 {
+                    self.secureStorageService.saveData(key: StorageKey.keyForTouches,
+                                                       value: count,
+                                                       dictionary: StorageDictionary.countOfTouches)
+                } else {
+                    self.secureStorageService.updateData(key: StorageKey.keyForTouches,
+                                                         value: count,
+                                                         dictionary: StorageDictionary.countOfTouches)
+                }
+            case .error(let error):
+                print(error)
+            case .completed:
+                print("Completed")
+            }
+        }.disposed(by: disposeBag)
     }
-    func loadTouches () -> Int {
-        let touches = secureStorageService.loadData(key: StorageKey.keyForTouches,
-                                                          dictionary: StorageDictionary.countOfTouches) as? Int
-        countTouches = touches ?? 0
-        return countTouches
+    func setupBinding() {
+        ballDidShake.subscribe { [weak self] _ in
+            self?.increaseTouches()
+            self?.saveTouches()
+            self?.networkManager.fetchAnswerByURLRX()
+        }.disposed(by: disposeBag)
     }
 }
