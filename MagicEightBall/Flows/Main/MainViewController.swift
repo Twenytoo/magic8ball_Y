@@ -45,8 +45,8 @@ class MainViewController: UIViewController {
                               completion: nil)
         }
     }
-    private func presentErrorAlert(error: MyError) {
-        let alert = UIAlertController(title: "Oops...", message: error.rawValue, preferredStyle: .alert)
+    private func presentErrorAlert(error: MyError?) {
+        let alert = UIAlertController(title: "Oops...", message: error?.rawValue, preferredStyle: .alert)
         let okButton = UIAlertAction(title: L10n.done, style: .default, handler: nil)
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
@@ -70,7 +70,6 @@ private extension MainViewController {
     // MARK: - Binging
     func setupBindings() {
         viewModel.countTouchesRX
-            .map(String.init)
             .map { count in
                 "Shake - \(count)"
             }
@@ -82,10 +81,15 @@ private extension MainViewController {
                 guard let self = self else { return }
                 self.isResp = true
                 self.updateAnswerLabel(answer: answer)
-                self.viewModel.currentAnswer = answer
             } onError: { error in
-                print(error)
-            }.disposed(by: disposeBag)
+                print(error, "!!!")
+                self.presentErrorAlert(error: error as? MyError)
+            } onCompleted: {
+                print("Completed!!!")
+            } onDisposed: {
+                print("Disposed!!!")
+            }
+            .disposed(by: disposeBag)
     }
     // MARK: - Setting UI
     func setUpInterface() {

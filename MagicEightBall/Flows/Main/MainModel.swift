@@ -10,7 +10,7 @@ import RxSwift
 
 // MARK: - Errors
 enum MyError: String, Error {
-    case invaliData         = "The data recieved from the server was invalid. Please try again! "
+    case invalidData        = "The data recieved from the server was invalid. Please try again! "
     case invalidURL         = "This URL created an invalid request. Please try again."
     case unableToComplete   = "Internet connection failed. You will see the answers from your store"
 }

@@ -6,22 +6,24 @@
 //
 
 import Foundation
-import CoreData
+import RxSwift
 
 protocol GetAnswerFromDBProtocol: AnyObject {
     func showAnswerWithoutConnection() -> String
 }
 class GetAnswerWithoutConnection: GetAnswerFromDBProtocol {
-    var storageManager: StorageServiceProtocol
+    private let storageManager: StorageServiceProtocol
+    private let disposeBag = DisposeBag()
     init(storageManager: StorageServiceProtocol) {
         self.storageManager = storageManager
     }
     func showAnswerWithoutConnection() -> String {
-//        var text = L10n.error
-//        storageManager.getAnswersFromDB { answers in
-//            text = answers.randomElement()?.text ?? L10n.error
-//        }
-//        return text
-        return "ПЕРЕДЕЛАТЬ"
+        var answer = L10n.error
+        storageManager.answerRx
+            .map { $0.map { $0.text ?? L10n.error }}
+            .subscribe(onNext: {
+                answer = $0.randomElement() ?? L10n.error
+            }).disposed(by: disposeBag)
+        return answer
     }
 }

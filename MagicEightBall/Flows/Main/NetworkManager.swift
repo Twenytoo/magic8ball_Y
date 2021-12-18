@@ -16,6 +16,7 @@ protocol NetworkService {
 // MARK: - Class
 class NetworkManager: NetworkService {
     var answerRx = PublishSubject<Answer>()
+    private var internetConnection = true
     private let createAnswerManager: CreateAnswerProtocol
     private let getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol
     init(createAnswerManager: CreateAnswerProtocol,
@@ -35,18 +36,24 @@ class NetworkManager: NetworkService {
             if error != nil {
                 let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
                 self.answerRx.onNext(Answer(text: answer, date: Date()))
-                self.answerRx.onError(MyError.unableToComplete)
+                if self.internetConnection {
+//                    self.answerRx.onError(MyError.unableToComplete)
+                    self.internetConnection = false
+                }
+                print(answer)
+            } else {
+                guard let data = data else {
+                    self.answerRx.onError(MyError.invalidData)
+                    return
+                }
+                guard let answer = self.parseJSON(withData: data) else {
+                    self.answerRx.onError(MyError.invalidData)
+                    return
+                }
+                self.internetConnection = true
+                self.createAnswerManager.addNewAnswer(answer: answer)
+                self.answerRx.onNext(Answer(text: answer, date: Date()))
             }
-            guard let data = data else {
-                self.answerRx.onError(MyError.invaliData)
-                return
-            }
-            guard let answer = self.parseJSON(withData: data) else {
-                self.answerRx.onError(MyError.invaliData)
-                return
-            }
-            self.createAnswerManager.addNewAnswer(answer: answer)
-            self.answerRx.onNext(Answer(text: answer, date: Date()))
         }.resume()
     }
     // MARK: - Parsing JSON data
