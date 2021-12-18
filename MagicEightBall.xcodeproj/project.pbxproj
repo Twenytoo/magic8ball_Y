@@ -33,6 +33,7 @@
 		13B1C0422751142D00439669 /* AnwersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C0412751142D00439669 /* AnwersModel.swift */; };
 		13B1C04827511AAA00439669 /* AnswerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C04727511AAA00439669 /* AnswerViewModel.swift */; };
 		13B1C04A27511C9000439669 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1C04927511C9000439669 /* Answer.swift */; };
+		13CEF444276E4B4A00A6E560 /* NavigationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CEF443276E4B4900A6E560 /* NavigationNode.swift */; };
 		BCE777B9C71D53D79D6BE9B6 /* Pods_MagicEightBall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3415F0C809DAC4EE5489D0 /* Pods_MagicEightBall.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		13B1C0412751142D00439669 /* AnwersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnwersModel.swift; sourceTree = "<group>"; };
 		13B1C04727511AAA00439669 /* AnswerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerViewModel.swift; sourceTree = "<group>"; };
 		13B1C04927511C9000439669 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
+		13CEF443276E4B4900A6E560 /* NavigationNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationNode.swift; sourceTree = "<group>"; };
 		2BB3D003DDC0401FBCBD13D6 /* Pods-MagicEightBall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicEightBall.release.xcconfig"; path = "Target Support Files/Pods-MagicEightBall/Pods-MagicEightBall.release.xcconfig"; sourceTree = "<group>"; };
 		3B3415F0C809DAC4EE5489D0 /* Pods_MagicEightBall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicEightBall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CA7053E74B1551A335EB8DE /* Pods-MagicEightBall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicEightBall.debug.xcconfig"; path = "Target Support Files/Pods-MagicEightBall/Pods-MagicEightBall.debug.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 		138A905A27452D2800424EA3 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				13CEF443276E4B4900A6E560 /* NavigationNode.swift */,
 				13B1C03E2751097C00439669 /* AnswerHistory */,
 				138A905B27452D7400424EA3 /* Main */,
 				138A905C27452D7900424EA3 /* Settings */,
@@ -353,6 +356,7 @@
 				138A905E27452DCF00424EA3 /* MainModel.swift in Sources */,
 				136752FB27144FD800ADC62C /* MainViewController.swift in Sources */,
 				13B1C04A27511C9000439669 /* Answer.swift in Sources */,
+				13CEF444276E4B4A00A6E560 /* NavigationNode.swift in Sources */,
 				1394865E275ACD4A0034CCBD /* AnswersForAnimation.swift in Sources */,
 				138A906027452E2700424EA3 /* SettingsModel.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
