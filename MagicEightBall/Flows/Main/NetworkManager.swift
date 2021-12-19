@@ -9,12 +9,12 @@ import Foundation
 import RxSwift
 
 // MARK: - Protocol
-protocol NetworkService {
+protocol NetworkServiceProtocol {
     func fetchAnswerByURLRX()
     var answerRx: PublishSubject<Answer> { get set }
 }
 // MARK: - Class
-class NetworkManager: NetworkService {
+class NetworkManager: NetworkServiceProtocol {
     var answerRx = PublishSubject<Answer>()
     private var internetConnection = true
     private let createAnswerManager: CreateAnswerProtocol

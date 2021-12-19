@@ -15,10 +15,17 @@ protocol StorageServiceProtocol {
     func getAnswersFromDBRX()
     var answerRx: BehaviorSubject<[AnswerEntity]> { get }
 }
+protocol CreateAnswerProtocol {
+    func addNewAnswer(answer: String)
+}
+protocol GetAnswerFromDBProtocol: AnyObject {
+    func showAnswerWithoutConnection() -> String
+}
 // MARK: - Class
 class StorageManager: StorageServiceProtocol {
     var answerRx = BehaviorSubject<[AnswerEntity]>(value: [])
     private var answers = [AnswerEntity]()
+    private let disposeBag = DisposeBag()
     private let persistentContainer: NSPersistentContainer
     private let context: NSManagedObjectContext
     private let backgroundContext: NSManagedObjectContext
@@ -95,7 +102,25 @@ extension StorageManager {
         }
     }
 }
-
+// MARK: - Save answer for NetworkManager
+extension StorageManager: CreateAnswerProtocol {
+    func addNewAnswer(answer: String) {
+        createAnswerEntity(answer: answer)
+    }
+}
+// MARK: - Get answer without Internet
+extension StorageManager: GetAnswerFromDBProtocol {
+    func showAnswerWithoutConnection() -> String {
+        var answer = L10n.error
+        answerRx
+            .map { $0.map { $0.text ?? L10n.error }}
+            .subscribe(onNext: {
+                answer = $0.randomElement() ?? L10n.error
+            }).disposed(by: disposeBag)
+        return answer
+    }
+}
+// MARK: - AnswerEntity to Answer
 extension AnswerEntity {
     func toAnswer() -> Answer {
         return Answer(text: self.text ?? L10n.error, date: self.date ?? Date())

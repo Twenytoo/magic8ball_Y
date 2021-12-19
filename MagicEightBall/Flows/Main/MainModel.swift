@@ -29,12 +29,12 @@ class MainModel: MainModelType {
         networkManager.answerRx
     }
     private let disposeBag = DisposeBag()
-    private let networkManager: NetworkService
+    private let networkManager: NetworkServiceProtocol
     private let storageManager: StorageServiceProtocol
-    private let secureStorageService: SecureStorageServiceType
-    init(networkManager: NetworkService,
+    private let secureStorageService: SecureStorageServiceProtocol
+    init(networkManager: NetworkServiceProtocol,
          storageManager: StorageServiceProtocol,
-         secureStorageService: SecureStorageServiceType) {
+         secureStorageService: SecureStorageServiceProtocol) {
         self.networkManager = networkManager
         self.storageManager = storageManager
         self.secureStorageService = secureStorageService

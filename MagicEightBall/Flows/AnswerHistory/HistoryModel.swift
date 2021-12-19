@@ -8,15 +8,15 @@
 import Foundation
 import RxSwift
 
-protocol AnswersModelType {
+protocol HistoryModelType {
     var answersRx: Observable<[Answer]> { get }
 }
-class AnswersModel: AnswersModelType {
+class HistoryModel: HistoryModelType {
     var answersRx: Observable<[Answer]> {
         storageManager.answerRx.map { $0.map {$0.toAnswer()} }
     }
     private let storageManager: StorageServiceProtocol
-    init(storagemanager: StorageServiceProtocol) {
-        self.storageManager = storagemanager
+    init(storageManager: StorageServiceProtocol) {
+        self.storageManager = storageManager
     }
 }

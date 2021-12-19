@@ -8,17 +8,17 @@
 import Foundation
 import RxSwift
 
-protocol AnswerViewModelType {
+protocol HistoryViewModelType {
     var answersRx: Observable<[String]> { get }
 }
-class AnswerViewModel: AnswerViewModelType {
+class HistoryViewModel: HistoryViewModelType {
     var answersRx: Observable<[String]> {
-        answerModel.answersRx.map { $0.map {$0.text}}
+        model.answersRx.map { $0.map {$0.text}}
     }
     private let dateFormatter: DateFormatter
-    private let answerModel: AnswersModelType
-    init(answerModel: AnswersModelType, dateFormatter: DateFormatter = DateFormatter()) {
-        self.answerModel = answerModel
+    private let model: HistoryModelType
+    init(model: HistoryModelType, dateFormatter: DateFormatter = DateFormatter()) {
+        self.model = model
         self.dateFormatter = dateFormatter
         self.dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
     }
