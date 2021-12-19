@@ -25,15 +25,14 @@ enum TabBarPages {
             return nil
         }
     }
-    
-    func pageTitleValue() -> String {
+    fileprivate func pageTitleValue() -> String {
         switch self {
         case .main:     return L10n.main
         case .settings: return L10n.settings
         case .history:  return L10n.history
         }
     }
-    func pageOrderNumber() -> Int {
+    fileprivate func pageOrderNumber() -> Int {
         switch self {
         case .main:
             return 0
@@ -43,7 +42,7 @@ enum TabBarPages {
             return 2
         }
     }
-    func pageIconValue() -> UIImage? {
+    fileprivate func pageIconValue() -> UIImage? {
         switch self {
         case .main:
             return UIImage(systemName: "restart.circle")
@@ -61,25 +60,13 @@ class TabBarCoordinator: NavigationNode {
     var networkManager: NetworkServiceProtocol!
     var secureStorageService: SecureStorageServiceProtocol!
     weak var containerViewController: UIViewController?
-//    let navigationController: UINavigationController
-//    let tabBarController: UITabBarController
     
     override init(parent: NavigationNode?) {
-//        self.navigationController = .init()
-//        self.tabBarController = .init()
         super.init(parent: parent)
     }
     deinit {
         print("TabCoordinator deinit")
     }
-//    func start() {
-//        let pages: [TabBarPages] = [.main, .settings, .history]
-//            .sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })
-//
-//        let controllers: [UINavigationController] = pages.map({ getTabController($0) })
-//
-//        return prepareTabBarController(withTabControllers: controllers)
-//    }
     private func prepareTabBarController(withTabControllers tabControllers: [UIViewController]) -> UITabBarController {
         let tabBarController = UITabBarController()
         tabBarController.setViewControllers(tabControllers, animated: true)

@@ -198,10 +198,10 @@
 			isa = PBXGroup;
 			children = (
 				13CEF451276FB14800A6E560 /* HistoryCoordinator.swift */,
-				13B1C04927511C9000439669 /* Answer.swift */,
 				13B1C0412751142D00439669 /* HistoryModel.swift */,
 				13B1C04727511AAA00439669 /* HistoryViewModel.swift */,
 				13B1C03F2751099700439669 /* HistoryViewController.swift */,
+				13B1C04927511C9000439669 /* Answer.swift */,
 			);
 			path = AnswerHistory;
 			sourceTree = "<group>";

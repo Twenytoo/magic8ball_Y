@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+
 class SettingsViewController: UIViewController, UITableViewDelegate {
     private var settingsViewModel: SettingsViewModelType
     private let disposeBag = DisposeBag()

@@ -21,7 +21,6 @@ class SettingsModel: SettingsModelType {
     var answersRx: Observable<[Answer]> {
         storageManager.answerRx.map { $0.map {$0.toAnswer()} }
     }
-//    private let disposeBag = DisposeBag()
     private let storageManager: StorageServiceProtocol
     init(storageManager: StorageServiceProtocol) {
         self.storageManager = storageManager
