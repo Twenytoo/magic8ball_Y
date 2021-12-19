@@ -40,7 +40,7 @@ class NetworkManager: NetworkServiceProtocol {
 //                    self.answerRx.onError(MyError.unableToComplete)
                     self.internetConnection = false
                 }
-                print(answer)
+                print(answer, "No Internet")
             } else {
                 guard let data = data else {
                     self.answerRx.onError(MyError.invalidData)
@@ -53,6 +53,7 @@ class NetworkManager: NetworkServiceProtocol {
                 self.internetConnection = true
                 self.createAnswerManager.addNewAnswer(answer: answer)
                 self.answerRx.onNext(Answer(text: answer, date: Date()))
+                print(answer, "Internet success")
             }
         }.resume()
     }

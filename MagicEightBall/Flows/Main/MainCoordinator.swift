@@ -16,6 +16,9 @@ class MainCoordinator: NavigationNode {
         super.init(parent: parent)
         addHandlers()
     }
+    deinit {
+        print("MainCoordinator deinit")
+    }
     private func addHandlers() {}
 }
 

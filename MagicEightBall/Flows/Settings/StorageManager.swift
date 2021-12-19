@@ -84,14 +84,15 @@ class StorageManager: StorageServiceProtocol {
 
 // MARK: - RX
 extension StorageManager {
-    func getAnswersFromDBRX() {
+    func getAnswersFromDBRX() { 
             let fetchRequest = NSFetchRequest<AnswerEntity>(entityName: "AnswerEntity")
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
             let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                         managedObjectContext: self.backgroundContext,
                                                         sectionNameKeyPath: nil,
                                                         cacheName: nil)
-            self.getObjects(fetchController: controller) { result in
+            self.getObjects(fetchController: controller) { [weak self] result in
+                guard let self = self else { return }
                 switch result {
                 case .success(let answerEntities):
                     self.answerRx.onNext(answerEntities)

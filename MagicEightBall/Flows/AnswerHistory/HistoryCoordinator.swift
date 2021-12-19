@@ -14,6 +14,9 @@ class HistoryCoordinator: NavigationNode {
         super.init(parent: parent)
         addHandlers()
     }
+    deinit {
+        print("HistoryCoordinator deinit")
+    }
     private func addHandlers() {}
 }
 

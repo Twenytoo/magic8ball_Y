@@ -58,7 +58,8 @@ private extension MainModel {
         countTouchesRX.onNext(new)
     }
     func saveTouches() {
-        countTouchesRX.subscribe { event in
+        countTouchesRX.subscribe { [weak self] event in
+            guard let self = self else { return }
             switch event {
             case .next(let count):
                 if count == 1 {
@@ -79,9 +80,10 @@ private extension MainModel {
     }
     func setupBinding() {
         ballDidShake.subscribe { [weak self] _ in
-            self?.increaseTouches()
-            self?.saveTouches()
-            self?.networkManager.fetchAnswerByURLRX()
+            guard let self = self else { return }
+            self.increaseTouches()
+            self.saveTouches()
+            self.networkManager.fetchAnswerByURLRX()
         }.disposed(by: disposeBag)
     }
 }

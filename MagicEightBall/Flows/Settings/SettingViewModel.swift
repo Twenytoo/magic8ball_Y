@@ -11,7 +11,7 @@ import RxSwift
 protocol SettingsViewModelType {
     func addNewAnswer(answer: String)
     func deleteAnswerAt(indexPath: Int)
-    var answersRx: Observable<[String]> {get }
+    var answersRx: Observable<[String]> { get }
     func getAnswersFromDBRX()
 }
 // MARK: - Class

@@ -12,7 +12,7 @@ enum TabBarPages {
     case main
     case settings
     case history
-
+    
     init?(index: Int) {
         switch index {
         case 0:
@@ -60,7 +60,6 @@ class TabBarCoordinator: NavigationNode {
     var networkManager: NetworkServiceProtocol!
     var secureStorageService: SecureStorageServiceProtocol!
     weak var containerViewController: UIViewController?
-    
     override init(parent: NavigationNode?) {
         super.init(parent: parent)
     }
@@ -104,7 +103,7 @@ class TabBarCoordinator: NavigationNode {
     }
 }
 
-extension TabBarCoordinator: FlowCoordinator {    
+extension TabBarCoordinator: FlowCoordinator {
     func createFlow() -> UIViewController {
         let pages: [TabBarPages] = [.main, .settings, .history]
             .sorted(by: { $0.pageOrderNumber() < $1.pageOrderNumber() })

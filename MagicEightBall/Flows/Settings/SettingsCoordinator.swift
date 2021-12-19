@@ -14,6 +14,9 @@ class SettingsCoordinator: NavigationNode {
         super.init(parent: parent)
         addHandlers()
     }
+    deinit {
+        print("SettingsCoordinator deinit")
+    }
     private func addHandlers() {}
 }
 
