@@ -22,7 +22,6 @@
 		138A906027452E2700424EA3 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A905F27452E2700424EA3 /* SettingsModel.swift */; };
 		138E033527439E36004D4FA8 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033227439E36004D4FA8 /* SettingViewModel.swift */; };
 		138E033627439E36004D4FA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E033327439E36004D4FA8 /* MainViewModel.swift */; };
-		1394865C275981990034CCBD /* My_Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394865B275981990034CCBD /* My_Animations.swift */; };
 		1394865E275ACD4A0034CCBD /* AnswersForAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */; };
 		13A9A220271B0E8900133716 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */; };
 		13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */; };
@@ -60,7 +59,6 @@
 		138A905F27452E2700424EA3 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		138E033227439E36004D4FA8 /* SettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		138E033327439E36004D4FA8 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		1394865B275981990034CCBD /* My_Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = My_Animations.swift; path = "../../../../../Материалы/My_Animations.swift"; sourceTree = "<group>"; };
 		1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersForAnimation.swift; sourceTree = "<group>"; };
 		13A9A21F271B0E8900133716 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorageService.swift; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 			children = (
 				132F50AE273EACF000B24FDC /* myStrings.strings */,
 				132F50B1273EAEC300B24FDC /* SwiftGen */,
-				136752F627144FD800ADC62C /* AppDelegate.swift */,
 				1367530427144FDE00ADC62C /* Info.plist */,
 				136752FF27144FDE00ADC62C /* Assets.xcassets */,
 				1394865D275ACD4A0034CCBD /* AnswersForAnimation.swift */,
@@ -174,7 +171,6 @@
 				138E033327439E36004D4FA8 /* MainViewModel.swift */,
 				136752FA27144FD800ADC62C /* MainViewController.swift */,
 				1372443F27182402007A08E9 /* NetworkManager.swift */,
-				1394865B275981990034CCBD /* My_Animations.swift */,
 				1372444127182838007A08E9 /* DecodedData.swift */,
 				13AB3ABE274BAEF7004F0796 /* SecureStorageService.swift */,
 			);
@@ -209,6 +205,7 @@
 		13CEF445276E5C2500A6E560 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				136752F627144FD800ADC62C /* AppDelegate.swift */,
 				13CEF446276E5E7A00A6E560 /* FlowCoordinator.swift */,
 				13CEF443276E4B4900A6E560 /* NavigationNode.swift */,
 				13CEF44D276F8DDD00A6E560 /* TabBarCoordinator.swift */,
@@ -392,7 +389,6 @@
 				1394865E275ACD4A0034CCBD /* AnswersForAnimation.swift in Sources */,
 				138A906027452E2700424EA3 /* SettingsModel.swift in Sources */,
 				136752F727144FD800ADC62C /* AppDelegate.swift in Sources */,
-				1394865C275981990034CCBD /* My_Animations.swift in Sources */,
 				13CEF44A276F6ADD00A6E560 /* AppNavigator.swift in Sources */,
 				1372444027182402007A08E9 /* NetworkManager.swift in Sources */,
 				13AB3ABF274BAEF7004F0796 /* SecureStorageService.swift in Sources */,

@@ -45,7 +45,8 @@ private extension HistoryViewController {
             .bind(to: tableView
                     .rx
                     .items(cellIdentifier: L10n.cell, cellType: CustomTableViewCell.self)) { _, answer, cell in
-                cell.configureTextAnswer(text: answer)
+                cell.configureTextAnswer(text: answer.text)
+                cell.configureTextDate(date: answer.date)
             }.disposed(by: disposeBag)
     }
 }

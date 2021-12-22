@@ -8,16 +8,16 @@
 import UIKit
 
 class SettingsCoordinator: NavigationNode {
-    var storageManager: StorageServiceProtocol!
+    var storageManager: StorageServiceProtocol
     weak var containerViewController: UIViewController?
-    override init(parent: NavigationNode?) {
+    init(   parent: NavigationNode?,
+            storageManager: StorageServiceProtocol) {
+        self.storageManager = storageManager
         super.init(parent: parent)
-        addHandlers()
     }
     deinit {
         print("SettingsCoordinator deinit")
     }
-    private func addHandlers() {}
 }
 
 extension SettingsCoordinator: FlowCoordinator {

@@ -8,7 +8,16 @@
 import UIKit
 import SnapKit
 
+class DateFormatterForCell {
+    static let shared = DateFormatter()
+    private init() {}
+}
 class CustomTableViewCell: UITableViewCell {
+    private var dateFormatter: DateFormatter {
+        let dateFormatter = DateFormatterForCell.shared
+        dateFormatter.setLocalizedDateFormatFromTemplate("MM-dd-yyyy HH:mm")
+        return dateFormatter
+    }
     private let answerLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -38,8 +47,9 @@ class CustomTableViewCell: UITableViewCell {
     func configureTextAnswer(text: String) {
         answerLabel.text = text
     }
-    func configureTextDate(text: String) {
-        dateLabel.text = text
+    func configureTextDate(date: Date) {
+        let dateString = dateFormatter.string(from: date)
+        dateLabel.text = dateString
     }
     func addConstraintsForCell() {
         answerLabel.snp.makeConstraints { make in

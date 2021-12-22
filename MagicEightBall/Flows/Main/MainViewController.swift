@@ -11,13 +11,13 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: UIViewController {
+    private var isResp = false
+    private var is3secPassed = false
     private var viewModel: MainViewModelType
     private let disposeBag = DisposeBag()
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
-    private var isResp = false
-    private var is3secPassed = false
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -75,6 +75,12 @@ private extension MainViewController {
             }
             .bind(to: countLabel.rx.text)
             .disposed(by: disposeBag)
+        viewModel.errorRx
+            .observeOn(MainScheduler.instance)
+            .subscribe(onError: { [unowned self] error in
+                print(error, "!!!")
+                self.presentErrorAlert(error: error as? MyError)
+            }).disposed(by: disposeBag)
         viewModel.answerRx
             .observeOn(MainScheduler.instance)
             .subscribe { [weak self] answer in
@@ -82,10 +88,8 @@ private extension MainViewController {
                 self.isResp = true
                 self.updateAnswerLabel(answer: answer)
                 self.viewModel.currentAnswer = answer
-            } onError: { [weak self] error in
-                guard let self = self else { return }
+            } onError: { error in
                 print(error, "!!!")
-                self.presentErrorAlert(error: error as? MyError)
             } onCompleted: {
                 print("Completed!!!")
             } onDisposed: {
@@ -116,7 +120,7 @@ private extension MainViewController {
     // MARK: - Contraints
     func setupConstraints() {
         imageBallView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(30)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.trailing.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
         answerLabel.snp.makeConstraints { make in

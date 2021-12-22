@@ -20,6 +20,7 @@ protocol MainModelType {
     var countTouchesRX: BehaviorSubject<Int> {get set}
     var ballDidShake: PublishSubject<Void> {get set}
     var answerRx: Observable<Answer> { get }
+    var errorRx: Observable<Void> { get }
 }
 // MARK: - Class
 class MainModel: MainModelType {
@@ -27,6 +28,9 @@ class MainModel: MainModelType {
     var ballDidShake = PublishSubject<Void>()
     var answerRx: Observable<Answer> {
         networkManager.answerRx
+    }
+    var errorRx: Observable<Void> {
+        networkManager.errorRX
     }
     private let disposeBag = DisposeBag()
     private let networkManager: NetworkServiceProtocol

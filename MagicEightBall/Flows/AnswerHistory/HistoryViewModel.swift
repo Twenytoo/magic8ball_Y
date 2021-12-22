@@ -9,11 +9,11 @@ import Foundation
 import RxSwift
 
 protocol HistoryViewModelType {
-    var answersRx: Observable<[String]> { get }
+    var answersRx: Observable<[Answer]> { get }
 }
 class HistoryViewModel: HistoryViewModelType {
-    var answersRx: Observable<[String]> {
-        model.answersRx.map { $0.map {$0.text}}
+    var answersRx: Observable<[Answer]> {
+        model.answersRx
     }
     private let dateFormatter: DateFormatter
     private let model: HistoryModelType

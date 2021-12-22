@@ -8,16 +8,16 @@
 import UIKit
 
 class HistoryCoordinator: NavigationNode {
-    var storageManager: StorageServiceProtocol!
+    var storageManager: StorageServiceProtocol
     weak var containerViewController: UIViewController?
-    override init(parent: NavigationNode?) {
+    init(   parent: NavigationNode?,
+            storageManager: StorageServiceProtocol) {
+        self.storageManager = storageManager
         super.init(parent: parent)
-        addHandlers()
     }
     deinit {
         print("HistoryCoordinator deinit")
     }
-    private func addHandlers() {}
 }
 
 extension HistoryCoordinator: FlowCoordinator {

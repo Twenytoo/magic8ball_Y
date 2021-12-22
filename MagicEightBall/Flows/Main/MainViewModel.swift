@@ -14,6 +14,7 @@ protocol MainViewModelType {
     var countTouchesRX: Observable<Int> { get }
     var ballDidShake: PublishSubject<Void> { get }
     var answerRx: Observable<String> { get }
+    var errorRx: Observable<Void> { get }
     func loadTouches()
     func getAnimationAnswer() -> String
 }
@@ -28,6 +29,9 @@ class MainViewModel: MainViewModelType {
     }
     var answerRx: Observable<String> {
         mainModel.answerRx.map { $0.text }
+    }
+    var errorRx: Observable<Void> {
+        mainModel.errorRx
     }
     private let mainModel: MainModelType
     init(mainModel: MainModelType) {

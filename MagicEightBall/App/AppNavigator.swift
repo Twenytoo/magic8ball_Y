@@ -22,10 +22,10 @@ final class AppNavigator: NavigationNode {
         super.init(parent: nil)
     }
     func startFlow() {
-        let coordinator = TabBarCoordinator(parent: self)
-        coordinator.storageManager = storageManager
-        coordinator.networkManager = networkManager
-        coordinator.secureStorageService = secureStorageService
+        let coordinator = TabBarCoordinator(parent: self,
+                                            storageManager: storageManager,
+                                            networkManager: networkManager,
+                                            secureStorageService: secureStorageService)
         let controller = coordinator.createFlow()
         window.rootViewController = controller
         window.makeKeyAndVisible()

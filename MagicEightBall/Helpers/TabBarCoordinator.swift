@@ -12,7 +12,6 @@ enum TabBarPages {
     case main
     case settings
     case history
-    
     init?(index: Int) {
         switch index {
         case 0:
@@ -56,11 +55,17 @@ enum TabBarPages {
 
 // MARK: - TabBarCoordinator
 class TabBarCoordinator: NavigationNode {
-    var storageManager: StorageServiceProtocol!
-    var networkManager: NetworkServiceProtocol!
-    var secureStorageService: SecureStorageServiceProtocol!
+    private let storageManager: StorageServiceProtocol
+    private let networkManager: NetworkServiceProtocol
+    private let secureStorageService: SecureStorageServiceProtocol
     weak var containerViewController: UIViewController?
-    override init(parent: NavigationNode?) {
+    init(   parent: NavigationNode?,
+            storageManager: StorageServiceProtocol,
+            networkManager: NetworkServiceProtocol,
+            secureStorageService: SecureStorageServiceProtocol) {
+        self.storageManager = storageManager
+        self.networkManager = networkManager
+        self.secureStorageService = secureStorageService
         super.init(parent: parent)
     }
     deinit {
@@ -85,17 +90,19 @@ class TabBarCoordinator: NavigationNode {
                                                      tag: page.pageOrderNumber())
         switch page {
         case .main:
-            let coordinator = MainCoordinator(parent: self)
-            coordinator.storageManager = storageManager
-            coordinator.networkManager = networkManager
-            coordinator.secureStorageService = secureStorageService
+            let coordinator = MainCoordinator(parent: self,
+                                              storageManager: storageManager,
+                                              networkManager: networkManager,
+                                              secureStorageService: secureStorageService)
             navController.pushViewController(coordinator.createFlow(), animated: true)
         case .settings:
-            let coordinator = SettingsCoordinator(parent: self)
+            let coordinator = SettingsCoordinator(parent: self,
+                                                  storageManager: storageManager)
             coordinator.storageManager = storageManager
             navController.pushViewController(coordinator.createFlow(), animated: true)
         case .history:
-            let coordinator = HistoryCoordinator(parent: self)
+            let coordinator = HistoryCoordinator(parent: self,
+                                                 storageManager: storageManager)
             coordinator.storageManager = storageManager
             navController.pushViewController(coordinator.createFlow(), animated: true)
         }

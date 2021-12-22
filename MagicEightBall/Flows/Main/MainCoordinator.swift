@@ -12,14 +12,18 @@ class MainCoordinator: NavigationNode {
     var networkManager: NetworkServiceProtocol!
     var secureStorageService: SecureStorageServiceProtocol!
     weak var containerViewController: UIViewController?
-    override init(parent: NavigationNode?) {
+    init(   parent: NavigationNode?,
+            storageManager: StorageServiceProtocol,
+            networkManager: NetworkServiceProtocol,
+            secureStorageService: SecureStorageServiceProtocol) {
+        self.storageManager = storageManager
+        self.networkManager = networkManager
+        self.secureStorageService = secureStorageService
         super.init(parent: parent)
-        addHandlers()
     }
     deinit {
         print("MainCoordinator deinit")
     }
-    private func addHandlers() {}
 }
 
 extension MainCoordinator: FlowCoordinator {
