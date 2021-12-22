@@ -11,26 +11,26 @@ import RxSwift
 protocol SettingsViewModelType {
     func addNewAnswer(answer: String)
     func deleteAnswerAt(indexPath: Int)
-    var answersRx: Observable<[String]> {get }
+    var answersRx: Observable<[String]> { get }
     func getAnswersFromDBRX()
 }
 // MARK: - Class
 class SettingViewModel: SettingsViewModelType {
-    private let settingsModel: SettingsModelType
+    private let model: SettingsModelType
     private let disposeBag = DisposeBag()
     var answersRx: Observable<[String]> {
-        settingsModel.answersRx.map { $0.map {$0.text}}
+        model.answersRx.map { $0.map {$0.text}}
     }
-    init(settingsModel: SettingsModelType) {
-        self.settingsModel = settingsModel
+    init(model: SettingsModelType) {
+        self.model = model
     }
     func getAnswersFromDBRX() {
-        settingsModel.getAnswersFromDBRX()
+        model.getAnswersFromDBRX()
     }
     func addNewAnswer(answer: String) {
-        settingsModel.addNewAnswer(answer: answer)
+        model.addNewAnswer(answer: answer)
     }
     func deleteAnswerAt(indexPath: Int) {
-        settingsModel.deleteAnswerAt(indexPath: indexPath)
+        model.deleteAnswerAt(indexPath: indexPath)
     }
 }

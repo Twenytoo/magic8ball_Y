@@ -15,15 +15,12 @@ protocol SettingsModelType {
     func addNewAnswer(answer: String)
     func deleteAnswerAt(indexPath: Int)
 }
-protocol CreateAnswerProtocol {
-    func addNewAnswer(answer: String)
-}
+
 // MARK: - Class
-class SettingsModel: SettingsModelType, CreateAnswerProtocol {
+class SettingsModel: SettingsModelType {
     var answersRx: Observable<[Answer]> {
         storageManager.answerRx.map { $0.map {$0.toAnswer()} }
     }
-    private let disposeBag = DisposeBag()
     private let storageManager: StorageServiceProtocol
     init(storageManager: StorageServiceProtocol) {
         self.storageManager = storageManager

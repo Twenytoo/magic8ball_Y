@@ -8,7 +8,7 @@
 import Foundation
 import Locksmith
 // MARK: - Protocols
-protocol SecureStorageServiceType {
+protocol SecureStorageServiceProtocol {
     func saveData (key: StorageKey, value: Any, dictionary: StorageDictionary)
     func updateData (key: StorageKey, value: Any, dictionary: StorageDictionary)
     func loadData (key: StorageKey, dictionary: StorageDictionary) -> Any?
@@ -21,7 +21,7 @@ enum StorageDictionary: String {
     case countOfTouches = "count_of_touches"
 }
 // MARK: - Class
-class SecureStorageService: SecureStorageServiceType {
+class SecureStorageService: SecureStorageServiceProtocol {
     func saveData (key: StorageKey, value: Any, dictionary: StorageDictionary) {
         do {
             try Locksmith.saveData(data: [key.rawValue: value], forUserAccount: dictionary.rawValue)

@@ -10,15 +10,15 @@ import RxSwift
 import RxCocoa
 
 class HistoryViewController: UIViewController {
-    private let answerViewModel: AnswerViewModelType
+    private let viewModel: HistoryViewModelType
     private let disposeBag = DisposeBag()
     private let tableView = UITableView()
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
-    init(answerViewModel: AnswerViewModelType) {
-        self.answerViewModel = answerViewModel
+    init(viewModel: HistoryViewModelType) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -41,11 +41,12 @@ private extension HistoryViewController {
     }
     // MARK: - RX
     func setupBinding() {
-        answerViewModel.answersRx
+        viewModel.answersRx
             .bind(to: tableView
                     .rx
                     .items(cellIdentifier: L10n.cell, cellType: CustomTableViewCell.self)) { _, answer, cell in
-                cell.configureTextAnswer(text: answer)
+                cell.configureTextAnswer(text: answer.text)
+                cell.configureTextDate(date: answer.date)
             }.disposed(by: disposeBag)
     }
 }

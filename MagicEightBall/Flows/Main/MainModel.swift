@@ -20,6 +20,7 @@ protocol MainModelType {
     var countTouchesRX: BehaviorSubject<Int> {get set}
     var ballDidShake: PublishSubject<Void> {get set}
     var answerRx: Observable<Answer> { get }
+    var errorRx: Observable<Void> { get }
 }
 // MARK: - Class
 class MainModel: MainModelType {
@@ -28,13 +29,16 @@ class MainModel: MainModelType {
     var answerRx: Observable<Answer> {
         networkManager.answerRx
     }
+    var errorRx: Observable<Void> {
+        networkManager.errorRX
+    }
     private let disposeBag = DisposeBag()
-    private let networkManager: NetworkService
+    private let networkManager: NetworkServiceProtocol
     private let storageManager: StorageServiceProtocol
-    private let secureStorageService: SecureStorageServiceType
-    init(networkManager: NetworkService,
+    private let secureStorageService: SecureStorageServiceProtocol
+    init(networkManager: NetworkServiceProtocol,
          storageManager: StorageServiceProtocol,
-         secureStorageService: SecureStorageServiceType) {
+         secureStorageService: SecureStorageServiceProtocol) {
         self.networkManager = networkManager
         self.storageManager = storageManager
         self.secureStorageService = secureStorageService
@@ -58,7 +62,8 @@ private extension MainModel {
         countTouchesRX.onNext(new)
     }
     func saveTouches() {
-        countTouchesRX.subscribe { event in
+        countTouchesRX.subscribe { [weak self] event in
+            guard let self = self else { return }
             switch event {
             case .next(let count):
                 if count == 1 {
@@ -79,9 +84,10 @@ private extension MainModel {
     }
     func setupBinding() {
         ballDidShake.subscribe { [weak self] _ in
-            self?.increaseTouches()
-            self?.saveTouches()
-            self?.networkManager.fetchAnswerByURLRX()
+            guard let self = self else { return }
+            self.increaseTouches()
+            self.saveTouches()
+            self.networkManager.fetchAnswerByURLRX()
         }.disposed(by: disposeBag)
     }
 }

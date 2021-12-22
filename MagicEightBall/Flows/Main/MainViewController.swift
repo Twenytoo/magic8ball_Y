@@ -11,13 +11,13 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: UIViewController {
+    private var isResp = false
+    private var is3secPassed = false
     private var viewModel: MainViewModelType
     private let disposeBag = DisposeBag()
     private let answerLabel = UILabel()
     private let countLabel = UILabel()
     private let imageBallView = UIImageView()
-    private var isResp = false
-    private var is3secPassed = false
     init(viewModel: MainViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -75,15 +75,21 @@ private extension MainViewController {
             }
             .bind(to: countLabel.rx.text)
             .disposed(by: disposeBag)
+        viewModel.errorRx
+            .observeOn(MainScheduler.instance)
+            .subscribe(onError: { [unowned self] error in
+                print(error, "!!!")
+                self.presentErrorAlert(error: error as? MyError)
+            }).disposed(by: disposeBag)
         viewModel.answerRx
             .observeOn(MainScheduler.instance)
             .subscribe { [weak self] answer in
                 guard let self = self else { return }
                 self.isResp = true
                 self.updateAnswerLabel(answer: answer)
+                self.viewModel.currentAnswer = answer
             } onError: { error in
                 print(error, "!!!")
-                self.presentErrorAlert(error: error as? MyError)
             } onCompleted: {
                 print("Completed!!!")
             } onDisposed: {
@@ -95,7 +101,7 @@ private extension MainViewController {
     func setUpInterface() {
         viewModel.loadTouches()
         title = L10n.main
-        self.view.backgroundColor = .black
+        view.backgroundColor = .black
         let imageBall = UIImage(asset: Asset.magicBallPNG)
         imageBallView.image = imageBall
         imageBallView.contentMode = .scaleAspectFit
@@ -107,14 +113,14 @@ private extension MainViewController {
         countLabel.textColor = #colorLiteral(red: 0.4620226622, green: 0.8382837176, blue: 1, alpha: 1)
         countLabel.textAlignment = .center
         countLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
-        self.view.addSubview(imageBallView)
-        self.view.addSubview(answerLabel)
-        self.view.addSubview(countLabel)
+        view.addSubview(imageBallView)
+        view.addSubview(answerLabel)
+        view.addSubview(countLabel)
     }
     // MARK: - Contraints
     func setupConstraints() {
         imageBallView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(50)
             make.trailing.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
         answerLabel.snp.makeConstraints { make in

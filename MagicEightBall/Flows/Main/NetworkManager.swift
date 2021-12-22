@@ -9,13 +9,15 @@ import Foundation
 import RxSwift
 
 // MARK: - Protocol
-protocol NetworkService {
+protocol NetworkServiceProtocol {
     func fetchAnswerByURLRX()
     var answerRx: PublishSubject<Answer> { get set }
+    var errorRX: PublishSubject<Void> { get set }
 }
 // MARK: - Class
-class NetworkManager: NetworkService {
+class NetworkManager: NetworkServiceProtocol {
     var answerRx = PublishSubject<Answer>()
+    var errorRX = PublishSubject<Void>()
     private var internetConnection = true
     private let createAnswerManager: CreateAnswerProtocol
     private let getAnswerWithoutConnectionManager: GetAnswerFromDBProtocol
@@ -37,22 +39,23 @@ class NetworkManager: NetworkService {
                 let answer = self.getAnswerWithoutConnectionManager.showAnswerWithoutConnection()
                 self.answerRx.onNext(Answer(text: answer, date: Date()))
                 if self.internetConnection {
-//                    self.answerRx.onError(MyError.unableToComplete)
+                    self.errorRX.onError(MyError.unableToComplete)
                     self.internetConnection = false
                 }
-                print(answer)
+                print(answer, "No Internet")
             } else {
                 guard let data = data else {
-                    self.answerRx.onError(MyError.invalidData)
+                    self.errorRX.onError(MyError.invalidData)
                     return
                 }
                 guard let answer = self.parseJSON(withData: data) else {
-                    self.answerRx.onError(MyError.invalidData)
+                    self.errorRX.onError(MyError.invalidData)
                     return
                 }
                 self.internetConnection = true
                 self.createAnswerManager.addNewAnswer(answer: answer)
                 self.answerRx.onNext(Answer(text: answer, date: Date()))
+                print(answer, "Internet success")
             }
         }.resume()
     }
